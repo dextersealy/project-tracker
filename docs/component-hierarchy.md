@@ -3,34 +3,22 @@
 ### AuthFormContainer
 - AuthForm
 
-### HomeContainer
+### Home
 - Header
 - OutsideContent
 
 ### Dashboard
 - Header
-- DashboardContent
-
-### DashboardContent
-- Sidebar
-- StoryPanelContainer
-
-### Sidebar
-- SidebarHeader
-- SidebarItemsIndex
-
-### SidebarItemsIndex
-- SidebarItem
-
-### StoryPanelContainer
-- StoryPanel
-
-### StoryPanel
-- StoryIndexHeader
-- StoryIndex
-
-### StoryIndex
-- StoryItem
+- Dashboard
+  - Sidebar
+    - SidebarHeader
+    - SidebarItemContainer
+      - SidebarItem
+  - StoryPanelContainer
+    - StoryPanel
+      - StoryPanelHeader
+      - StoryItemIndex
+        - StoryItem
 
 ## Routes
 
@@ -38,5 +26,5 @@ Path   | Component
 -------|----------
 /signup | AuthFormContainer
 /signin | AuthFormContainer
-/home | HomeContainer
-/projects | DashboardContainer
+/home | Home
+/projects | Dashboard
