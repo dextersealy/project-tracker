@@ -38,21 +38,21 @@ By the end of week 9, the application will meet the following criteria with smoo
 - User can edit story
 - User can delete story
 
-### Phase 5: Story workflow (1 day)
+### Phase 4: Story workflow (1 day)
 - User can move stories through workflow
 - Only story owner can Accept or Reject
 - User can toggle hiding/showing accepted stories
 
-### Phase 6: Tasks (1 day)
+### Phase 5: Tasks (1 day)
 - User can create and edit tasks
 - User can change task status
 
-### Phase 7: Comments (1 day)
+### Phase 6: Comments (1 day)
 - User can comment on story
 - User can edit own comments
 - User who rejects story is prompted to enter a comment
 
-### Phase 8: Drag & drop (1 day)
+### Phase 7: Drag & drop (1 day)
 - User can prioritize stories via drag & drop
 
 ### Bonus Features (TBD)
