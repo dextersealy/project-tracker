@@ -14,7 +14,13 @@ class SignUpForm extends React.Component{
   handleSubmit(e) {
     e.preventDefault();
     const user = Object.assign({}, this.state);
+    user.initials = this.getInitials(user.name);
     this.props.signup(user);
+  }
+
+  getInitials(name) {
+    const initials = name.split(/\s+/).map(word => word[0]);
+    return initials.join('').slice(0, 4);
   }
 
   handleChange(field) {
@@ -32,7 +38,7 @@ class SignUpForm extends React.Component{
     return (
       <section className='session-form'>
         <h2>Sign Up</h2>
-        <form>
+        <form onSubmit={this.handleSubmit}>
           <label htmlFor='name'>Name:</label>
           <input id='name' onChange={this.handleChange('name')} value={name}/>
           <label htmlFor='email'>Email:</label>
@@ -41,7 +47,7 @@ class SignUpForm extends React.Component{
           <input type='password' id='password' onChange={this.handleChange('password')} value={password}/>
           <label htmlFor='confirm_password'>Confirm password:</label>
           <input type='password' id='confirm_password' onChange={this.handleChange('confirm_password')} value={confirm_password}/>
-          <button onClick={this.handleSubmit}>Sign Up</button>
+          <button>Sign Up</button>
           <ul>{errors}</ul>
         </form>
         <div className='redirect'>
