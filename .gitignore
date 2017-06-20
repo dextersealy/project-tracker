@@ -19,7 +19,6 @@
 .byebug_history
 
 tmp/
-Gemfile.lock
 bundle.js
 bundle.js.map
 .DS_Store
