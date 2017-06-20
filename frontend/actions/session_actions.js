@@ -43,3 +43,5 @@ export const logout = () => (
       );
   }
 );
+
+export const clearErrors = () => receiveErrors([]);

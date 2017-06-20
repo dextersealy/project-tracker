@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { signup } from '../actions/session_actions';
+import { signup, clearErrors } from '../actions/session_actions';
 
 class SignUpForm extends React.Component{
   constructor(props) {
@@ -9,6 +9,10 @@ class SignUpForm extends React.Component{
 		this.state = { name: '', email: '', password: '', confirm_password: ''};
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.clearErrors();
   }
 
   handleSubmit(e) {
@@ -65,7 +69,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  signup: user => dispatch(signup(user))
+  signup: user => dispatch(signup(user)),
+  clearErrors: () => dispatch(clearErrors())
 });
 
 export default connect(
