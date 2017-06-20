@@ -45,3 +45,4 @@ export const logout = () => (
 );
 
 export const clearErrors = () => receiveErrors([]);
+export const reportErrors = (errors) => receiveErrors(errors);

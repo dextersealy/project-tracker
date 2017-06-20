@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { signup, clearErrors } from '../actions/session_actions';
+import { signup, clearErrors, reportErrors } from '../actions/session_actions';
 
 class SignUpForm extends React.Component{
   constructor(props) {
@@ -18,8 +18,12 @@ class SignUpForm extends React.Component{
   handleSubmit(e) {
     e.preventDefault();
     const user = Object.assign({}, this.state);
-    user.initials = this.getInitials(user.name);
-    this.props.signup(user);
+    if (user.password !== user.confirm_password) {
+      this.props.reportErrors(["Passwords do match"]);
+    } else {
+      user.initials = this.getInitials(user.name);
+      this.props.signup(user);
+    }
   }
 
   getInitials(name) {
@@ -70,7 +74,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   signup: user => dispatch(signup(user)),
-  clearErrors: () => dispatch(clearErrors())
+  clearErrors: () => dispatch(clearErrors()),
+  reportErrors: (errors) => dispatch(reportErrors(errors))
 });
 
 export default connect(
