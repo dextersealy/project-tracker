@@ -28,8 +28,8 @@ class Greeting extends React.Component {
     } else {
       return (
         <div className='greeting'>
+          <Link className='button' to='/login'>Sign In</Link>
           <Link className='button' to='/signup'>Sign Up</Link>
-          <Link className='button' to='/login'>Log In</Link>
         </div>
       );
     }

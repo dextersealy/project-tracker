@@ -1,0 +1,48 @@
+.session-form {
+  width: 50%;
+  margin: 0 auto;
+}
+
+.session-form input {
+  width: 400px;
+  padding: 5px 10px;
+  border: 1px solid black;
+  border-radius: 5px;
+  font-size: 16pt;
+}
+
+.session-form label {
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 2px;
+  color: black;
+}
+
+.session-form h2 {
+  font-size: 24pt;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 20pt;
+  margin-bottom: 10pt;
+}
+
+.session-form button,
+.session-form .button {
+  display: block;
+  margin: 10px auto;
+}
+
+.redirect {
+  display: flex;
+  margin-top: 20px;
+}
+
+.redirect span {
+  display: block;
+  padding-right: 5px;
+}
+
+.session-form a {
+  color: blue;
+  text-decoration: underline;
+}
