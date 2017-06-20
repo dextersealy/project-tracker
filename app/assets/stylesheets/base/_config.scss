@@ -1,0 +1,21 @@
+$bold-weight: 700;
+
+$color-brand: #38A3DC;
+$color-brand-accent-dark: #214254;
+$color-brand-accent-light: #3851DC;
+
+$button-margin: 0 5px 0 0;
+$button-padding: 5px;
+$button-border-radius: 8px;
+$button-background: grey;
+$button-color: white;
+$button-font-family: sans-serif;
+$button-font-weight: $bold-weight;
+
+$header-height: 100px;
+$header-padding: 10px;
+$header-background-color: $color-brand-accent-dark;
+
+body {
+  font-family: sans-serif;
+}

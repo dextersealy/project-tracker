@@ -20,19 +20,17 @@ class Greeting extends React.Component {
 
     if (user) {
       return (
-        <section>
-          {`Welcome: ${user.name}`}
-          <button onClick={this.handleLogout}>Logout</button>
-        </section>
+        <div className='greeting'>
+          <p className='name'>{`${user.name}`}</p>
+          <button onClick={this.handleLogout}>Sign Out</button>
+        </div>
       );
     } else {
       return (
-        <section>
-          <ul>
-            <li><Link to='/signup'>Sign Up</Link></li>
-            <li><Link to='/login'>Log In</Link></li>
-          </ul>
-        </section>
+        <div className='greeting'>
+          <Link className='button' to='/signup'>Sign Up</Link>
+          <Link className='button' to='/login'>Log In</Link>
+        </div>
       );
     }
   }
