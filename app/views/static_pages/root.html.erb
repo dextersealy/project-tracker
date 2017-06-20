@@ -5,5 +5,8 @@
       user: current_user
     ).html_safe %>
   <% end %>
+  window.images = {
+    logo: "<%= image_path('logo.svg') %>",
+  };
 </script>
 <main id="root"></main>

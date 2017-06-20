@@ -7,7 +7,7 @@ class Header extends React.Component {
     return (
       <header>
         <logo>
-          <img src="/assets/logo.svg" alt="Project Tracker logo"/>
+          <img src={window.images.logo} alt="Project Tracker logo"/>
         </logo>
         <Greeting />
       </header>
