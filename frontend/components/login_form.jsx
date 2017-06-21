@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { login, clearErrors } from '../actions/session_actions';
 import Header from './header';
+import ErrorMsg from './error';
 
 class LoginForm extends React.Component{
   constructor(props) {
@@ -37,7 +38,6 @@ class LoginForm extends React.Component{
   }
 
   render() {
-    const errors = this.props.errors.map((error, idx) => <li key={idx}>{error}</li>);
     const {email, password} = this.state;
     return (
       <div>
@@ -45,12 +45,12 @@ class LoginForm extends React.Component{
         <section className='auth-form'>
           <h2>Sign In</h2>
           <form>
+            <ErrorMsg msg={this.props.errors[0]}/>
             <label htmlFor='email'>Email:</label>
             <input id='email' onChange={this.handleChange('email')} value={email}/>
             <label htmlFor='password'>Password:</label>
             <input type='password' id='password' onChange={this.handleChange('password')} value={password}/>
             <button onClick={this.handleSubmit}>Sign In</button>
-            <ul>{errors}</ul>
           </form>
           <div className='redirect'>
             <span>New user?</span><Link to='/signup'>Sign Up</Link>

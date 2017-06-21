@@ -24,19 +24,32 @@ body.signup {
     display: block;
     margin-top: 10px;
     margin-bottom: 2px;
-    color: black;
+    color: grey;
   }
 
   input {
     width: 100%;
     font-size: 16pt;
     padding: 5px 10px;
-    border: 1px solid black;
-    border-radius: 5px;
+    border: 1px solid lightgray;
+    border-radius: 4px;
 
     &:last-of-type {
       margin-bottom: 10px;
     }
+
+    &.error {
+      border-color: red;
+    }
+  }
+
+  div.error {
+    background-color: rgba(255, 0, 0, 0.02);
+    border: 1px solid red;
+    border-radius: 2px;
+    padding: 5px;
+    color: grey;
+    font-size: 10pt;
   }
 
   button, .button {

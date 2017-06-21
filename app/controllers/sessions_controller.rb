@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
       login(@user)
       render '/users/show'
     else
-      render json: ["invalid credentials"], status: 422
+      render json: ["Invalid email/password"], status: 422
     end
   end
 
