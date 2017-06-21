@@ -13,6 +13,11 @@ class SignUpForm extends React.Component{
 
   componentDidMount() {
     this.props.clearErrors();
+    document.body.classList.toggle('signup', true);
+  }
+
+  componentWillUnmount() {
+    document.body.classList.toggle('signup', false);
   }
 
   handleSubmit(e) {
