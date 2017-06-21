@@ -1,6 +1,7 @@
 import React from 'react'
 import { logout } from '../actions/session_actions';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import Logo from './logo';
 
 class Header extends React.Component {
@@ -10,7 +11,8 @@ class Header extends React.Component {
   }
 
   handleLogout() {
-    this.props.logout();
+    this.props.logout()
+      .then(() => this.props.history.push('/logout'));
   }
 
   render() {
@@ -37,7 +39,7 @@ const mapDispatchToProps = (dispatch) => ({
   logout: () => dispatch(logout())
 });
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(Header);
+)(Header));

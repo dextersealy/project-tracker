@@ -1,0 +1,24 @@
+.logout {
+  width: 50%;
+  margin: 40px auto;
+  background: white;
+  border: 1px solid lightgrey;
+  border-radius: 4px;
+  padding: 20px;
+  text-align: center;
+
+  h2 {
+    font-size: 16pt;
+    font-weight: bold;
+  }
+
+  p {
+    color: grey;
+    margin-top: 10px;
+  }
+
+  a {
+    color: blue;
+    text-decoration: underline;
+  }
+}

@@ -15,11 +15,11 @@ class LoginForm extends React.Component{
 
   componentDidMount() {
     this.props.clearErrors();
-    document.body.classList.toggle('signup', true);
+    document.body.classList.toggle('auth', true);
   }
 
   componentWillUnmount() {
-    document.body.classList.toggle('signup', false);
+    document.body.classList.toggle('auth', false);
   }
 
   handleSubmit(e) {
