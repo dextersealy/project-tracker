@@ -12,23 +12,23 @@
   background-repeat: no-repeat;
   background-size: cover;
   position: relative;
-}
 
-.hero .button {
-  display: block;
-  margin: 0 10px 0 0;
-  padding: 5px 10px;
-  border: 0;
-  border-radius: $button-border-radius;
-  background-color: orange;
-  color: $button-color;
-  font-family: $button-font-family;
-  font-size: 12pt;
-  text-align: center;
-  text-shadow: 0;
+  .button, button {
+    display: block;
+    margin: 0 10px 0 0;
+    padding: 5px 10px;
+    border: 0;
+    border-radius: $button-border-radius;
+    background-color: orange;
+    color: $button-color;
+    font-family: $button-font-family;
+    font-size: 12pt;
+    text-align: center;
+    text-shadow: 0;
 
-  &:hover {
-    background-color: darkorange;
+    &:hover {
+      background-color: darkorange;
+    }
   }
 }
 
