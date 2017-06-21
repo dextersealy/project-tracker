@@ -1,6 +1,6 @@
 import React from 'react';
-import Header from './header';
 import { Link } from 'react-router-dom';
+import Header from '../util/header';
 
 class LoggedOut extends React.Component {
   componentDidMount() {

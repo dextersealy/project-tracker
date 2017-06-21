@@ -1,9 +1,17 @@
 import React from 'react'
-import Header from './header';
+import Header from './util/header';
+import ProjectsIndex from './projects/projects_index';
 
 const Dashboard = () => {
   return (
-    <Header/>
+    <div>
+      <Header/>
+      <div className='heading'>
+        <h2>Projects</h2>
+        <button>Create Project</button>
+      </div>
+      <ProjectsIndex/>
+    </div>
   )
 }
 

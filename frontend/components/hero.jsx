@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import Logo from './logo';
 import { login } from '../actions/session_actions';
+import Logo from './util/logo';
 
 class Hero extends React.Component {
   constructor(props) {

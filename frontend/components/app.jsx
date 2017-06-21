@@ -2,9 +2,9 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import { AuthRoute } from '../util/route_util';
 import Home from './home';
-import Login from './login_form';
-import SignUp from './sign_up_form';
-import LoggedOut from './logout';
+import Login from './session/login_form';
+import SignUp from './session/sign_up_form';
+import LoggedOut from './session/logout';
 
 const App = () => (
   <div>

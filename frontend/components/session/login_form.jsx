@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { login, clearErrors } from '../actions/session_actions';
-import Header from './header';
-import ErrorMsg from './error';
+import { login, clearErrors } from '../../actions/session_actions';
+import Header from '../util/header';
+import ErrorMsg from '../util/error';
 
 class LoginForm extends React.Component{
   constructor(props) {

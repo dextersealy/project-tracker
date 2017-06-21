@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { signup, clearErrors, reportErrors } from '../actions/session_actions';
-import Header from './header';
-import ErrorMsg from './error';
+import { signup, clearErrors, reportErrors } from '../../actions/session_actions';
+import Header from '../util/header';
+import ErrorMsg from '../util/error';
 
 class SignUpForm extends React.Component{
   constructor(props) {
