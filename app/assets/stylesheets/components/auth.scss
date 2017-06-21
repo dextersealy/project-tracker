@@ -1,0 +1,71 @@
+body.signup {
+  background-color: $color-signup-background
+}
+
+.auth-form {
+  width: 50%;
+  margin: 40px auto;
+  background: white;
+  border: 1px solid lightgrey;
+  border-radius: 4px;
+
+  h2 {
+    margin-top: 10pt;
+    font-size: 16pt;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  form {
+    margin: 20px;
+  }
+
+  label {
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 2px;
+    color: black;
+  }
+
+  input {
+    width: 100%;
+    font-size: 16pt;
+    padding: 5px 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+
+    &:last-of-type {
+      margin-bottom: 10px;
+    }
+  }
+
+  button, .button {
+    display: block;
+    margin: 10px auto;
+    padding: 5px 10px;
+    border: 0;
+    border-radius: $button-border-radius;
+    background-color: $button-background;
+    color: $button-color;
+    font-family: $button-font-family;
+    font-weight: $button-font-weight;
+    font-size: 12pt;
+    text-align: center;
+  }
+
+  .redirect {
+    display: flex;
+    margin: 20px;
+  }
+
+  .redirect span {
+    display: block;
+    padding-right: 5px;
+  }
+
+  a {
+    color: blue;
+    text-decoration: underline;
+  }
+
+}

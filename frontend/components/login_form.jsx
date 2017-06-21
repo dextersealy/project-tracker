@@ -42,7 +42,7 @@ class LoginForm extends React.Component{
     return (
       <div>
         <Header />
-        <section className='session-form'>
+        <section className='auth-form'>
           <h2>Sign In</h2>
           <form>
             <label htmlFor='email'>Email:</label>

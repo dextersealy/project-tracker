@@ -52,7 +52,7 @@ class SignUpForm extends React.Component{
     return (
       <div>
         <Header />
-        <section className='session-form'>
+        <section className='auth-form'>
           <h2>Sign Up</h2>
           <form onSubmit={this.handleSubmit}>
             <label htmlFor='name'>Name:</label>
