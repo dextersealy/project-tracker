@@ -17,8 +17,7 @@ class Project < ApplicationRecord
     through: :memberships,
     source: :user
 
-  def owners
-    self.members
-  end
+  has_many :ownerships, -> { owned }, class_name: 'Membership'
+  has_many :owners, through: :ownerships, source: :user
 
 end

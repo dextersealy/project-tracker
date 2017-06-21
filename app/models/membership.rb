@@ -18,4 +18,6 @@ class Membership < ApplicationRecord
 
   belongs_to :user
   belongs_to :project
+
+  scope :owned, -> { where(role: 'owner') }
 end
