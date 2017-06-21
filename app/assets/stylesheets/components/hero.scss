@@ -1,7 +1,3 @@
-// body {
-//   height: 100%;
-// }
-
 .hero {
   display: flex;
   flex-direction: column;
@@ -45,28 +41,25 @@
   width: 100%;
   top: 100%;
   position: absolute;
-  background: $color-signup-background;
-}
-
-.hero-text {
-  font-weight: bold;
-  text-align: center;
-  color: white;
-  text-shadow: -1px 0 grey, 0 1px grey, 1px 0 grey, 0 -1px grey;
+  background: $color-auth-background;
 }
 
 .hero-headline {
-  position: absolute;
-  top: 20%;
+  color: white;
+  font-size: 70px;
+  font-weight: bold;
   margin-left: 10%;
   margin-right: 10%;
-  font-size: 70px;
+  position: absolute;
+  text-align: center;
+  text-shadow: -1px 0 grey, 0 1px grey, 1px 0 grey, 0 -1px grey;
+  top: 20%;
 }
 
 .hero-tagline {
+  font-size: 40px;
   position: absolute;
   top: 110%;
-  font-size: 40px;
 }
 
 .hero-action {
