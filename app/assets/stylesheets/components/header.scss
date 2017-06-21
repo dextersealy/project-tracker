@@ -5,13 +5,8 @@ header {
   padding: $header-padding;
 }
 
-logo {
-  background: white;
-  height: 40px;
-  width: 40px;
-}
-
-.button, button {
+header .button,
+header button {
   display: block;
   margin: 0 10px 0 0;
   padding: 5px 10px;

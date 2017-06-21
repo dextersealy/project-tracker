@@ -1,0 +1,93 @@
+// body {
+//   height: 100%;
+// }
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  height: 667px;
+  width: auto;
+  background-image: image-url('hero.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+.hero .button {
+  display: block;
+  margin: 0 10px 0 0;
+  padding: 5px 10px;
+  border: 0;
+  border-radius: $button-border-radius;
+  background-color: orange;
+  color: $button-color;
+  font-family: $button-font-family;
+  font-size: 12pt;
+  text-align: center;
+  text-shadow: 0;
+
+  &:hover {
+    background-color: darkorange;
+  }
+}
+
+.hero-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid white;
+}
+
+.hero-footer {
+  border-top: 2px solid orange;
+  width: 100%;
+  top: 100%;
+  position: absolute;
+  background: $color-signup-background;
+}
+
+.hero-text {
+  font-weight: bold;
+  text-align: center;
+  color: white;
+  text-shadow: -1px 0 grey, 0 1px grey, 1px 0 grey, 0 -1px grey;
+}
+
+.hero-headline {
+  position: absolute;
+  top: 20%;
+  margin-left: 10%;
+  margin-right: 10%;
+  font-size: 70px;
+}
+
+.hero-tagline {
+  position: absolute;
+  top: 110%;
+  font-size: 40px;
+}
+
+.hero-action {
+  font-size: 20px;
+  font-weight: normal;
+  text-shadow: none;
+
+  .button {
+    width: 200px;
+    margin: 20px auto;
+    padding: 15px;
+  }
+
+  p {
+    color: black;
+    font-size: 16px;
+    margin: 10px;
+    a {
+      color: blue;
+      text-decoration: underline;
+    }
+  }
+
+}

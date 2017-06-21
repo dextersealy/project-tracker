@@ -1,0 +1,17 @@
+logo {
+  display: flex;
+}
+
+.logo-image {
+  display: block;
+  height: 40px;
+  width: 40px;
+}
+
+logo p {
+  font-family: 'Slabo', serif;
+  font-size: 20pt;
+  font-weight: bold;
+  color: white;
+  margin-top: 5px;
+}

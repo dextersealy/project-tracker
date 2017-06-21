@@ -26,12 +26,7 @@ class Greeting extends React.Component {
         </div>
       );
     } else {
-      return (
-        <div className='greeting'>
-          <Link className='button' to='/login'>Sign In</Link>
-          <Link className='button' to='/signup'>Sign Up</Link>
-        </div>
-      );
+      return null;
     }
   }
 }

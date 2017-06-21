@@ -33,6 +33,15 @@ body.signup {
 .session-form .button {
   display: block;
   margin: 10px auto;
+  padding: 5px 10px;
+  border: 0;
+  border-radius: $button-border-radius;
+  background-color: $button-background;
+  color: $button-color;
+  font-family: $button-font-family;
+  font-weight: $button-font-weight;
+  font-size: 12pt;
+  text-align: center;
 }
 
 .redirect {

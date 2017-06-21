@@ -1,4 +1,5 @@
 import React from 'react'
+import Logo from './logo';
 import Greeting from './greeting';
 
 class Header extends React.Component {
@@ -6,10 +7,8 @@ class Header extends React.Component {
   render() {
     return (
       <header>
-        <logo>
-          <img src={window.images.logo} alt="Project Tracker logo"/>
-        </logo>
-        <Greeting />
+        <Logo/>
+        <Greeting/>
       </header>
     );
   }

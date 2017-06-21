@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { login, clearErrors } from '../actions/session_actions';
+import Header from './header';
 
 class LoginForm extends React.Component{
   constructor(props) {
@@ -39,20 +40,23 @@ class LoginForm extends React.Component{
     const errors = this.props.errors.map((error, idx) => <li key={idx}>{error}</li>);
     const {email, password} = this.state;
     return (
-      <section className='session-form'>
-        <h2>Sign In</h2>
-        <form>
-          <label htmlFor='email'>Email:</label>
-          <input id='email' onChange={this.handleChange('email')} value={email}/>
-          <label htmlFor='password'>Password:</label>
-          <input type='password' id='password' onChange={this.handleChange('password')} value={password}/>
-          <button onClick={this.handleSubmit}>Sign In</button>
-          <ul>{errors}</ul>
-        </form>
-        <div className='redirect'>
-          <span>New user?</span><Link to='/signup'>Sign Up</Link>
-        </div>
-      </section>
+      <div>
+        <Header />
+        <section className='session-form'>
+          <h2>Sign In</h2>
+          <form>
+            <label htmlFor='email'>Email:</label>
+            <input id='email' onChange={this.handleChange('email')} value={email}/>
+            <label htmlFor='password'>Password:</label>
+            <input type='password' id='password' onChange={this.handleChange('password')} value={password}/>
+            <button onClick={this.handleSubmit}>Sign In</button>
+            <ul>{errors}</ul>
+          </form>
+          <div className='redirect'>
+            <span>New user?</span><Link to='/signup'>Sign Up</Link>
+          </div>
+        </section>
+      </div>
     );
   }
 }
