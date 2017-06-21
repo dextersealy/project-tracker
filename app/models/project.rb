@@ -16,4 +16,9 @@ class Project < ApplicationRecord
   has_many :members,
     through: :memberships,
     source: :user
+
+  def owners
+    self.members
+  end
+
 end
