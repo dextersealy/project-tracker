@@ -45,11 +45,11 @@ class LoginForm extends React.Component{
         <section className='auth-form'>
           <h2>Sign In</h2>
           <form>
-            <ErrorMsg msg={this.props.errors[0]}/>
             <label htmlFor='email'>Email:</label>
             <input id='email' onChange={this.handleChange('email')} value={email}/>
             <label htmlFor='password'>Password:</label>
             <input type='password' id='password' onChange={this.handleChange('password')} value={password}/>
+            <ErrorMsg msg={this.props.errors[0]}/>
             <button onClick={this.handleSubmit}>Sign In</button>
           </form>
           <div className='redirect'>

@@ -10,7 +10,7 @@ body.signup {
   border-radius: 4px;
 
   h2 {
-    margin-top: 10pt;
+    margin-top: 20px;
     font-size: 16pt;
     font-weight: bold;
     text-align: center;
@@ -33,28 +33,21 @@ body.signup {
     padding: 5px 10px;
     border: 1px solid lightgray;
     border-radius: 4px;
-
-    &:last-of-type {
-      margin-bottom: 10px;
-    }
-
-    &.error {
-      border-color: red;
-    }
   }
 
   div.error {
+    color: grey;
     background-color: rgba(255, 0, 0, 0.02);
     border: 1px solid red;
     border-radius: 2px;
-    padding: 5px;
-    color: grey;
     font-size: 10pt;
+    margin-top: 10px;
+    padding: 5px;
   }
 
   button, .button {
     display: block;
-    margin: 10px auto;
+    margin: 15px auto;
     padding: 5px 10px;
     border: 0;
     border-radius: $button-border-radius;

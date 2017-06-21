@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { signup, clearErrors, reportErrors } from '../actions/session_actions';
 import Header from './header';
+import ErrorMsg from './error';
 
 class SignUpForm extends React.Component{
   constructor(props) {
@@ -47,7 +48,17 @@ class SignUpForm extends React.Component{
   }
 
   render() {
-    const errors = this.props.errors.map((error, idx) => <li key={idx}>{error}</li>);
+    const errors = {};
+    this.props.errors.forEach(msg => {
+      if (msg.match(/name/i)) {
+        errors.name = msg;
+      } else if (msg.match(/email/i)) {
+        errors.email = msg;
+      } else if (msg.match(/password/i)) {
+        errors.password = msg;
+      }
+    });
+
     const {name, email, password, confirm_password} = this.state;
     return (
       <div>
@@ -57,14 +68,16 @@ class SignUpForm extends React.Component{
           <form onSubmit={this.handleSubmit}>
             <label htmlFor='name'>Name:</label>
             <input id='name' onChange={this.handleChange('name')} value={name}/>
+            <ErrorMsg msg={errors.name}/>
             <label htmlFor='email'>Email:</label>
             <input id='email' onChange={this.handleChange('email')} value={email}/>
+            <ErrorMsg msg={errors.email}/>
             <label htmlFor='password'>Password:</label>
             <input type='password' id='password' onChange={this.handleChange('password')} value={password}/>
+            <ErrorMsg msg={errors.password}/>
             <label htmlFor='confirm_password'>Confirm password:</label>
             <input type='password' id='confirm_password' onChange={this.handleChange('confirm_password')} value={confirm_password}/>
             <button>Sign Up</button>
-            <ul>{errors}</ul>
           </form>
           <div className='redirect'>
             <span>Already have an account?</span><Link to='/login'>Sign In</Link>
