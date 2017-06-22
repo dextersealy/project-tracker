@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import session from './session_reducer';
-import projects from './projects_reducer';
+import projects from './project_reducer';
 
 const rootReducer = combineReducers({
   session,

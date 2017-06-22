@@ -1,12 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
-import Dashboard from './dashboard';
+import { Redirect } from 'react-router-dom';
 import Hero from './hero';
 
 const Home = ({loggedIn}) => {
   if (loggedIn) {
-    return <Dashboard />
+    return <Redirect to='/projects'/>
   } else {
     return <Hero />
   }

@@ -17,7 +17,7 @@ body.dash {
       margin-top: 10px;
     }
 
-    button {
+    button, .button {
       background-color: forestgreen;
       border: 0;
       border-radius: 5px;
@@ -33,6 +33,8 @@ body.dash {
     display: flex;
     padding: 20px;
     font-size: 14px;
+    flex-wrap: wrap;
+    height: 100%;
 
     .item {
       background-color: white;
@@ -40,7 +42,9 @@ body.dash {
       border-radius: 5px;
       display: flex;
       flex-direction: column;
+      justify-content: space-between;
       margin-right: 10px;
+      margin-bottom: 10px;
       padding: 10px;
       width: 200px;
 
@@ -58,7 +62,7 @@ body.dash {
       background-color: dodgerblue;
       border-radius: 5px;
       color: white;
-      padding: 10px;
+      padding: 5px 10px;
       &:hover {
         background-color: darken(dodgerblue, 10%);
       }

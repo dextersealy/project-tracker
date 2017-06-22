@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { login, clearErrors } from '../../actions/session_actions';
 import Header from '../util/header';
 import ErrorMsg from '../util/error';
@@ -25,7 +25,7 @@ class LoginForm extends React.Component{
   handleSubmit(e) {
     e.preventDefault();
     const user = Object.assign({}, this.state);
-    this.props.login(user);
+    this.props.login(user).then(() => this.props.history.push('/projects'));
   }
 
   handleChange(field) {
@@ -72,7 +72,7 @@ const mapDispatchToProps = dispatch => ({
   clearErrors: () => dispatch(clearErrors())
 });
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(LoginForm);
+)(LoginForm));

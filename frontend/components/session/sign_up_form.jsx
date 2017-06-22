@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { signup, clearErrors, reportErrors } from '../../actions/session_actions';
 import Header from '../util/header';
 import ErrorMsg from '../util/error';
@@ -29,7 +29,7 @@ class SignUpForm extends React.Component{
       this.props.reportErrors(["Passwords do match"]);
     } else {
       user.initials = this.getInitials(user.name);
-      this.props.signup(user);
+      this.props.signup(user).then(() => this.props.history.push('/projects'));
     }
   }
 
@@ -100,6 +100,7 @@ const mapDispatchToProps = dispatch => ({
   reportErrors: (errors) => dispatch(reportErrors(errors))
 });
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
-  mapDispatchToProps)(SignUpForm);
+  mapDispatchToProps
+)(SignUpForm));

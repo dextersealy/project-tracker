@@ -1,6 +1,8 @@
 import React from 'react'
+import { Link, Route } from 'react-router-dom';
 import Header from './util/header';
-import ProjectsIndex from './projects/projects_index';
+import ProjectIndex from './project/project_index';
+import ProjectForm from './project/project_form';
 
 class Dashboard extends React.Component {
 
@@ -18,9 +20,13 @@ class Dashboard extends React.Component {
         <Header/>
         <div className='heading'>
           <h2>Projects</h2>
-          <button>Create Project</button>
+          <Link className='button' to='/projects/new'>Create Project</Link>
         </div>
-        <ProjectsIndex/>
+        <div className='body'>
+          <ProjectIndex/>
+          <Route path='/projects/new' component={ProjectForm} />
+          <Route path='/projects/edit/:id' component={ProjectForm} />
+        </div>
       </div>
     );
   }
