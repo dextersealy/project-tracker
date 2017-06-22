@@ -10,18 +10,20 @@ const defaultState = {
 
 const SessionReducer = (state = defaultState, action) => {
   Object.freeze(state);
+  let newState = state;
+
   switch (action.type) {
     case RECEIVE_CURRENT_USER:
-      return { currentUser: action.user, errors: [] };
+      newState = { currentUser: action.user, errors: [] };
+      break;
 
     case RECEIVE_ERRORS:
-      const newState = Object.assign({}, state);
+      newState = Object.assign({}, state);
       newState.errors = action.errors;
-      return newState;
-
-    default:
-      return state;
+      break;
   }
+
+  return newState;
 };
 
 export default SessionReducer;

@@ -22,7 +22,7 @@ class Hero extends React.Component {
           <Logo/>
           <div className='greeting'>
             <Link className='button' to='/login'>Sign In</Link>
-            <button onClick={this.handleGuestLogin}>Guest Sign In</button>
+            <button type="button" onClick={this.handleGuestLogin}>Guest Sign In</button>
           </div>
         </div>
         <div className='hero-text'>

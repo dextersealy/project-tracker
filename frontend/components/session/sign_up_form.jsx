@@ -67,7 +67,12 @@ class SignUpForm extends React.Component{
           <h2>Sign Up</h2>
           <form onSubmit={this.handleSubmit}>
             <label htmlFor='name'>Name:</label>
-            <input id='name' onChange={this.handleChange('name')} value={name}/>
+            <input
+              id='name'
+              onChange={this.handleChange('name')}
+              value={name}
+              autoFocus={true}
+              />
             <ErrorMsg msg={errors.name}/>
             <label htmlFor='email'>Email:</label>
             <input id='email' onChange={this.handleChange('email')} value={email}/>
@@ -77,7 +82,7 @@ class SignUpForm extends React.Component{
             <ErrorMsg msg={errors.password}/>
             <label htmlFor='confirm_password'>Confirm password:</label>
             <input type='password' id='confirm_password' onChange={this.handleChange('confirm_password')} value={confirm_password}/>
-            <button>Sign Up</button>
+            <button type='submit'>Sign Up</button>
           </form>
           <div className='redirect'>
             <span>Already have an account?</span><Link to='/login'>Sign In</Link>

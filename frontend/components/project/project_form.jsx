@@ -1,7 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { createProject, updateProject } from '../../actions/project_actions';
+import { clearErrors } from '../../actions/session_actions';
 import { Redirect } from 'react-router-dom';
+import ErrorMsg from '../util/error';
 
 const emptyState = {
   title: '',
@@ -15,6 +17,14 @@ class ProjectsForm extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    this.title.focus();
+  }
+
+  componentWillUnmount() {
+    this.props.clearErrors();
   }
 
   componentWillReceiveProps(newProps) {
@@ -51,6 +61,7 @@ class ProjectsForm extends React.Component {
     }
 
     const {title} = this.state;
+    const errorMsg = this.props.errors[0];
     return (
       <form className='form' onSubmit={this.handleSubmit}>
         <h2>{isNew ? "Create a new project" : "Edit project"}</h2>
@@ -58,13 +69,15 @@ class ProjectsForm extends React.Component {
           <label htmlFor='title'>Project Name</label>
           <input
             id='title'
+            ref={input => this.title = input }
             onChange={this.handleChange("title")}
             placeholder='Enter a name for your project'
             value={title} />
         </div>
+        <ErrorMsg msg={errorMsg}/>
         <div className='form-footer'>
-          <button onClick={this.handleCancel}>Cancel</button>
-          <button>Save</button>
+          <button type="button" onClick={this.handleCancel}>Cancel</button>
+          <button type='submit'>Save</button>
         </div>
       </form>
     );
@@ -74,13 +87,20 @@ class ProjectsForm extends React.Component {
 const mapStateToProps = (state, ownProps) => {
   const id = ownProps.match.params.id;
   const project = state.projects[id];
-  return { project: project ? project : {} };
+  return {
+    project: project ? project : {},
+    errors: state.session.errors,
+  };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   const isNew = Boolean(ownProps.match.path.match(/new/));
   const callback = isNew ? createProject : updateProject;
-  return { isNew, submit: (project) => dispatch(callback(project)) };
+  return {
+    isNew,
+    submit: project => dispatch(callback(project)),
+    clearErrors: () => dispatch(clearErrors()),
+  };
 }
 
 export default connect(

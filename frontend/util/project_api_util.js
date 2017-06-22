@@ -15,3 +15,10 @@ export const updateProject = project => {
     data: { project },
   });
 }
+
+export const deleteProject = project => {
+  return $.ajax({
+    method: 'DELETE',
+    url: `/api/projects/${project.id}`
+  });
+}

@@ -23,7 +23,7 @@ class Header extends React.Component {
         { this.props.user &&
           <div className='greeting'>
             <p className='name'>{`${user.name}`}</p>
-            <button onClick={this.handleLogout}>Sign Out</button>
+            <button type='submit' onClick={this.handleLogout}>Sign Out</button>
           </div>
         }
       </header>

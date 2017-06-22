@@ -7,32 +7,40 @@ class ProjectsController < ApplicationController
 
   def create
     @project = Project.new(project_params)
-    if save_and_set_owner(@project)
-      render :show
-    else
-      render json: @project.errors.full_messages, status: 422
-    end
+    do_action { save_and_set_owner(@project) }
   end
 
   def update
     @project = current_user.projects.find(params[:id])
-    if @project.owners.include?(current_user)
-      if @project.update(project_params)
-        render :show
-      else
-        render json: @project.errors.full_messages, status: 422
-      end
-    else
-      render json: ["not authorized"], status: 422
-    end
+    do_action { @project.update(project_params) }
+  end
+
+  def destroy
+    @project = current_user.projects.find(params[:id])
+    do_action { @project.destroy }
   end
 
   private
 
   def require_login
-    unless logged_in?
-      render json: [], status: 401
+    render json: [], status: 401 unless logged_in?
+  end
+
+  def do_action(&prc)
+    if is_admin?(@project)
+      if prc.call
+        render :show
+      else
+        render json: @project.errors.full_messages, status: 422
+      end
+    else
+      render json: ["Permission denied"], status: 422
     end
+  end
+
+  def is_admin?(project)
+    return true unless project.persisted?
+    project.owners.include?(current_user)
   end
 
   def save_and_set_owner(project)
