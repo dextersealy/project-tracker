@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 
 const ProjectsIndexItem = ({project}) => {
   return (
-    <li>
-      <Link className='project-title' to={`/project/${project.id}`}>
+    <li className='item'>
+      <Link className='title' to={`/project/${project.id}`}>
         {project.title}
       </Link>
-      <div className='project-controls'>
+      <div className='controls'>
         <Link className='button' to={`/edit_project/${project.id}`}>Edit</Link>
       </div>
     </li>

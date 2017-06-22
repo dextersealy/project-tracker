@@ -14,7 +14,7 @@ class ProjectsIndex extends React.Component {
       project => <ProjectsIndexItem key={project.id} project={project} />
     );
     return (
-      <ul>{projects}</ul>
+      <ul className='index'>{projects}</ul>
     );
   }
 };
