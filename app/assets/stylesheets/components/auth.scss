@@ -35,27 +35,8 @@ body.auth {
     border-radius: 4px;
   }
 
-  div.error {
-    color: grey;
-    background-color: rgba(255, 0, 0, 0.02);
-    border: 1px solid red;
-    border-radius: 2px;
-    font-size: 10pt;
-    margin-top: 10px;
-    padding: 5px;
-  }
-
   button, .button {
-    display: block;
     margin: 15px auto;
-    padding: 5px 10px;
-    border-radius: $button-border-radius;
-    background-color: $button-background;
-    color: $button-color;
-    font-family: $button-font-family;
-    font-weight: $button-font-weight;
-    font-size: 12pt;
-    text-align: center;
   }
 
   .redirect {

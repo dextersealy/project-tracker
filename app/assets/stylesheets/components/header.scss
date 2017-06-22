@@ -5,27 +5,9 @@ header {
   padding: $header-padding;
 }
 
-header .button,
-header button {
-  display: block;
-  margin: 0 10px 0 0;
-  padding: 5px 10px;
-  border-radius: $button-border-radius;
-  background-color: $button-background;
-  color: $button-color;
-  font-family: $button-font-family;
-  font-weight: $button-font-weight;
-  font-size: 12pt;
-  text-align: center;
-}
-
 .greeting {
   display: flex;
   padding:5px 0 10px 0;
-
-  .button:last-child {
-    margin-right: 0;
-  }
 
   .name {
     display: block;

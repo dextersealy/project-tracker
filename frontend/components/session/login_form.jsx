@@ -55,7 +55,11 @@ class LoginForm extends React.Component{
             <label htmlFor='password'>Password:</label>
             <input type='password' id='password' onChange={this.handleChange('password')} value={password}/>
             <ErrorMsg msg={this.props.errors[0]}/>
-            <button type='submit' onClick={this.handleSubmit}>Sign In</button>
+            <button
+              type='submit'
+              disabled={!(this.state.email && this.state.password)}
+              onClick={this.handleSubmit}
+              >Sign In</button>
           </form>
           <div className='redirect'>
             <span>New user?</span><Link to='/signup'>Sign Up</Link>

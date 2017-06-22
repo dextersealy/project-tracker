@@ -19,8 +19,6 @@ body.dash {
 
     button, .button {
       background-color: forestgreen;
-      border-radius: 5px;
-      color: white;
       padding: 10px;
       &:hover {
         background-color: darken(forestgreen, 10%);
@@ -32,18 +30,6 @@ body.dash {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-
-    button, .button {
-      background-color: dodgerblue;
-      border-radius: 5px;
-      color: white;
-      margin-right: 10px;
-      padding: 5px 10px;
-
-      &:hover {
-        background-color: darken(dodgerblue, 10%);
-      }
-    }
 
     .index {
       display: flex;

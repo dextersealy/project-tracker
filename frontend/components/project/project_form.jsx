@@ -77,7 +77,7 @@ class ProjectsForm extends React.Component {
         <ErrorMsg msg={errorMsg}/>
         <div className='form-footer'>
           <button type="button" onClick={this.handleCancel}>Cancel</button>
-          <button type='submit'>Save</button>
+          <button type='submit' disabled={!this.state.title}>Save</button>
         </div>
       </form>
     );

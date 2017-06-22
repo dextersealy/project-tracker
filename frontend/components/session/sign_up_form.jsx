@@ -59,6 +59,9 @@ class SignUpForm extends React.Component{
       }
     });
 
+    const disabled = !Boolean(this.state.name && this.state.email && 
+      this.state.password && this.state.confirm_password);
+
     const {name, email, password, confirm_password} = this.state;
     return (
       <div>
@@ -82,7 +85,7 @@ class SignUpForm extends React.Component{
             <ErrorMsg msg={errors.password}/>
             <label htmlFor='confirm_password'>Confirm password:</label>
             <input type='password' id='confirm_password' onChange={this.handleChange('confirm_password')} value={confirm_password}/>
-            <button type='submit'>Sign Up</button>
+            <button type='submit' disabled={disabled}>Sign Up</button>
           </form>
           <div className='redirect'>
             <span>Already have an account?</span><Link to='/login'>Sign In</Link>
