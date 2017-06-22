@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link, Route } from 'react-router-dom';
-import Header from './util/header';
-import ProjectIndex from './project/project_index';
-import ProjectForm from './project/project_form';
+import Header from '../util/header';
+import ProjectIndex from './project_index';
+import ProjectForm from './project_form';
 
 class Dashboard extends React.Component {
 

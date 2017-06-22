@@ -18,7 +18,7 @@ class ProjectIndexItem extends React.Component {
     const { project } = this.props;
     return (
       <li className='item'>
-        <Link className='title' to={`/projects/${project.id}`}>
+        <Link className='title' to={`/project/${project.id}`}>
           {project.title}
         </Link>
         <div className='controls'>

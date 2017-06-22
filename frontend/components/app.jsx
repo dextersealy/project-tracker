@@ -2,18 +2,20 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import { AuthRoute, ProtectedRoute } from '../util/route_util';
 import Home from './home';
-import Dashboard from './dashboard';
-import Login from './session/login_form';
-import SignUp from './session/sign_up_form';
-import LoggedOut from './session/logout';
+import Dashboard from './dashboard/dashboard';
+import Project from './project/project';
+import Login from './session/login';
+import SignUp from './session/signup';
+import LogOut from './session/logout';
 
 const App = () => (
   <div>
     <Route exact path='/' component={Home} />
     <AuthRoute path='/login' component={Login} />
     <AuthRoute path='/signup' component={SignUp} />
-    <AuthRoute path='/logout' component={LoggedOut} />
+    <AuthRoute path='/logout' component={LogOut} />
     <ProtectedRoute path='/projects' component={Dashboard} />
+    <ProtectedRoute path='/project/:id' component={Project} />
   </div>
 );
 
