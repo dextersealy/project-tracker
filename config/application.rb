@@ -16,3 +16,5 @@ module ProjectTracker
     # -- all .rb files in that directory are automatically loaded.
   end
 end
+
+require_relative './initializers/version'
