@@ -6,11 +6,18 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-if !User.find_by(email: 'dsealy@alum.mit.edu')
-  User.create!({
-    name: "Guest User",
-    email: 'dsealy@alum.mit.edu',
-    initials: 'GU',
-    password: 'password'
+
+user = User.find_or_create_by(email: 'dsealy@alum.mit.edu') do |user|
+  user.name =  "Guest User"
+  user.initials = 'GU',
+  user.password = 'password'
+end
+
+if !Project.find_by(title: "My Project")
+  project = Project.create!({ title: "My Project" });
+  Membership.create!({
+    user: user,
+    project: project,
+    role: 'owner'
   })
 end
