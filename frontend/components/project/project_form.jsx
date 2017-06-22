@@ -39,7 +39,7 @@ class ProjectsForm extends React.Component {
 
   handleCancel(e) {
     e.preventDefault();
-    this.props.history.goBack();
+    this.props.history.push('/projects');
   }
 
   render() {
@@ -52,15 +52,17 @@ class ProjectsForm extends React.Component {
 
     const {title} = this.state;
     return (
-      <form className='project-form' onSubmit={this.handleSubmit}>
-        <h2>{isNew ? "Create New Project" : "Edit Project"}</h2>
-        <div className='project-form-body'>
+      <form className='form' onSubmit={this.handleSubmit}>
+        <h2>{isNew ? "Create a new project" : "Edit project"}</h2>
+        <div className='form-body'>
+          <label htmlFor='title'>Project Name</label>
           <input
+            id='title'
             onChange={this.handleChange("title")}
-            placeholder='project title'
+            placeholder='Enter a name for your project'
             value={title} />
         </div>
-        <div className='project-form-footer'>
+        <div className='form-footer'>
           <button onClick={this.handleCancel}>Cancel</button>
           <button>Save</button>
         </div>

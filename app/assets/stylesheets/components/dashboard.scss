@@ -19,7 +19,6 @@ body.dash {
 
     button, .button {
       background-color: forestgreen;
-      border: 0;
       border-radius: 5px;
       color: white;
       padding: 10px;
@@ -29,43 +28,95 @@ body.dash {
     }
   }
 
-  .index {
+  .body {
     display: flex;
-    padding: 20px;
-    font-size: 14px;
-    flex-wrap: wrap;
-    height: 100%;
-
-    .item {
-      background-color: white;
-      border: 1px solid lightgrey;
-      border-radius: 5px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      margin-right: 10px;
-      margin-bottom: 10px;
-      padding: 10px;
-      width: 200px;
-
-      .controls {
-        display: flex;
-        margin-top: 10px;
-      }
-    }
-
-    a {
-      color: grey;
-    }
+    flex-direction: row;
+    justify-content: space-between;
 
     button, .button {
       background-color: dodgerblue;
       border-radius: 5px;
       color: white;
+      margin-right: 10px;
       padding: 5px 10px;
+
       &:hover {
         background-color: darken(dodgerblue, 10%);
       }
     }
+
+    .index {
+      display: flex;
+      padding: 20px;
+      font-size: 14px;
+      flex-wrap: wrap;
+      height: 100%;
+
+      .item {
+        background-color: white;
+        border: 1px solid lightgrey;
+        border-radius: 5px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        padding: 10px;
+        width: 200px;
+
+        .title {
+          color: darken(grey, 20%);
+        }
+
+        .controls {
+          display: flex;
+          margin-top: 10px;
+        }
+      }
+    }
+
+    form {
+
+      margin-top: 20px;
+      margin-right: 20px;
+      margin-left: -10px;
+      border: 1px solid lightgrey;
+      background-color: darken($color-dashboard, 5%);
+
+      h2 {
+        background: white;
+        color: darken(grey, 20%);
+        font-size: 20px;
+        padding: 20px;
+      }
+
+      .form-body {
+        border-top: 1px solid lightgrey;
+      }
+
+      label {
+        display: block;
+        font-size: 14px;
+        font-weight: bold;
+        color: grey;
+        margin: 20px 10px 10px 20px;
+      }
+
+      input {
+        border: 1px solid lightgrey;
+        box-shadow: 0px 0px 1px 1px dodgerblue;
+        box-sizing: border-box;
+        color: lighten(black, 10%);
+        margin: 0 20px 20px 20px;
+        padding: 5px 10px;
+        width: 300px;
+      }
+
+      .form-footer {
+        display: flex;
+        margin: 0 20px 20px 20px;
+      }
+    }
+
   }
 }
