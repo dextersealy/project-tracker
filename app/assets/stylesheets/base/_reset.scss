@@ -41,9 +41,9 @@ button {
   appearance: none;
 }
 
-button,
+button, .button,
 input[type="submit"] {
-  // cursor:
+  cursor: pointer;
 }
 
 /* Clearfix */
