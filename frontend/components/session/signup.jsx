@@ -26,10 +26,11 @@ class SignUpForm extends React.Component{
 
   handleSubmit(e) {
     e.preventDefault();
-    const user = this.state;
+    const user = Object.assign({}, this.state);
     if (user.password !== user.confirm_password) {
       this.props.reportError("Passwords do match");
     } else {
+      delete user.confirm_password;
       user.initials = this.getInitials(user.name);
       this.props.signup(user).then(() => this.props.history.push('/projects'));
     }
