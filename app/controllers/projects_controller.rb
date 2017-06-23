@@ -27,7 +27,7 @@ class ProjectsController < ApplicationController
   end
 
   def do_action(&prc)
-    if is_admin?(@project)
+    if owner?(@project)
       if prc.call
         render :show
       else
@@ -38,9 +38,9 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def is_admin?(project)
+  def owner?(project)
     return true unless project.persisted?
-    project.owners.include?(current_user)
+    project.owner?(current_user)
   end
 
   def save_and_set_owner(project)

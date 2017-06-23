@@ -21,4 +21,17 @@ class Project < ApplicationRecord
   has_many :owners, through: :ownerships, source: :user
 
   has_many :stories
+
+  def owner?(user)
+    role(user) == "owner"
+  end
+
+  def member?(user)
+    %w(owner member).include?(role(user))
+  end
+
+  def role(user)
+    membership = memberships.find_by(user: user)
+    membership ? membership.role : nil
+  end
 end
