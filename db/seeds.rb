@@ -41,9 +41,9 @@ stories = [
 ]
 
 stories.each do |story|
-  next if Story.find_by({ project: project, title: story[:title] })
-  Story.create!({
-    project: project, author: user, owner: user, title: story[:title],
-    description: story[:description].gsub(/\s+/, " ")
+  story = Story.find_or_create_by({ project: project, title: story[:title] })
+  story.update!({
+    author: user, owner: user,
+    description: story[:description].gsub(/\s+/, " ").strip
   })
 end
