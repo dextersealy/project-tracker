@@ -2,7 +2,7 @@ import { RECEIVE_ERRORS } from '../actions/error_actions';
 
 const defaultState = [];
 
-const ErrorReducer = (state = defaultState, action) => {
+const ErrorsReducer = (state = defaultState, action) => {
   switch (action.type) {
     case RECEIVE_ERRORS:
       return action.errors;
@@ -11,4 +11,4 @@ const ErrorReducer = (state = defaultState, action) => {
   }
 };
 
-export default ErrorReducer;
+export default ErrorsReducer;
