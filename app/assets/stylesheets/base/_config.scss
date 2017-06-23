@@ -1,26 +1,16 @@
-$bold-weight: 700;
-
-$color-brand: #38A3DC;
-$color-brand-accent-dark: #214254;
-$color-brand-accent-light: #3851DC;
-
-$color-auth: #f3f4f4;
-
-$color-dashboard: #f3f4f4;
-$color-dashboard-heading: white;
-
-$button-margin: 0 5px 0 0;
-$button-padding: 5px;
-$button-border-radius: 8px;
-$button-background: grey;
-$button-color: white;
-$button-font-family: sans-serif;
-$button-font-weight: $bold-weight;
-
-$header-height: 100px;
-$header-padding: 10px;
-$header-background-color: $color-brand-accent-dark;
+html {
+  height: calc(100% - 70px)
+}
 
 body {
   font-family: sans-serif;
+  height: 100%;
+}
+
+main {
+  height: 100%
+}
+
+main > div {
+  height: 100%
 }

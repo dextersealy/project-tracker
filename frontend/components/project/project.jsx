@@ -3,7 +3,8 @@ import Header from '../util/header';
 import { connect } from 'react-redux';
 import { fetchProject } from '../../actions/project_actions';
 import { currentProject, currentStories } from '../../selectors/project';
-import StoryIndex from '../story/story_index';
+import NavPanel from './nav_panel'
+import StoryPanel from '../story/story_panel'
 
 class Project extends React.Component {
   constructor(props) {
@@ -20,7 +21,10 @@ class Project extends React.Component {
     return (
       <div className="project">
         <Header/>
-        <StoryIndex stories={stories}/>
+        <div className='content'>
+          <NavPanel/>
+          <StoryPanel title={'Current iteration/backlog'} stories={stories} />
+        </div>
       </div>
     );
   }

@@ -1,5 +1,80 @@
 .project {
+  position: relative;
+  height: 100%;
+
   header {
-    background-color: $color-brand-accent-light;
+    background-color: #3E7293;
+    p {
+      font-weight: normal;
+    }
+  }
+
+  .content {
+    display: flex;
+    background-color: #212121;
+    height: 100%;
+  }
+
+  .panel {
+    background-color: #484F57;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    height: 100%;
+    margin-left: 5px;
+    width: 300px;
+  }
+
+  .nav.panel {
+    width: 200px;
+
+    ul {
+      height: 100%;
+      background-color: #2f3337;
+      border-top: 1px solid #393a3c;
+    }
+
+    li {
+      color: #8ac5ff;
+      font-size: 12px;
+      font-weight: normal;
+      margin-left: 10px;
+      padding: 8px 8px 8px 10px;
+
+      &:first-child {
+        margin: 10px;
+        background-color: #3e7293;
+        color: white;
+        border-radius: 4px;
+      }
+    }
+  }
+
+  .header {
+    align-items: center;
+    background: #2c2d2f;
+    border-top: 1px solid #393a3c;
+    display: flex;
+    height: 40px;
+    padding: 5px;
+    width: 100%;
+
+    p {
+      color: white;
+      font-size: 10pt;
+      font-weight: normal;
+      margin-left: 20px;
+    }
+  }
+
+  .item {
+    background-color: #f3f3d1;
+    border-top: 1px solid white;
+    border-bottom: 1px solid lightgrey;
+    padding: 5px;
+    font-size: 10pt;
+
+    &:hover {
+      background-color: darken(#f3f3d1, 5%)
+    }
   }
 }

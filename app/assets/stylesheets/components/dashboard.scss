@@ -1,11 +1,11 @@
 body.dash {
-  background-color: $color-dashboard;
+  background-color: #f3f4f4;
 }
 
 .dashboard {
 
   .heading {
-    background-color: $color-dashboard-heading;
+    background-color: white;
     border-bottom: 1px solid lightgrey;
     display: flex;
     justify-content: space-between;
@@ -67,7 +67,7 @@ body.dash {
       margin-right: 20px;
       margin-left: -10px;
       border: 1px solid lightgrey;
-      background-color: darken($color-dashboard, 5%);
+      background-color: darken(#f3f4f4, 5%);
 
       h2 {
         background: white;

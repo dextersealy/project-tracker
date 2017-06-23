@@ -18,13 +18,7 @@ class StoryIndexItem extends React.Component {
     const { story } = this.props;
     return (
       <li className='item'>
-        <Link className='title' to={`/story/${story.id}`}>
-          {story.title}
-        </Link>
-        <div className='controls'>
-          <Link className='button' to={`/storys/edit/${story.id}`}>Edit</Link>
-          <button type="button" onClick={this.handleDelete}>Delete</button>
-        </div>
+        <div className='title'>{story.title}</div>
       </li>
     );
   }
