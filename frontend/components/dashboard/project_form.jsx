@@ -4,6 +4,7 @@ import { Redirect } from 'react-router-dom';
 import * as FormUtil from '../../util/form_util';
 import { createProject, updateProject } from '../../actions/project_actions';
 import { clearErrors } from '../../actions/error_actions';
+import { currentProject } from '../../selectors/project';
 import ErrorMsg from '../util/error';
 
 const emptyState = {
@@ -77,14 +78,10 @@ class ProjectsForm extends React.Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  const id = ownProps.match.params.id;
-  const project = state.projects[id];
-  return {
-    project: project ? project : {},
+const mapStateToProps = (state, ownProps) => ({
+    project: currentProject(state, ownProps, {}),
     errors: state.errors,
-  };
-};
+});
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   const isNew = Boolean(ownProps.match.path.match(/new/));
