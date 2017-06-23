@@ -33,7 +33,7 @@ column name     | data type | details
 project_id | integer | foreign key (projects), indexed
 title | string | not null
 description | text |
-type | string | (*feature*, *bug*, or *release*)
+kind | string | (*feature*, *bug*, *release*, or, *chore*)
 state | string | not null, (*unscheduled*, *pending*, *started*, *finished*, *delivered*, *accepted*, or *rejected*)
 points | integer | *0*, *1*, *2,* *4*, or *8*
 priority | integer | indexed

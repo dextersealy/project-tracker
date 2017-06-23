@@ -20,4 +20,5 @@ class Project < ApplicationRecord
   has_many :ownerships, -> { owned }, class_name: 'Membership'
   has_many :owners, through: :ownerships, source: :user
 
+  has_many :stories
 end
