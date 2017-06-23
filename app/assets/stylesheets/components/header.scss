@@ -3,18 +3,25 @@ header {
   justify-content: space-between;
   background-color: $header-background-color;
   padding: $header-padding;
-}
 
-.greeting {
-  display: flex;
-  padding:5px 0 10px 0;
+  .greeting {
+    display: flex;
+    padding: 5px 0 10px 0;
 
-  .name {
-    display: block;
-    font-size: 10pt;
-    text-transform: uppercase;
-    padding: 8px 10px 5px 0;
-    vertical-align: bottom;
-    color: lightgrey;
+    .name {
+      display: block;
+      font-size: 10pt;
+      text-transform: uppercase;
+      padding: 8px 10px 5px 0;
+      vertical-align: bottom;
+      color: lightgrey;
+    }
+
+    button.guest {
+      background-color: orange;
+      &:hover {
+        background-color: darkorange;
+      }
+    }
   }
 }

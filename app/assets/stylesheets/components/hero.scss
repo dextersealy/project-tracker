@@ -10,29 +10,16 @@
   position: relative;
 
   .button, button {
-    display: block;
-    margin: 0 10px 0 0;
-    padding: 5px 10px;
-    border-radius: $button-border-radius;
     background-color: orange;
-    color: $button-color;
-    font-family: $button-font-family;
-    font-size: 12pt;
-    text-align: center;
-    text-shadow: 0;
-
     &:hover {
       background-color: darkorange;
     }
   }
-}
 
-.hero-header {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px;
-  background-color: rgba(255, 255, 255, 0.2);
-  border-bottom: 1px solid white;
+  header {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-bottom: 1px solid white;
+  }
 }
 
 .hero-footer {
