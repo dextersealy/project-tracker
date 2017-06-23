@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import * as FormUtil from '../../util/form_util';
-import { clearErrors, reportErrors } from '../../actions/error_actions';
+import { clearErrors, reportError } from '../../actions/error_actions';
 import { signup } from '../../actions/session_actions';
 import Header from '../util/header';
 import ErrorMsg from '../util/error';
@@ -26,9 +26,9 @@ class SignUpForm extends React.Component{
 
   handleSubmit(e) {
     e.preventDefault();
-    const user = Object.assign({}, this.state);
+    const user = this.state;
     if (user.password !== user.confirm_password) {
-      this.props.reportErrors(["Passwords do match"]);
+      this.props.reportError("Passwords do match");
     } else {
       user.initials = this.getInitials(user.name);
       this.props.signup(user).then(() => this.props.history.push('/projects'));
@@ -98,7 +98,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
   signup: user => dispatch(signup(user)),
   clearErrors: () => dispatch(clearErrors()),
-  reportErrors: (errors) => dispatch(reportErrors(errors))
+  reportError: (errors) => dispatch(reportError(errors))
 });
 
 export default withRouter(connect(

@@ -6,4 +6,4 @@ export const receiveErrors = errors => ({
 });
 
 export const clearErrors = () => receiveErrors([]);
-export const reportErrors = errors => receiveErrors(errors);
+export const reportError = error => receiveErrors([error]);
