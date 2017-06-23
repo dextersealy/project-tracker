@@ -10,9 +10,10 @@ const receiveProjects = projects => ({
   projects
 });
 
-const receiveProject = project => ({
+const receiveProject = ({project, stories}) => ({
   type: RECEIVE_PROJECT,
-  project
+  project,
+  stories
 });
 
 const receiveDeleteProject = project => ({
@@ -23,6 +24,12 @@ const receiveDeleteProject = project => ({
 export const fetchProjects = () => dispatch => (
   APIUtil.fetchProjects()
     .done(projects => dispatch(receiveProjects(projects)))
+    .fail(errors => dispatch(receiveErrors(errors)))
+);
+
+export const fetchProject = (id) => dispatch => (
+  APIUtil.fetchProject(id)
+    .done(project => dispatch(receiveProject(project)))
     .fail(errors => dispatch(receiveErrors(errors)))
 );
 

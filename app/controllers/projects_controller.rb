@@ -5,6 +5,10 @@ class ProjectsController < ApplicationController
     @projects = current_user.projects
   end
 
+  def show
+    @project = current_user.projects.find(params[:id])
+  end
+
   def create
     @project = Project.new(project_params)
     do_action { save_and_set_owner(@project) }

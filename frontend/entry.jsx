@@ -3,9 +3,6 @@ import ReactDOM from 'react-dom';
 import configureStore from './store/store';
 import Root from './components/root';
 
-import { fetchProjects } from './actions/project_actions';
-import { fetchStories } from './actions/story_actions';
-
 document.addEventListener('DOMContentLoaded', () => {
   let store;
   if (window.currentUser) {
@@ -18,8 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // BEGIN TEST
   window.getState = store.getState;
   window.dispatch = store.dispatch;
-  window.fetchProjects = fetchProjects;
-  window.fetchStories = fetchStories;
   // END TEST
 
   const root = document.getElementById('root');

@@ -1,7 +1,3 @@
-export const fetchStories = project => $.ajax({
-  url: `/api/projects/${project.id}/stories`,
-});
-
 export const createStory = (project, story) => $.ajax({
   method: 'POST',
   url: `/api/projects/${project.id}/stories`,
