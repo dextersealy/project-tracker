@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { createProject, updateProject } from '../../actions/project_actions';
-import { clearErrors } from '../../actions/session_actions';
+import { clearErrors } from '../../actions/error_actions';
 import { Redirect } from 'react-router-dom';
 import ErrorMsg from '../util/error';
 
@@ -89,7 +89,7 @@ const mapStateToProps = (state, ownProps) => {
   const project = state.projects[id];
   return {
     project: project ? project : {},
-    errors: state.session.errors,
+    errors: state.errors,
   };
 };
 

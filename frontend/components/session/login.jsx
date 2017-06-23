@@ -1,11 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
-import { login, clearErrors } from '../../actions/session_actions';
+import { clearErrors } from '../../actions/error_actions';
+import { login } from '../../actions/session_actions';
 import Header from '../util/header';
 import ErrorMsg from '../util/error';
 
-class LoginForm extends React.Component{
+class LoginForm extends React.Component {
   constructor(props) {
 		super(props);
 		this.state = { email: '', password: '' };
@@ -72,7 +73,7 @@ class LoginForm extends React.Component{
 
 const mapStateToProps = state => {
   return ({
-    errors: state.session.errors,
+    errors: state.errors,
   });
 };
 

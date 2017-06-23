@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
-import { signup, clearErrors, reportErrors } from '../../actions/session_actions';
+import { clearErrors, reportErrors } from '../../actions/error_actions';
+import { signup } from '../../actions/session_actions';
 import Header from '../util/header';
 import ErrorMsg from '../util/error';
 
@@ -14,11 +15,11 @@ class SignUpForm extends React.Component{
   }
 
   componentDidMount() {
-    this.props.clearErrors();
     document.body.classList.toggle('auth', true);
   }
 
   componentWillUnmount() {
+    this.props.clearErrors();
     document.body.classList.toggle('auth', false);
   }
 
@@ -59,7 +60,7 @@ class SignUpForm extends React.Component{
       }
     });
 
-    const disabled = !Boolean(this.state.name && this.state.email && 
+    const disabled = !Boolean(this.state.name && this.state.email &&
       this.state.password && this.state.confirm_password);
 
     const {name, email, password, confirm_password} = this.state;
@@ -98,7 +99,7 @@ class SignUpForm extends React.Component{
 
 const mapStateToProps = state => {
   return ({
-    errors: state.session.errors,
+    errors: state.errors,
   });
 };
 

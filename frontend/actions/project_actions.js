@@ -1,5 +1,5 @@
 import * as APIUtil from '../util/project_api_util';
-import { receiveErrors } from './session_actions';
+import { receiveErrors } from './error_actions';
 
 export const RECEIVE_ALL_PROJECTS = 'RECEIVE_ALL_PROJECTS';
 export const RECEIVE_PROJECT = "RECEIVE_PROJECT";
@@ -23,23 +23,23 @@ const receiveDeleteProject = project => ({
 export const fetchProjects = () => dispatch => (
   APIUtil.fetchProjects()
     .done(projects => dispatch(receiveProjects(projects)))
-    .fail(errors => dispatch(receiveErrors(errors.responseJSON)))
+    .fail(errors => dispatch(receiveErrors(errors)))
 );
 
 export const createProject = project => dispatch => (
   APIUtil.createProject(project)
     .done(project => dispatch(receiveProject(project)))
-    .fail(errors => dispatch(receiveErrors(errors.responseJSON)))
+    .fail(errors => dispatch(receiveErrors(errors)))
 );
 
 export const updateProject = project => dispatch => (
   APIUtil.updateProject(project)
     .done(project => dispatch(receiveProject(project)))
-    .fail(errors => dispatch(receiveErrors(errors.responseJSON)))
+    .fail(errors => dispatch(receiveErrors(errors)))
 );
 
 export const deleteProject = project => dispatch => (
   APIUtil.deleteProject(project)
     .done(() => dispatch(receiveDeleteProject(project)))
-    .fail(errors => dispatch(receiveErrors(errors.responseJSON)))
+    .fail(errors => dispatch(receiveErrors(errors)))
 );
