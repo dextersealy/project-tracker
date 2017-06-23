@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
+import * as FormUtil from '../../util/form_util';
 import { clearErrors } from '../../actions/error_actions';
 import { login } from '../../actions/session_actions';
 import Header from '../util/header';
@@ -11,7 +12,7 @@ class LoginForm extends React.Component {
 		super(props);
 		this.state = { email: '', password: '' };
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+    this.handleChange = FormUtil.handleChange().bind(this);
   }
 
   componentDidMount() {
@@ -27,15 +28,6 @@ class LoginForm extends React.Component {
     e.preventDefault();
     const user = Object.assign({}, this.state);
     this.props.login(user).then(() => this.props.history.push('/projects'));
-  }
-
-  handleChange(field) {
-    return (e) => {
-      e.preventDefault();
-      const newState = Object.assign({}, this.state);
-      newState[field] = e.currentTarget.value;
-      this.setState(newState);
-    };
   }
 
   render() {

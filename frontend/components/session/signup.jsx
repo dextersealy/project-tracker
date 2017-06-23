@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
+import * as FormUtil from '../../util/form_util';
 import { clearErrors, reportErrors } from '../../actions/error_actions';
 import { signup } from '../../actions/session_actions';
 import Header from '../util/header';
@@ -11,7 +12,7 @@ class SignUpForm extends React.Component{
 		super(props);
 		this.state = { name: '', email: '', password: '', confirm_password: ''};
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+    this.handleChange = FormUtil.handleChange().bind(this);
   }
 
   componentDidMount() {
@@ -37,15 +38,6 @@ class SignUpForm extends React.Component{
   getInitials(name) {
     const initials = name.split(/\s+/).map(word => word[0]);
     return initials.join('').slice(0, 4);
-  }
-
-  handleChange(field) {
-    return (e) => {
-      e.preventDefault();
-      const newState = Object.assign({}, this.state);
-      newState[field] = e.currentTarget.value;
-      this.setState(newState);
-    };
   }
 
   render() {

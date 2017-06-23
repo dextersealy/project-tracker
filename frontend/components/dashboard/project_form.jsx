@@ -1,8 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import * as FormUtil from '../../util/form_util';
 import { createProject, updateProject } from '../../actions/project_actions';
 import { clearErrors } from '../../actions/error_actions';
-import { Redirect } from 'react-router-dom';
 import ErrorMsg from '../util/error';
 
 const emptyState = {
@@ -14,7 +15,7 @@ class ProjectsForm extends React.Component {
     super(props);
 
     this.state = Object.assign({}, emptyState, props.project);
-    this.handleChange = this.handleChange.bind(this);
+    this.handleChange = FormUtil.handleChange().bind(this);
     this.handleCancel = this.handleCancel.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -30,14 +31,6 @@ class ProjectsForm extends React.Component {
   componentWillReceiveProps(newProps) {
     if (this.props.project.id !== newProps.project.id) {
       this.setState(Object.assign({}, emptyState, newProps.project));
-    }
-  }
-
-  handleChange(field) {
-    return (e) => {
-      const newState = Object.assign({}, this.state);
-      newState[field] = e.currentTarget.value;
-      this.setState(newState);
     }
   }
 
