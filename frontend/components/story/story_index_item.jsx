@@ -19,9 +19,14 @@ class StoryIndexItem extends React.Component {
     const { story } = this.props;
     return (
       <div className='item'>
-        {this.renderCaret()}
-        {this.renderKind()}
-        {this.renderTitle()}
+        <div>
+          {this.renderCaret()}
+          {this.renderKind()}
+          {this.renderTitle()}
+        </div>
+        <div className='action'>
+          {this.renderActions()}
+        </div>
       </div>
     );
   }
@@ -41,7 +46,7 @@ class StoryIndexItem extends React.Component {
     );
   }
 
-  renderTitle(title) {
+  renderTitle() {
     const { story, initials } = this.props;
     return (
       <p>
@@ -51,6 +56,28 @@ class StoryIndexItem extends React.Component {
       </p>
     );
   }
+
+  renderActions() {
+    const actions = {
+      unscheduled: { started: 'Start'},
+      pending: { started: 'Start'},
+      started: { finished: 'Finish'},
+      finished: { delivered: 'Deliver'},
+      delivered: { accepted: 'Accept', rejected: 'Reject'},
+      rejected: { restarted: 'Restart'},
+    };
+
+    const flow = actions[this.props.story.state];
+    const buttons = flow && Object.keys(flow).map(key => {
+      return (
+        <button type='button' className={key.replace(/ed$/, '')}>
+          {flow[key]}
+        </button>
+      );
+    });
+    return buttons;
+  }
+
 }
 
 const mapStateToProps = (state, {story}) => ({

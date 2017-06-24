@@ -72,9 +72,9 @@ class Project extends React.Component {
 
   filter(story, key) {
     switch (key) {
+      case 'unscheduled': return story.state === 'unscheduled';
       case 'current': return !['done', 'unscheduled'].includes(story.state);
       case 'assigned': return false;
-      case 'unscheduled': return story.state === 'unscheduled';
       case 'done': return story.state === 'accepted';
       default: return true;
     }

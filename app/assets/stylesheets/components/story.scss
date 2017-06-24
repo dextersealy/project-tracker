@@ -4,8 +4,14 @@
   border-bottom: 1px solid lightgrey;
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   padding: 5px;
   font-size: 12px;
+
+  > div {
+    display: flex;
+    align-items: center;
+  }
 
   &:hover {
     background-color: darken(#f3f3d1, 5%)
@@ -17,6 +23,7 @@
     cursor: pointer;
     font-size: 14px;
   }
+
   .caret {
     color: grey;
   }
@@ -27,5 +34,37 @@
 
   .initials {
     color: #3e7293;
+  }
+
+  .action {
+    align-items: flex-start;
+  }
+  
+  button {
+    font-size: 10px;
+    border-radius: 2px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    margin-right: 5px;
+    &:last-child {
+      margin-right: 0;
+    }
+    &.start, &.restart {
+      background: #e0e2e5;
+      color: black;
+      border: 1px solid lightgrey;
+    }
+    &.finish {
+      background: #203e64;
+    }
+    &.deliver {
+      background: #f39300;
+    }
+    &.accept {
+      background: #629200;
+    }
+    &.reject {
+      background: #a71f39;
+    }
   }
 }

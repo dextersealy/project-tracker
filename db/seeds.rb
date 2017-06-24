@@ -24,17 +24,17 @@ if !project
 end
 
 stories = [
-  { title: "New user can sign up",
+  { state: :finished, title: "New user can sign up",
     description: <<~HEREDOC },
     Sign Up button is on home page. Sign Up page enforces password guidelines
     and prevents duplicate username or email.
     HEREDOC
-  { title: "User can sign in",
+  { state: :started, title: "User can sign in",
     description: <<~HEREDOC },
     Sign in button is on the home page. Sign Up page validates account
     information.
     HEREDOC
-  { title: "User remains signed in",
+  { state: :unscheduled, title: "User remains signed in",
     description: <<~HEREDOC },
     The user remains signed in when the page is refreshed.
     HEREDOC
@@ -43,7 +43,7 @@ stories = [
 stories.each do |story|
   object = Story.find_or_create_by({ project: project, title: story[:title] })
   object.update!({
-    author: user, owner: user,
+    author: user, owner: user, state: story[:state],
     description: story[:description].gsub(/\s+/, " ").strip
   })
 end
