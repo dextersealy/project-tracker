@@ -28,14 +28,44 @@ class Project extends React.Component {
   }
 
   componentDidMount() {
-    const { project_id } = this.props;
-    this.props.fetchProject(project_id)
+    this.props.fetchProject(this.props.project_id)
   }
 
   componentWillReceiveProps({ project_id }) {
     if (project_id !== this.props.project_id) {
       this.setState(this.retrieveState(project_id));
     }
+  }
+
+  render() {
+    return (
+      <div className='project'>
+        <Header/>
+        <div className='content'>
+          <NavPanel panels={this.state.panels} handleNav={this.handleNav}/>
+          {this.storyPanels()}
+        </div>
+      </div>
+    );
+  }
+
+  storyPanels() {
+    const { panels } = this.state;
+    const { stories } = this.props;
+    const storyPanels = Object.keys(panels).map(key => {
+      if (key !== 'addStory' && panels[key].visible) {
+        return (
+          <StoryPanel
+            key={key}
+            title={panels[key].title}
+            stories={stories}
+            />
+        );
+      } else {
+        return null;
+      }
+    });
+    return storyPanels.filter(panel => Boolean(panel))
   }
 
   handleNav(id) {
@@ -77,34 +107,6 @@ class Project extends React.Component {
 
   getKey(project_id = null) {
     return `project_${project_id || this.props.project_id}`;
-  }
-
-  render() {
-    const { panels } = this.state;
-    const { stories } = this.props;
-    const storyPanels = Object.keys(panels).map(key => {
-      if (key !== 'addStory' && panels[key].visible) {
-        return (
-          <StoryPanel
-            key={key}
-            title={panels[key].title}
-            stories={stories}
-            />
-        );
-      } else {
-        return null;
-      }
-    });
-
-    return (
-      <div className='project'>
-        <Header/>
-        <div className='content'>
-          <NavPanel panels={panels} handleNav={this.handleNav}/>
-          {storyPanels.filter(panel => Boolean(panel))}
-        </div>
-      </div>
-    );
   }
 }
 
