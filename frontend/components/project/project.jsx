@@ -43,29 +43,27 @@ class Project extends React.Component {
         <Header/>
         <div className='content'>
           <NavPanel panels={this.state.panels} handleNav={this.handleNav}/>
-          {this.storyPanels()}
+          {this.renderPanels()}
         </div>
       </div>
     );
   }
 
-  storyPanels() {
+  renderPanels() {
+    const storyPanels = [];
     const { panels } = this.state;
-    const { stories } = this.props;
-    const storyPanels = Object.keys(panels).map(key => {
+    Object.keys(panels).forEach(key => {
       if (key !== 'addStory' && panels[key].visible) {
-        return (
+        storyPanels.push(
           <StoryPanel
             key={key}
             title={panels[key].title}
-            stories={stories}
+            stories={this.props.stories}
             />
         );
-      } else {
-        return null;
       }
     });
-    return storyPanels.filter(panel => Boolean(panel))
+    return storyPanels;
   }
 
   handleNav(id) {
