@@ -2,8 +2,8 @@ import * as APIUtil from '../util/project_api_util';
 import { receiveErrors } from './error_actions';
 
 export const RECEIVE_ALL_PROJECTS = 'RECEIVE_ALL_PROJECTS';
-export const RECEIVE_PROJECT = "RECEIVE_PROJECT";
-export const RECEIVE_DELETE_PROJECT = "RECEIVE_DELETE_PROJECT";
+export const RECEIVE_PROJECT = 'RECEIVE_PROJECT';
+export const RECEIVE_DELETE_PROJECT = 'RECEIVE_DELETE_PROJECT';
 
 const receiveProjects = projects => ({
   type: RECEIVE_ALL_PROJECTS,

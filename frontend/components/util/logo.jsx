@@ -8,7 +8,7 @@ const Logo = ({project}) => {
   return (
     <logo>
       <Link to='/'>
-        <img className="logo-image" src={window.images.logo} alt="logo"/>
+        <img className='logo-image' src={window.images.logo} alt='logo'/>
       </Link>
       <Link to='/'><p>{title}</p></Link>
     </logo>

@@ -8,7 +8,7 @@ const NavPanel = ({panels, handleNav}) => {
       <li
         key={key}
         onClick={handleNav(key)}
-        className={panel.visible ? "active" : "inactive"}>
+        className={panel.visible ? 'active' : 'inactive'}>
         {panel.nav_title || panel.title}
       </li>
     )

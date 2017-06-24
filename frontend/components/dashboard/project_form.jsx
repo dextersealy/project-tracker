@@ -58,19 +58,19 @@ class ProjectsForm extends React.Component {
     const errorMsg = this.props.errors[0];
     return (
       <form className='form' onSubmit={this.handleSubmit}>
-        <h2>{isNew ? "Create a new project" : "Edit project"}</h2>
+        <h2>{isNew ? 'Create a new project' : 'Edit project'}</h2>
         <div className='form-body'>
           <label htmlFor='title'>Project Name</label>
           <input
             id='title'
             ref={input => this.title = input }
-            onChange={this.handleChange("title")}
+            onChange={this.handleChange('title')}
             placeholder='Enter a name for your project'
             value={title} />
         </div>
         <ErrorMsg msg={errorMsg}/>
         <div className='form-footer'>
-          <button type="button" onClick={this.handleCancel}>Cancel</button>
+          <button type='button' onClick={this.handleCancel}>Cancel</button>
           <button type='submit' disabled={!this.state.title}>Save</button>
         </div>
       </form>
@@ -85,10 +85,10 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   const isNew = Boolean(ownProps.match.path.match(/new/));
-  const callback = isNew ? createProject : updateProject;
+  const func = isNew ? createProject : updateProject;
   return {
     isNew,
-    submit: project => dispatch(callback(project)),
+    submit: project => dispatch(func(project)),
     clearErrors: () => dispatch(clearErrors()),
   };
 }

@@ -23,7 +23,7 @@ class ProjectIndexItem extends React.Component {
         </Link>
         <div className='controls'>
           <Link className='button' to={`/projects/edit/${project.id}`}>Edit</Link>
-          <button type="button" onClick={this.handleDelete}>Delete</button>
+          <button type='button' onClick={this.handleDelete}>Delete</button>
         </div>
       </li>
     );

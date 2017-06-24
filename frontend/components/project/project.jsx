@@ -9,14 +9,14 @@ import StoryPanel from '../story/story_panel'
 
 const defaultState = {
   panels: {
-    addStory: { title: "Add Story", visible: true },
+    addStory: { title: 'Add Story', visible: true },
     current: {
-      title: "Current iteration/backlog", nav_title: "Current/backlog",
+      title: 'Current iteration/backlog', nav_title: 'Current/backlog',
       visible: true
     },
-    assigned: { title: "My Work", visible: true },
-    unscheduled: { title: "Icebox", visible: true },
-    done: { title: "Done", visible: false },
+    assigned: { title: 'My Work', visible: true },
+    unscheduled: { title: 'Icebox', visible: true },
+    done: { title: 'Done', visible: false },
   }
 }
 
@@ -41,7 +41,7 @@ class Project extends React.Component {
   handleNav(id) {
     return (e) => {
       e.stopPropagation();
-      if (id === "addStory") {
+      if (id === 'addStory') {
       } else {
         this.toggleNav(id);
       }
@@ -83,7 +83,7 @@ class Project extends React.Component {
     const { panels } = this.state;
     const { stories } = this.props;
     const storyPanels = Object.keys(panels).map(key => {
-      if (key !== "addStory" && panels[key].visible) {
+      if (key !== 'addStory' && panels[key].visible) {
         return (
           <StoryPanel
             key={key}
@@ -97,7 +97,7 @@ class Project extends React.Component {
     });
 
     return (
-      <div className="project">
+      <div className='project'>
         <Header/>
         <div className='content'>
           <NavPanel panels={panels} handleNav={this.handleNav}/>

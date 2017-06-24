@@ -28,7 +28,7 @@ class SignUpForm extends React.Component{
     e.preventDefault();
     const user = Object.assign({}, this.state);
     if (user.password !== user.confirm_password) {
-      this.props.reportError("Passwords do match");
+      this.props.reportError('Passwords do match');
     } else {
       delete user.confirm_password;
       user.initials = this.getInitials(user.name);

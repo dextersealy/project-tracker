@@ -30,7 +30,7 @@ class Greeting extends React.Component {
         { this.props.homepage &&
           <Link className='button' to='/login'>Sign In</Link> }
         { !user &&
-          <button type="button" className="guest"
+          <button type='button' className='guest'
             onClick={this.handleGuestLogin}>
             Guest Sign In
           </button> }

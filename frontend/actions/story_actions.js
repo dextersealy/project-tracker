@@ -1,8 +1,8 @@
 import * as APIUtil from '../util/story_api_util';
 import { receiveErrors } from './error_actions';
 
-export const RECEIVE_STORY = "RECEIVE_STORY";
-export const RECEIVE_DELETE_STORY = "RECEIVE_DELETE_STORY";
+export const RECEIVE_STORY = 'RECEIVE_STORY';
+export const RECEIVE_DELETE_STORY = 'RECEIVE_DELETE_STORY';
 
 const receiveStory = story => ({
   type: RECEIVE_STORY,
