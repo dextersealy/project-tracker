@@ -54,16 +54,30 @@ class Project extends React.Component {
     const { panels } = this.state;
     Object.keys(panels).forEach(key => {
       if (key !== 'addStory' && panels[key].visible) {
+        const stories = this.props.stories &&
+          this.props.stories.filter(story =>
+            this.filter(story, key)
+          );
         storyPanels.push(
           <StoryPanel
             key={key}
             title={panels[key].title}
-            stories={this.props.stories}
+            stories={stories}
             />
         );
       }
     });
     return storyPanels;
+  }
+
+  filter(story, key) {
+    switch (key) {
+      case 'current': return !['done', 'unscheduled'].includes(story.state);
+      case 'assigned': return false;
+      case 'unscheduled': return story.state === 'unscheduled';
+      case 'done': return story.state === 'accepted';
+      default: return true;
+    }
   }
 
   handleNav(id) {
