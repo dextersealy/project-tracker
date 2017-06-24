@@ -81,16 +81,4 @@
       margin-left: 20px;
     }
   }
-
-  .item {
-    background-color: #f3f3d1;
-    border-top: 1px solid white;
-    border-bottom: 1px solid lightgrey;
-    padding: 5px;
-    font-size: 10pt;
-
-    &:hover {
-      background-color: darken(#f3f3d1, 5%)
-    }
-  }
 }

@@ -5,7 +5,7 @@ class StoryIndex extends React.Component {
   render() {
     return (
       <div className='index'>
-        <ul>{this.renderItems(this.props.stories)}</ul>
+        {this.renderItems(this.props.stories)}
       </div>
     );
   }

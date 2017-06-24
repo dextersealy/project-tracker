@@ -9,3 +9,11 @@ json.set! :stories do
     end
   end
 end
+
+json.set! :members do
+  @project.members.each do |user|
+    json.set! user.id do
+      json.partial! 'users/user', user: user
+    end
+  end
+end

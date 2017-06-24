@@ -10,10 +10,11 @@ const receiveProjects = projects => ({
   projects
 });
 
-const receiveProject = ({project, stories}) => ({
+const receiveProject = ({project, stories, members}) => ({
   type: RECEIVE_PROJECT,
   project,
-  stories
+  stories,
+  members,
 });
 
 const receiveDeleteProject = project => ({
