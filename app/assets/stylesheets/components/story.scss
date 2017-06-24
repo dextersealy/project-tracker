@@ -1,0 +1,31 @@
+.item {
+  background-color: #f3f3d1;
+  border-top: 1px solid white;
+  border-bottom: 1px solid lightgrey;
+  display: flex;
+  flex-direction: row;
+  padding: 5px;
+  font-size: 12px;
+
+  &:hover {
+    background-color: darken(#f3f3d1, 5%)
+  }
+
+  i {
+    display: block;
+    margin-right: 5px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  .caret {
+    color: grey;
+  }
+
+  .fa-star {
+    color: #e0c85e;
+  }
+
+  .initials {
+    color: #3e7293;
+  }
+}
