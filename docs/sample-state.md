@@ -43,7 +43,7 @@
       title: "User can sign in",
       description: "",
       type: "feature",
-      state: "unscheduled",
+      state: "unstarted",
       points: 2,
       priority: 2,
       author_id: 1,

@@ -17,9 +17,8 @@
 #
 
 class Story < ApplicationRecord
-  enum kind: [:feature, :bug, :release, :chore]
-  enum state: [:unscheduled, :pending, :started, :finished, :delivered,
-    :accepted, :rejected]
+  enum kind: [:feature, :bug, :chore, :release]
+  enum state: [:unstarted, :started, :finished, :delivered, :accepted, :rejected]
   enum points: { zero: 0, easy: 1, medium: 2, hard: 4, huge: 8 }
 
   validates :project, :author, :owner, :title, presence: true

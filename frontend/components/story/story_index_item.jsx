@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { deleteStory } from '../../actions/story_actions';
 import { selectUser } from '../../util/selectors';
 import StoryForm from './story_form';
 import * as StoryUtil from './story_util';
@@ -9,18 +8,11 @@ import * as StoryUtil from './story_util';
 class StoryIndexItem extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { open: false }
-    this.handleDelete = this.handleDelete.bind(this);
+    this.state = { open: StoryUtil.isNew(this.props.story) }
     this.handleCaret = this.handleCaret.bind(this);
   }
 
-  handleDelete(e) {
-    e.preventDefault();
-    this.props.deleteStory(this.props.story);
-  }
-
   handleCaret(e) {
-    e.stopPropagation();
     this.setState(Object.assign({}, this.state, {open: !this.state.open }));
   }
 
@@ -71,8 +63,7 @@ class StoryIndexItem extends React.Component {
 
   renderActions() {
     const actions = {
-      unscheduled: { started: 'Start'},
-      pending: { started: 'Start'},
+      unstarted: { started: 'Start'},
       started: { finished: 'Finish'},
       finished: { delivered: 'Deliver'},
       delivered: { accepted: 'Accept', rejected: 'Reject'},
@@ -96,11 +87,6 @@ const mapStateToProps = (state, {story}) => ({
   initials: selectUser(state, story.author_id)['initials']
 });
 
-const mapDisptachToProps = dispatch => ({
-  deleteStory: (story) => dispatch(deleteStory(story))
-});
-
 export default connect(
-  mapStateToProps,
-  mapDisptachToProps
+  mapStateToProps
 )(StoryIndexItem);

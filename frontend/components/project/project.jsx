@@ -4,18 +4,20 @@ import * as StorageAPI from '../../util/storage_util';
 import { connect } from 'react-redux';
 import { fetchProject } from '../../actions/project_actions';
 import { selectProject, currentStories } from '../../util/selectors';
+import { addStory } from '../../actions/story_actions';
+import { initStory } from '../story/story_util'
 import NavPanel from './nav_panel'
 import StoryPanel from '../story/story_panel'
 
 const defaultState = {
-  panels: {
-    addStory: { title: 'Add Story', visible: true },
+  tabs: {
+    add: { title: 'Add Story', visible: true },
     current: {
       title: 'Current iteration/backlog', nav_title: 'Current/backlog',
       visible: true
     },
     assigned: { title: 'My Work', visible: true },
-    unscheduled: { title: 'Icebox', visible: true },
+    unstarted: { title: 'Icebox', visible: true },
     done: { title: 'Done', visible: false },
   }
 }
@@ -42,7 +44,7 @@ class Project extends React.Component {
       <div className='project'>
         <Header/>
         <div className='content'>
-          <NavPanel panels={this.state.panels} handleNav={this.handleNav}/>
+          <NavPanel tabs={this.state.tabs} handleNav={this.handleNav}/>
           {this.renderPanels()}
         </div>
       </div>
@@ -50,30 +52,32 @@ class Project extends React.Component {
   }
 
   renderPanels() {
-    const storyPanels = [];
-    const { panels } = this.state;
-    Object.keys(panels).forEach(key => {
-      if (key !== 'addStory' && panels[key].visible) {
+    const panels = [];
+    const { tabs } = this.state;
+    Object.keys(tabs).forEach(key => {
+      const tab = tabs[key];
+      if (key !== 'add' && tab.visible) {
         const stories = this.props.stories &&
           this.props.stories.filter(story =>
             this.filter(story, key)
           );
-        storyPanels.push(
+        panels.push(
           <StoryPanel
+            ref={instance => tab.instance = instance }
             key={key}
-            title={panels[key].title}
+            title={tab.title}
             stories={stories}
             />
         );
       }
     });
-    return storyPanels;
+    return panels;
   }
 
   filter(story, key) {
     switch (key) {
-      case 'unscheduled': return story.state === 'unscheduled';
-      case 'current': return !['done', 'unscheduled'].includes(story.state);
+      case 'unstarted': return story.state === 'unstarted';
+      case 'current': return !['done', 'unstarted'].includes(story.state);
       case 'assigned': return false;
       case 'done': return story.state === 'accepted';
       default: return true;
@@ -83,38 +87,49 @@ class Project extends React.Component {
   handleNav(id) {
     return (e) => {
       e.stopPropagation();
-      if (id === 'addStory') {
+      if (id === 'add') {
+        this.addStory('unstarted');
       } else {
         this.toggleNav(id);
       }
     }
   }
 
-  toggleNav(id) {
-    const newState = Object.assign({}, this.state);
-    newState.panels[id].visible = !newState.panels[id].visible;
-    this.setState(newState);
-    this.saveState();
+  addStory(state) {
+    const { user_id, project_id } = this.props;
+    this.props.addStory(initStory({ user_id, project_id, state }));
+    if (!this.state.tabs[state].visible) {
+      this.toggleNav(state);
+    }
   }
 
-  saveState() {
-    const currState = {};
-    const { panels } = this.state;
-    Object.keys(panels).forEach(key => {
-      currState[key] = { visible: panels[key].visible }
+  toggleNav(id) {
+    this.setState(prevState => {
+      const newState = Object.assign({}, prevState);
+      newState.tabs[id].visible = !prevState.tabs[id].visible;
+      this.saveState(newState);
+      return newState;
     });
-    StorageAPI.set(this.getKey(), currState);
+  }
+
+  saveState({ tabs }) {
+    const state = {};
+    Object.keys(tabs).forEach(key => {
+      state[key] = { visible: tabs[key].visible }
+    });
+    StorageAPI.set(this.getKey(), state);
   }
 
   retrieveState(project_id = null) {
-    const newState = Object.assign({}, defaultState, this.state);
-    const prevState = StorageAPI.get(this.getKey(project_id));
-    Object.keys(prevState).forEach(key => {
-      if (newState.panels[key]) {
-        newState.panels[key].visible = prevState[key].visible;
+    const state = Object.assign({}, defaultState, this.state);
+    const { tabs } = state;
+    const savedState = StorageAPI.get(this.getKey(project_id));
+    Object.keys(savedState).forEach(key => {
+      if (tabs[key]) {
+        tabs[key].visible = savedState[key].visible;
       }
     });
-    return newState;
+    return state;
   }
 
   getKey(project_id = null) {
@@ -123,16 +138,18 @@ class Project extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
+  const user_id = state.session.currentUser.id;
   const project_id = ownProps.match.params.id;
   const project = selectProject(state, ownProps);
   const stories = project && Object.keys(state.stories)
     .map(id => state.stories[id])
-    .filter(story => story.project_id === project.id);
-  return { project_id, project, stories };
+    .filter(story => story.project_id == project.id);
+  return { user_id, project_id, project, stories };
 };
 
 const mapDispatchToProps = dispatch => ({
   fetchProject: id => dispatch(fetchProject(id)),
+  addStory: story => dispatch(addStory(story)),
 });
 
 export default connect(

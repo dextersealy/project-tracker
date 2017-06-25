@@ -3,12 +3,35 @@ import { connect } from 'react-redux';
 import * as FormUtil from '../../util/form_util';
 import * as StoryUtil from './story_util';
 import { selectUser } from '../../util/selectors';
+import {
+  createStory,
+  updateStory,
+  deleteStory,
+  removeStory,
+} from '../../actions/story_actions';
 
 class StoryForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = Object.assign({}, this.props.story);
     this.handleChange = FormUtil.handleChange.bind(this);
+    this.handleSave = this.handleSave.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+  }
+
+  handleSave(e) {
+    const { story, commit, remove, handleClose } = this.props;
+    commit(this.state).then(() => {
+      if (StoryUtil.isNew(story)) {
+        remove(story);
+      } else {
+        handleClose(e)
+      }
+    });
+  }
+
+  handleDelete(e) {
+    this.props.remove(this.props.story);
   }
 
   render() {
@@ -29,20 +52,24 @@ class StoryForm extends React.Component {
 
   renderTitle() {
     const { title } = this.state;
-    const { handleClose } = this.props;
     return (
       <div className='title'>
-        <i onClick={handleClose} className='caret fa fa-caret-down'/>
+        <i onClick={this.handleSave} className='caret fa fa-caret-down'/>
         <input type='text' value={title} onChange={this.handleChange('title')}/>
       </div>
     );
   }
 
   renderActions() {
-    const { handleClose } = this.props;
+    const isNew = StoryUtil.isNew(this.props.story);
     return (
       <div className='actions'>
-        <button type='button' onClick={handleClose}>Close</button>
+        <button type='button' onClick={this.handleDelete}>
+          {isNew ? 'Cancel' : 'Delete'}
+        </button>
+        <button type='button' onClick={this.handleSave}>
+          {isNew ? 'Save' : 'Close'}
+        </button>
       </div>
     );
   }
@@ -112,6 +139,17 @@ const mapStateToProps = (state, { story }) => ({
   requester: selectUser(state, story.author_id)['name']
 });
 
+const mapDispatchToProps = (dispatch, {story}) => {
+  const isNew = StoryUtil.isNew(story);
+  const commit = isNew ? createStory : updateStory;
+  const remove = isNew ? removeStory : deleteStory;
+  return {
+    commit: story => dispatch(commit(story)),
+    remove: story => dispatch(remove(story)),
+  };
+};
+
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(StoryForm);

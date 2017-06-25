@@ -34,7 +34,7 @@ stories = [
     Sign in button is on the home page. Sign Up page validates account
     information.
     HEREDOC
-  { state: :unscheduled, title: "User remains signed in",
+  { state: :unstarted, title: "User remains signed in",
     description: <<~HEREDOC },
     The user remains signed in when the page is refreshed.
     HEREDOC

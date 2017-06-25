@@ -63,7 +63,7 @@ class ProjectsForm extends React.Component {
           <label htmlFor='title'>Project Name</label>
           <input
             id='title'
-            ref={input => this.title = input }
+            ref={instance => this.title = instance }
             onChange={this.handleChange('title')}
             placeholder='Enter a name for your project'
             value={title} />

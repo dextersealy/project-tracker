@@ -1,6 +1,6 @@
-export const createStory = (project, story) => $.ajax({
+export const createStory = (story) => $.ajax({
   method: 'POST',
-  url: `/api/projects/${project.id}/stories`,
+  url: `/api/projects/${story.project_id}/stories`,
   data: { story },
 });
 

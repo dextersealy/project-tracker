@@ -31,3 +31,6 @@ export const deleteStory = story => dispatch => (
     .done(() => dispatch(receiveDeleteStory(story)))
     .fail(errors => dispatch(receiveErrors(errors)))
 );
+
+export const addStory = story => receiveStory(story);
+export const removeStory = story => receiveDeleteStory(story);

@@ -1,15 +1,15 @@
 import React from 'react';
 import PanelHeader from './panel_header.jsx'
 
-const NavPanel = ({panels, handleNav}) => {
-  const items = Object.keys(panels).map(key => {
-    const panel = panels[key];
+const NavPanel = ({tabs, handleNav}) => {
+  const items = Object.keys(tabs).map(key => {
+    const tab = tabs[key];
     return(
       <li
         key={key}
         onClick={handleNav(key)}
-        className={panel.visible ? 'active' : 'inactive'}>
-        {panel.nav_title || panel.title}
+        className={tab.visible ? 'active' : 'inactive'}>
+        {tab.nav_title || tab.title}
       </li>
     )
   });
