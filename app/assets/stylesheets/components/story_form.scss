@@ -1,0 +1,87 @@
+.story-form {
+  background-color: #f3f4f4;
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+  padding: 10px;
+  background: #f1f0ea;
+  border-top: 1px solid white;
+  border-bottom: 1px solid lightgrey;
+
+  button {
+    background-color: darken(grey, 10%);
+  }
+
+  div.title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  input, textarea {
+    border: 1px solid lightgrey;
+    border-radius: 2px;
+    padding: 3px;
+    width: 100%;
+    resize: none;
+    background-color: white;
+  }
+
+  label {
+    color: black;
+    display: block;
+    margin-bottom: 5px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  .actions {
+    margin-top: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+
+  .options {
+    border: 1px solid lightgrey;
+    border-radius: 2px;
+    margin-top: 10px;
+
+    > div {
+      border-bottom: 1px solid lightgrey;
+      padding: 5px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+
+  div.story-type {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .drop-down {
+    background: inherit;
+    text-transform: capitalize;
+    color: black;
+    padding: 0;
+  }
+
+  .description {
+    margin-top: 10px;
+  }
+
+  .label {
+    text-transform: uppercase;
+    font-size: 11px;
+    color: grey;
+  }
+
+}

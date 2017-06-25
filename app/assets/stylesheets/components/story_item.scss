@@ -1,4 +1,4 @@
-.item {
+.story-item {
   background-color: #f3f3d1;
   border-top: 1px solid white;
   border-bottom: 1px solid lightgrey;
@@ -17,19 +17,8 @@
     background-color: darken(#f3f3d1, 5%)
   }
 
-  i {
-    display: block;
-    margin-right: 5px;
-    cursor: pointer;
-    font-size: 14px;
-  }
-
   .caret {
     color: grey;
-  }
-
-  .fa-star {
-    color: #e0c85e;
   }
 
   .initials {
@@ -41,14 +30,6 @@
   }
 
   button {
-    font-size: 10px;
-    border-radius: 2px;
-    padding-top: 4px;
-    padding-bottom: 4px;
-    margin-right: 5px;
-    &:last-child {
-      margin-right: 0;
-    }
     &.start, &.restart {
       background: #e0e2e5;
       color: black;

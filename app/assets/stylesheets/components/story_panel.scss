@@ -1,0 +1,24 @@
+.story.panel {
+  button {
+    font-size: 10px;
+    border-radius: 2px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    margin-right: 5px;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  i {
+    display: block;
+    margin-right: 5px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+
+  .fa-star {
+    color: #e0c85e;
+  }
+
+}

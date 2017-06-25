@@ -12,7 +12,7 @@ class SignUpForm extends React.Component{
 		super(props);
 		this.state = { name: '', email: '', password: '', confirm_password: ''};
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = FormUtil.handleChange().bind(this);
+    this.handleChange = FormUtil.handleChange.bind(this);
   }
 
   componentDidMount() {

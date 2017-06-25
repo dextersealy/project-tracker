@@ -3,7 +3,7 @@ import Header from '../util/header';
 import * as StorageAPI from '../../util/storage_util';
 import { connect } from 'react-redux';
 import { fetchProject } from '../../actions/project_actions';
-import { selectCurrentProject, currentStories } from '../../util/selectors';
+import { selectProject, currentStories } from '../../util/selectors';
 import NavPanel from './nav_panel'
 import StoryPanel from '../story/story_panel'
 
@@ -124,7 +124,7 @@ class Project extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
   const project_id = ownProps.match.params.id;
-  const project = selectCurrentProject(state, ownProps);
+  const project = selectProject(state, ownProps);
   const stories = project && Object.keys(state.stories)
     .map(id => state.stories[id])
     .filter(story => story.project_id === project.id);

@@ -7,7 +7,7 @@ const StoriesReducer = (state = defaultState, action) => {
   Object.freeze(state);
   switch (action.type) {
     case RECEIVE_PROJECT:
-      return action.stories;
+      return action.stories || defaultState;
 
     case RECEIVE_STORY: {
       let newState = Object.assign({}, state);

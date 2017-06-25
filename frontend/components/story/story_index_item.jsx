@@ -2,12 +2,16 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { deleteStory } from '../../actions/story_actions';
-import { selectUserInitials } from '../../util/selectors';
+import { selectUser } from '../../util/selectors';
+import StoryForm from './story_form';
+import * as StoryUtil from './story_util';
 
 class StoryIndexItem extends React.Component {
   constructor(props) {
     super(props);
+    this.state = { open: false }
     this.handleDelete = this.handleDelete.bind(this);
+    this.handleCaret = this.handleCaret.bind(this);
   }
 
   handleDelete(e) {
@@ -15,35 +19,43 @@ class StoryIndexItem extends React.Component {
     this.props.deleteStory(this.props.story);
   }
 
+  handleCaret(e) {
+    e.stopPropagation();
+    this.setState(Object.assign({}, this.state, {open: !this.state.open }));
+  }
+
   render() {
     const { story } = this.props;
-    return (
-      <div className='item'>
-        <div>
-          {this.renderCaret()}
-          {this.renderKind()}
-          {this.renderTitle()}
+    if (this.state.open) {
+      return (
+        <StoryForm story={story} handleClose={this.handleCaret}/>
+      );
+    } else {
+      return (
+        <div className='story-item'>
+          <div>
+            {this.renderCaret()}
+            {this.renderKind()}
+            {this.renderTitle()}
+          </div>
+          <div className='action'>
+            {this.renderActions()}
+          </div>
         </div>
-        <div className='action'>
-          {this.renderActions()}
-        </div>
-      </div>
-    );
+      );
+    }
   }
 
   renderCaret() {
     return (
-      <i className='caret fa fa-caret-right'/>
+      <i onClick={this.handleCaret}
+        className={`caret fa fa-caret-${this.state.open ? 'down' : 'right'}`}
+      />
     );
   }
 
   renderKind() {
-    const icons = {
-      feature: 'star', bug: 'bug', chore: 'cog', release: 'flag'
-    };
-    return (
-      <i className={`kind fa fa-${icons[this.props.story.kind]}`}/>
-    );
+    return StoryUtil.renderKind(this.props.story.kind);
   }
 
   renderTitle() {
@@ -70,7 +82,7 @@ class StoryIndexItem extends React.Component {
     const flow = actions[this.props.story.state];
     const buttons = flow && Object.keys(flow).map(key => {
       return (
-        <button type='button' className={key.replace(/ed$/, '')}>
+        <button key={key} type='button' className={key.replace(/ed$/, '')}>
           {flow[key]}
         </button>
       );
@@ -81,7 +93,7 @@ class StoryIndexItem extends React.Component {
 }
 
 const mapStateToProps = (state, {story}) => ({
-  initials: selectUserInitials(state, story.author_id)
+  initials: selectUser(state, story.author_id)['initials']
 });
 
 const mapDisptachToProps = dispatch => ({

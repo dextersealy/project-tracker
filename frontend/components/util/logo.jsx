@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
-import { selectCurrentProject } from '../../util/selectors';
+import { selectProject } from '../../util/selectors';
 
 const Logo = ({project}) => {
   const title = project ? project.title : 'Project Tracker';
@@ -16,7 +16,7 @@ const Logo = ({project}) => {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  project: selectCurrentProject(state, ownProps)
+  project: selectProject(state, ownProps)
 });
 
 export default withRouter(connect(
