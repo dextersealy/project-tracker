@@ -94,13 +94,14 @@ class Project extends React.Component {
       case 'done': return StoryUtil.isCompleted(story);
       case 'current': return StoryUtil.isCurrent(story);
       case 'unstarted': return StoryUtil.isUnstarted(story);
-      case 'assigned': return this.isAssignedToCurrentUser(story);
+      case 'assigned': return this.isWorkItem(story);
       default: return true;
     }
   }
 
-  isAssignedToCurrentUser(story) {
-    return StoryUtil.isCurrent(story)
+  isWorkItem(story) {
+    return !StoryUtil.isNew(story)
+      && StoryUtil.isCurrent(story)
       && StoryUtil.belongsToUser(story, this.props.user_id);
   }
 
