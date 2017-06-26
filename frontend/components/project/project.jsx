@@ -17,7 +17,7 @@ const theTabs = {
   },
   current: {
     title: 'Current iteration/backlog',
-    nav_title: 'Current/backlog',
+    navTitle: 'Current/backlog',
     visible: true,
     storyToAdd: 'started'
   },
@@ -71,15 +71,11 @@ class Project extends React.Component {
     Object.keys(tabs).forEach(key => {
       const tab = tabs[key];
       if (key !== 'add' && tab.visible) {
-        const stories = this.props.stories &&
-          this.props.stories.filter(story =>
-            this.filter(story, key)
-          );
         panels.push(
           <StoryPanel
             key={key}
             title={tab.title}
-            stories={stories}
+            stories={this.filterStories(key)}
             handleAdd={this.handleAdd(key)}
             handleClose={this.handleClose(key)}
             />
@@ -87,6 +83,11 @@ class Project extends React.Component {
       }
     });
     return panels;
+  }
+
+  filterStories(key) {
+    const { stories } = this.props;
+    return stories && stories.filter(story => this.filter(story, key));
   }
 
   filter(story, key) {

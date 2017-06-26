@@ -24,7 +24,7 @@ class NavPanel extends React.Component {
           onClick={handleNav(key)}
           className={`nav-item ${tab.visible ? 'active' : 'inactive'}`}>
           {this.renderIcon(key)}
-          {tab.nav_title || tab.title}
+          {tab.navTitle || tab.title}
         </div>
       )
     });
