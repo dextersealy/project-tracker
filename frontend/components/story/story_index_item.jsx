@@ -4,16 +4,33 @@ import { Link } from 'react-router-dom';
 import { selectUser } from '../../util/selectors';
 import StoryForm from './story_form';
 import * as StoryUtil from './story_util';
+import { updateStory } from '../../actions/story_actions';
+
+const workflow = {
+  unstarted: { started: 'Start'},
+  started: { finished: 'Finish'},
+  finished: { delivered: 'Deliver'},
+  delivered: { accepted: 'Accept', rejected: 'Reject'},
+  rejected: { started: 'Restart'},
+};
 
 class StoryIndexItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = { open: StoryUtil.isNew(this.props.story) }
     this.handleCaret = this.handleCaret.bind(this);
+    this.handleAction = this.handleAction.bind(this);
   }
 
   handleCaret(e) {
-    this.setState(Object.assign({}, this.state, {open: !this.state.open }));
+    this.setState(prevState => ({ open: !prevState.open }));
+  }
+
+  handleAction(action) {
+    return (e) => {
+      const story = Object.assign({}, this.props.story, { state: action });
+      this.props.commit(story);
+    }
   }
 
   render() {
@@ -24,7 +41,7 @@ class StoryIndexItem extends React.Component {
       );
     } else {
       return (
-        <div className='story-item'>
+        <div className={`story-item ${story.state}`}>
           <div>
             {this.renderCaret()}
             {this.renderKind()}
@@ -62,19 +79,13 @@ class StoryIndexItem extends React.Component {
   }
 
   renderActions() {
-    const actions = {
-      unstarted: { started: 'Start'},
-      started: { finished: 'Finish'},
-      finished: { delivered: 'Deliver'},
-      delivered: { accepted: 'Accept', rejected: 'Reject'},
-      rejected: { restarted: 'Restart'},
-    };
-
-    const flow = actions[this.props.story.state];
-    const buttons = flow && Object.keys(flow).map(key => {
+    const actions = workflow[this.props.story.state];
+    const buttons = actions && Object.keys(actions).map(action => {
+      const title = actions[action];
       return (
-        <button key={key} type='button' className={key.replace(/ed$/, '')}>
-          {flow[key]}
+        <button type='button' key={action} onClick={this.handleAction(action)}
+          className={action.replace(/ed$/, '')}>
+          {title}
         </button>
       );
     });
@@ -87,6 +98,11 @@ const mapStateToProps = (state, {story}) => ({
   initials: selectUser(state, story.author_id)['initials']
 });
 
+const mapDispatchToProps = dispatch => ({
+  commit: story => dispatch(updateStory(story))
+})
+
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(StoryIndexItem);

@@ -8,13 +8,20 @@
   padding: 5px;
   font-size: 12px;
 
+  &:hover {
+    background-color: darken(#f3f3d1, 5%)
+  }
+
+  &.accepted {
+    background-color: #daebcf;
+    &:hover {
+      background-color: darken(#daebcf, 5%)
+    }
+  }
+
   > div {
     display: flex;
     align-items: center;
-  }
-
-  &:hover {
-    background-color: darken(#f3f3d1, 5%)
   }
 
   .caret {
@@ -30,10 +37,15 @@
   }
 
   button {
+    padding-top: 4px;
+    padding-bottom: 4px;
+
     &.start, &.restart {
       background: #e0e2e5;
       color: black;
       border: 1px solid lightgrey;
+      padding-top: 3px;
+      padding-bottom: 3px;
       &:hover {
         background: darken(#e0e2e5, 5%);
       }

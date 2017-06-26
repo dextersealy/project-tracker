@@ -22,4 +22,4 @@ export const initStory = ({ user_id, project_id, state }) => ({
   description: '',
 });
 
-export const isNew = ({ id }) => `${id}`.match(/^new/);
+export const isNew = ({ id }) => Boolean(`${id}`.match(/^new/));

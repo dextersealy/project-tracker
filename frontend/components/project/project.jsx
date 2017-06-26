@@ -77,7 +77,7 @@ class Project extends React.Component {
   filter(story, key) {
     switch (key) {
       case 'unstarted': return story.state === 'unstarted';
-      case 'current': return !['done', 'unstarted'].includes(story.state);
+      case 'current': return !['accepted', 'unstarted'].includes(story.state);
       case 'assigned': return false;
       case 'done': return story.state === 'accepted';
       default: return true;
