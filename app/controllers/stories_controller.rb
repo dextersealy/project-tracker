@@ -7,8 +7,10 @@ class StoriesController < ApplicationController
   end
 
   def create
-    @story = Story.new(story_params)
-    do_action { @story.save }
+    do_action do
+      @story = Story.new(story_params)
+      @story.save
+    end
   end
 
   def update
@@ -34,19 +36,24 @@ class StoriesController < ApplicationController
   end
 
   def do_action(&prc)
-    if can_edit?(@story)
+    render json: ["Permission denied"], status: 422 unless can_edit?(@story)
+    begin
       if prc.call
         render :show
       else
         render json: @story.errors.full_messages, status: 422
       end
-    else
-      render json: ["Permission denied"], status: 422
+    rescue ArgumentError => exception
+      if exception.message.include? 'is not a valid'
+        render json: [exception.message], status: 422
+      else
+        raise
+      end
     end
   end
 
   def can_edit?(story)
-    return true unless story.persisted?
+    return true unless story && story.persisted?
     story.project.member?(current_user)
   end
 
