@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 import * as FormUtil from '../../util/form_util';
 import * as StoryUtil from './story_util';
 import { selectUser } from '../../util/selectors';
+import { clearErrors } from '../../actions/error_actions';
+import ErrorMsg from '../util/error';
+
 import {
   createStory,
   updateStory,
@@ -15,8 +18,18 @@ class StoryForm extends React.Component {
     super(props);
     this.state = Object.assign({}, this.props.story);
     this.handleChange = FormUtil.handleChange.bind(this);
+    this.handleCaret = this.handleCaret.bind(this);
     this.handleSave = this.handleSave.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+  }
+
+  handleCaret(e) {
+    const { story, remove } = this.props;
+    if (StoryUtil.isNew(story) && StoryUtil.isEmpty(this.state)) {
+      remove(story);
+    } else {
+      this.handleSave(e)
+    }
   }
 
   handleSave(e) {
@@ -34,10 +47,16 @@ class StoryForm extends React.Component {
     this.props.remove(this.props.story);
   }
 
+  componentWillUnmount() {
+    this.props.clearErrors();
+  }
+
   render() {
+    const { errorMsg } = this.props;
     return (
       <div className='story-form'>
         {this.renderTitle()}
+        <ErrorMsg msg={errorMsg}/>
         {this.renderActions()}
         <div className='options'>
           {this.renderKind()}
@@ -54,7 +73,7 @@ class StoryForm extends React.Component {
     const { title } = this.state;
     return (
       <div className='title'>
-        <i onClick={this.handleSave} className='caret fa fa-caret-down'/>
+        <i onClick={this.handleCaret} className='caret fa fa-caret-down'/>
         <input type='text' value={title} onChange={this.handleChange('title')}/>
       </div>
     );
@@ -136,7 +155,8 @@ class StoryForm extends React.Component {
 }
 
 const mapStateToProps = (state, { story }) => ({
-  requester: selectUser(state, story.author_id)['name']
+  requester: selectUser(state, story.author_id)['name'],
+  errorMsg: state.errors[0],
 });
 
 const mapDispatchToProps = (dispatch, {story}) => {
@@ -146,6 +166,7 @@ const mapDispatchToProps = (dispatch, {story}) => {
   return {
     commit: story => dispatch(commit(story)),
     remove: story => dispatch(remove(story)),
+    clearErrors: () => dispatch(clearErrors()),
   };
 };
 

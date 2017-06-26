@@ -22,7 +22,13 @@ export const initStory = ({ user_id, project_id, state }) => ({
   description: '',
 });
 
+
 export const isNew = ({ id }) => Boolean(`${id}`.match(/^new/));
+export const isEmpty = story => {
+  return story.title.trim().length === 0
+    && story.description.trim().length === 0;
+}
+
 export const isUnstarted = ({ state }) => state === 'unstarted';
 export const isCompleted = ({ state }) => state === 'accepted';
 export const isCurrent = ({ state }) => (
