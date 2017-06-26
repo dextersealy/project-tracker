@@ -1,5 +1,5 @@
 import React from 'react';
-import StoryIndexItem from './story_index_item';
+import StoryItem from './story_item';
 
 class StoryIndex extends React.Component {
   render() {
@@ -12,7 +12,7 @@ class StoryIndex extends React.Component {
 
   renderItems(stories) {
     const items = stories && stories.map(story =>
-      <StoryIndexItem
+      <StoryItem
         key={story.id}
         story={story}
         />

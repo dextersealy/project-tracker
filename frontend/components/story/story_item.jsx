@@ -14,7 +14,7 @@ const workflow = {
   rejected: { started: 'Restart'},
 };
 
-class StoryIndexItem extends React.Component {
+class StoryItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = { open: StoryUtil.isNew(this.props.story) }
@@ -103,4 +103,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(StoryIndexItem);
+)(StoryItem);
