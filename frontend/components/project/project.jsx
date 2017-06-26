@@ -9,16 +9,30 @@ import { initStory } from '../story/story_util'
 import NavPanel from './nav_panel'
 import StoryPanel from '../story/story_panel'
 
-const defaultState = {
-  tabs: {
-    add: { title: 'Add Story', visible: true },
-    current: {
-      title: 'Current iteration/backlog', nav_title: 'Current/backlog',
-      visible: true
-    },
-    assigned: { title: 'My Work', visible: true },
-    unstarted: { title: 'Icebox', visible: true },
-    done: { title: 'Done', visible: false },
+const theTabs = {
+  add: {
+    title: 'Add Story',
+    visible: true,
+    storyToAdd: 'unstarted'
+  },
+  current: {
+    title: 'Current iteration/backlog',
+    nav_title: 'Current/backlog',
+    visible: true,
+    storyToAdd: 'started'
+  },
+  assigned: {
+    title: 'My Work',
+    visible: true
+  },
+  unstarted: {
+    title: 'Icebox',
+    visible: true,
+    storyToAdd: 'unstarted'
+  },
+  done: {
+    title: 'Done',
+    visible: false
   }
 }
 
@@ -63,10 +77,11 @@ class Project extends React.Component {
           );
         panels.push(
           <StoryPanel
-            ref={instance => tab.instance = instance }
             key={key}
             title={tab.title}
             stories={stories}
+            handleAdd={this.handleAdd(key)}
+            handleClose={this.handleClose(key)}
             />
         );
       }
@@ -84,22 +99,35 @@ class Project extends React.Component {
     }
   }
 
+  handleClose(id) {
+    return (e) => {
+      e.stopPropagation();
+      this.toggleNav(id);
+    }
+  }
+
   handleNav(id) {
     return (e) => {
       e.stopPropagation();
       if (id === 'add') {
-        this.addStory('unstarted');
+        this.addStory(theTabs[id].storyToAdd);
       } else {
         this.toggleNav(id);
       }
     }
   }
 
+  handleAdd(tab_id) {
+    return theTabs[tab_id].storyToAdd
+      ? (e) => this.addStory(theTabs[tab_id].storyToAdd)
+      : null;
+  }
+
   addStory(state) {
     const { user_id, project_id } = this.props;
     this.props.addStory(initStory({ user_id, project_id, state }));
-    if (!this.state.tabs[state].visible) {
-      this.toggleNav(state);
+    if (state === 'unstarted' && !this.state.tabs['unstarted'].visible) {
+      this.toggleNav('unstarted');
     }
   }
 
@@ -121,7 +149,7 @@ class Project extends React.Component {
   }
 
   retrieveState(project_id = null) {
-    const state = Object.assign({}, defaultState, this.state);
+    const state = Object.assign({}, { tabs: theTabs }, this.state);
     const { tabs } = state;
     const savedState = StorageAPI.get(this.getKey(project_id));
     Object.keys(savedState).forEach(key => {

@@ -1,0 +1,45 @@
+.nav.panel {
+  flex: none;
+  width: 230px;
+  background-color: #2f3337;
+
+  .nav-list {
+    border-top: 1px solid #393a3c;
+    border-bottom: 4px solid #262a2e;
+    padding-bottom: 10px;
+  }
+
+  .nav-item {
+    font-size: 12px;
+    font-weight: normal;
+    margin-left: 10px;
+    padding: 8px 8px 8px 10px;
+    cursor: pointer;
+    margin-right: 10px;
+
+    i {
+      padding-right: 10px;
+      font-size: 14px;
+    }
+
+    &.active {
+      color: #8ac5ff;
+    }
+    &.inactive {
+      color: lighten(grey, 20%);
+    }
+    &:hover {
+      background-color: darken(#2f3337, 5%);
+      border-radius: 4px;
+    }
+    &:first-child {
+      margin: 10px;
+      background-color: #3e7293;
+      color: white;
+      border-radius: 4px;
+      &:hover {
+        background-color: darken(#3e7293, 5%);
+      }
+    }
+  }
+}

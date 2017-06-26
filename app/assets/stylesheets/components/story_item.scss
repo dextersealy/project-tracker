@@ -24,6 +24,14 @@
     align-items: center;
   }
 
+  i {
+    padding-right: 5px;
+    font-size: 14px;
+    &:first-child {
+      padding-left: 5px;
+    }
+  }
+
   .caret {
     color: grey;
   }

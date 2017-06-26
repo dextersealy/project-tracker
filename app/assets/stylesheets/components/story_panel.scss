@@ -1,4 +1,7 @@
 .story.panel {
+  flex: 1 1 0px;
+  background-color: #484F57;
+
   button {
     font-size: 10px;
     border-radius: 2px;
@@ -8,11 +11,13 @@
     }
   }
 
-  i {
-    display: block;
+  p i {
+    padding-left: 5px;
+    padding-right: 10px;
+  }
+
+  .fa-plus {
     margin-right: 5px;
-    cursor: pointer;
-    font-size: 14px;
   }
 
   .fa-star {

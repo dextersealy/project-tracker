@@ -12,6 +12,15 @@
     background-color: darken(grey, 10%);
   }
 
+  i {
+    padding-right: 10px;
+    font-size: 14px;
+  }
+
+  .caret {
+    color: grey;
+  }
+
   div.title {
     display: flex;
     flex-direction: row;
