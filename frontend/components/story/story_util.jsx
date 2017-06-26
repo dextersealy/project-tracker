@@ -23,3 +23,11 @@ export const initStory = ({ user_id, project_id, state }) => ({
 });
 
 export const isNew = ({ id }) => Boolean(`${id}`.match(/^new/));
+export const isUnstarted = ({ state }) => state === 'unstarted';
+export const isCompleted = ({ state }) => state === 'accepted';
+export const isCurrent = ({ state }) => (
+  !['accepted', 'unstarted'].includes(state)
+);
+export const belongsToUser = ({ owner_id }, user_id) => {
+  return owner_id == user_id
+}

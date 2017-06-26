@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { fetchProject } from '../../actions/project_actions';
 import { selectProject, currentStories } from '../../util/selectors';
 import { addStory } from '../../actions/story_actions';
-import { initStory } from '../story/story_util'
+import * as StoryUtil from '../story/story_util'
 import NavPanel from './nav_panel'
 import StoryPanel from '../story/story_panel'
 
@@ -91,12 +91,17 @@ class Project extends React.Component {
 
   filter(story, key) {
     switch (key) {
-      case 'unstarted': return story.state === 'unstarted';
-      case 'current': return !['accepted', 'unstarted'].includes(story.state);
-      case 'assigned': return false;
-      case 'done': return story.state === 'accepted';
+      case 'done': return StoryUtil.isCompleted(story);
+      case 'current': return StoryUtil.isCurrent(story);
+      case 'unstarted': return StoryUtil.isUnstarted(story);
+      case 'assigned': return this.isAssignedToCurrentUser(story);
       default: return true;
     }
+  }
+
+  isAssignedToCurrentUser(story) {
+    return StoryUtil.isCurrent(story)
+      && StoryUtil.belongsToUser(story, this.props.user_id);
   }
 
   handleClose(id) {
@@ -125,7 +130,7 @@ class Project extends React.Component {
 
   addStory(state) {
     const { user_id, project_id } = this.props;
-    this.props.addStory(initStory({ user_id, project_id, state }));
+    this.props.addStory(StoryUtil.initStory({ user_id, project_id, state }));
     if (state === 'unstarted' && !this.state.tabs['unstarted'].visible) {
       this.toggleNav('unstarted');
     }
