@@ -70,11 +70,11 @@ class StoryIndexItem extends React.Component {
   renderTitle() {
     const { story, initials } = this.props;
     return (
-      <p>
+      <div>
         <span className='title'>{story.title}
         </span> (<span className='initials'>{initials}
         </span>)
-      </p>
+      </div>
     );
   }
 

@@ -22,6 +22,7 @@
   > div {
     display: flex;
     align-items: center;
+    cursor: default;
   }
 
   i {
@@ -34,6 +35,7 @@
 
   .caret {
     color: grey;
+    cursor: pointer;
   }
 
   .initials {
