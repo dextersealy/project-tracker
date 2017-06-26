@@ -22,37 +22,25 @@ class StoryIndexItem extends React.Component {
     this.handleAction = this.handleAction.bind(this);
   }
 
-  handleCaret(e) {
-    this.setState(prevState => ({ open: !prevState.open }));
-  }
-
-  handleAction(action) {
-    return (e) => {
-      const story = Object.assign({}, this.props.story, { state: action });
-      this.props.commit(story);
-    }
-  }
-
   render() {
-    const { story } = this.props;
-    if (this.state.open) {
-      return (
-        <StoryForm story={story} handleClose={this.handleCaret}/>
-      );
-    } else {
-      return (
-        <div className={`story-item ${story.state}`}>
-          <div>
-            {this.renderCaret()}
-            {this.renderKind()}
-            {this.renderTitle()}
-          </div>
-          <div className='action'>
-            {this.renderActions()}
-          </div>
+    return this.state.open
+      ? <StoryForm story={this.props.story} handleClose={this.handleCaret}/>
+    : this.renderItem();
+  }
+
+  renderItem() {
+    return (
+      <div className={`story-item ${this.props.story.state}`}>
+        <div>
+          {this.renderCaret()}
+          {this.renderKind()}
+          {this.renderTitle()}
         </div>
-      );
-    }
+        <div className='action'>
+          {this.renderActions()}
+        </div>
+      </div>
+    );
   }
 
   renderCaret() {
@@ -92,6 +80,16 @@ class StoryIndexItem extends React.Component {
     return buttons;
   }
 
+  handleCaret(e) {
+    this.setState(prevState => ({ open: !prevState.open }));
+  }
+
+  handleAction(action) {
+    return (e) => {
+      const story = Object.assign({}, this.props.story, { state: action });
+      this.props.commit(story);
+    }
+  }
 }
 
 const mapStateToProps = (state, {story}) => ({
