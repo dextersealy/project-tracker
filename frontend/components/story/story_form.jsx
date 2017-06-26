@@ -5,7 +5,6 @@ import * as StoryUtil from './story_util';
 import { selectUser } from '../../util/selectors';
 import { clearErrors } from '../../actions/error_actions';
 import ErrorMsg from '../util/error';
-
 import {
   createStory,
   updateStory,
@@ -21,30 +20,6 @@ class StoryForm extends React.Component {
     this.handleCaret = this.handleCaret.bind(this);
     this.handleSave = this.handleSave.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
-  }
-
-  handleCaret(e) {
-    const { story, remove } = this.props;
-    if (StoryUtil.isNew(story) && StoryUtil.isEmpty(this.state)) {
-      remove(story);
-    } else {
-      this.handleSave(e)
-    }
-  }
-
-  handleSave(e) {
-    const { story, commit, remove, handleClose } = this.props;
-    commit(this.state).then(() => {
-      if (StoryUtil.isNew(story)) {
-        remove(story);
-      } else {
-        handleClose(e)
-      }
-    });
-  }
-
-  handleDelete(e) {
-    this.props.remove(this.props.story);
   }
 
   componentWillUnmount() {
@@ -151,6 +126,30 @@ class StoryForm extends React.Component {
           onChange={this.handleChange('description')} value={description}/>
       </div>
     );
+  }
+
+  handleCaret(e) {
+    const { story, remove } = this.props;
+    if (StoryUtil.isNew(story) && StoryUtil.isEmpty(this.state)) {
+      remove(story);
+    } else {
+      this.handleSave(e)
+    }
+  }
+
+  handleSave(e) {
+    const { story, commit, remove, handleClose } = this.props;
+    commit(this.state).then(() => {
+      if (StoryUtil.isNew(story)) {
+        remove(story);
+      } else {
+        handleClose(e)
+      }
+    });
+  }
+
+  handleDelete(e) {
+    this.props.remove(this.props.story);
   }
 }
 
