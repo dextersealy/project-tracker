@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import * as FormUtil from '../../util/form_util';
 import * as StoryUtil from './story_util';
+import StoryMenu from './story_menu';
 import { selectUser } from '../../util/selectors';
 import { clearErrors } from '../../actions/error_actions';
 import ErrorMsg from '../util/error';
@@ -69,37 +70,60 @@ class StoryForm extends React.Component {
   }
 
   renderKind() {
+    const items = {
+      feature: { title: 'Feature', icon: 'fa fa-star' },
+      bug: { title: 'Bug', icon: 'fa fa-bug' },
+      chore: { title: 'Chore', icon: 'fa fa-gear' },
+      release: { title: 'Release', icon: 'fa fa-flag' },
+    };
     const { kind } = this.state;
     return (
       <div>
         <span className='label'>Story type</span>
         <div className='story-type'>
           {StoryUtil.renderKind(kind)}
-          <button className='drop-down'>{kind}</button>
+          <StoryMenu items={items} currentValue={kind}
+            handleSelect={this.handleMenu('kind')}/>
         </div>
       </div>
     );
   }
 
   renderPoints() {
+    const items = {
+      zero: { title: '0\xa0Points' },
+      easy: { title: '1\xa0Point' },
+      medium: { title: '2\xa0Points' },
+      hard: { title: '3\xa0Points' },
+    };
     const { points } = this.state;
     return (
       <div>
         <span className='label'>Points</span>
         <div className='story-points'>
-          <button className='drop-down'>{points} Points</button>
+          <StoryMenu items={items} currentValue={points}
+            handleSelect={this.handleMenu('points')}/>
         </div>
       </div>
     );
   }
 
   renderState() {
+    const items = {
+      unstarted: { title: 'Unstarted' },
+      started: { title: 'Started' },
+      finished: { title: 'Finished' },
+      delivered: { title: 'Delivered' },
+      rejected: { title: 'Rejected' },
+      accepted: { title: 'Accepted' },
+    }
     const { state } = this.state;
     return (
       <div>
         <span className='label'>State</span>
         <div className='story-state'>
-          <button className='drop-down'>{state}</button>
+          <StoryMenu items={items} currentValue={state}
+            handleSelect={this.handleMenu('state')}/>
         </div>
       </div>
     );
@@ -111,7 +135,7 @@ class StoryForm extends React.Component {
       <div>
         <span className='label'>Requester</span>
         <div className='story-requester'>
-          <button className='drop-down'>{requester}</button>
+          <div className='requester-name'>{requester}</div>
         </div>
       </div>
     );
@@ -134,6 +158,14 @@ class StoryForm extends React.Component {
       remove(story);
     } else {
       this.handleSave(e)
+    }
+  }
+
+  handleMenu(field) {
+    return (value, e) => {
+      this.setState(prevState => (
+        Object.assign({}, prevState, {[field]: value})
+      ));
     }
   }
 
