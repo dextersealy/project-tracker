@@ -157,7 +157,6 @@ class Project extends React.Component {
   }
 
   retrieveState(project_id = null) {
-    debugger;
     const state = _.merge({}, { tabs: theTabs }, this.state);
     const { tabs } = state;
     const savedState = StorageAPI.get(this.getKey(project_id));

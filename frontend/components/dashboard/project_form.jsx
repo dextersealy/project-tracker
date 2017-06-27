@@ -37,8 +37,13 @@ class ProjectsForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    this.props.submit(this.state)
-      .then(() => this.props.history.push('/projects'));
+    const isNew = this.props.isNew;
+    this.props.submit(this.state).then(resp => {
+      this.props.history.push(isNew
+        ? `/project/${resp.project.id}`
+        : '/projects'
+      );
+    });
   }
 
   handleCancel(e) {
@@ -71,7 +76,9 @@ class ProjectsForm extends React.Component {
         <ErrorMsg msg={errorMsg}/>
         <div className='form-footer'>
           <button type='button' onClick={this.handleCancel}>Cancel</button>
-          <button type='submit' disabled={!this.state.title}>Save</button>
+          <button type='submit' disabled={!this.state.title}>
+            {isNew ? 'Create Project' : 'Save'}
+          </button>
         </div>
       </form>
     );
