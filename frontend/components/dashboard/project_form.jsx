@@ -30,7 +30,7 @@ class ProjectsForm extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-    if (this.props.project.id !== newProps.project.id) {
+    if (newProps.project && this.props.project.id !== newProps.project.id) {
       this.setState(Object.assign({}, emptyState, newProps.project));
     }
   }
@@ -47,8 +47,8 @@ class ProjectsForm extends React.Component {
   }
 
   render() {
-    const isNew = this.props.isNew;
-    if (!(isNew || this.props.project.id)) {
+    const { isNew, project } = this.props;
+    if (!(isNew || (project && project.id))) {
       return(
         <Redirect to='/projects'/>
       );
