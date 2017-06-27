@@ -19,8 +19,8 @@
     }
   }
 
-  input,
-  textarea {
+  textarea,
+  input[type=text] {
     border: 1px solid lightgrey;
     border-radius: 2px;
     background-color: white;
@@ -95,17 +95,6 @@
   .story-tasks-section {
     .story-section-content {
       width: 100%;
-    }
-
-    button {
-      color: grey;
-      padding: 5px;
-      background: darken(#f1f0ea, 5%);
-      border-radius: 4px;
-      width: 100%;
-    }
-    i {
-      padding: 0 5px;
     }
   }
 }

@@ -24,6 +24,12 @@ class TasksController < ApplicationController
 
   private
 
+  def find_task(task_id)
+    task = Task.includes(:project).find(task_id)
+    raise ActiveRecord::RecordNotFound unless current_user.projects.include?(task.project)
+    task
+  end
+
   def action_object
     @task
   end
@@ -41,7 +47,7 @@ class TasksController < ApplicationController
 
   def task_params
     result = params.require(:task).permit(:author_id, :title, :done)
-    result[:title].strip!
+    result[:title].strip! if result[:title]
     result
   end
 

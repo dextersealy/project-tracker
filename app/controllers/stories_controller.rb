@@ -49,8 +49,8 @@ end
   def story_params
     result = params.require(:story).permit(:project_id, :author_id, :owner_id,
       :title, :description, :kind, :state, :points, :priority)
-    result[:title].strip!
-    result[:description].strip!
+    result[:title].strip! if result[:title]
+    result[:description].strip! if result[:description]
     result
   end
 

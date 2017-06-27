@@ -58,7 +58,7 @@ class ProjectsController < ApplicationController
 
   def project_params
     result = params.require(:project).permit(:title)
-    result[:title].strip!
+    result[:title].strip! if result[:title]
     result
   end
 

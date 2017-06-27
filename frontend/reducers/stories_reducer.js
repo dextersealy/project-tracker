@@ -1,5 +1,7 @@
 import { RECEIVE_STORY, RECEIVE_DELETE_STORY } from '../actions/story_actions';
 import { RECEIVE_PROJECT } from '../actions/project_actions';
+import { RECEIVE_TASK } from '../actions/task_actions';
+import * as _ from 'lodash';
 
 const defaultState = {}
 
@@ -18,6 +20,16 @@ const StoriesReducer = (state = defaultState, action) => {
     case RECEIVE_DELETE_STORY: {
       let newState = Object.assign({}, state);
       delete newState[action.story.id];
+      return newState;
+    }
+
+    case RECEIVE_TASK: {
+      const { task } = action;
+      let newState = _.merge({}, state);
+      const story = newState[task.story_id];
+      if (story) {
+        story.tasks[task.id] = task;
+      }
       return newState;
     }
 

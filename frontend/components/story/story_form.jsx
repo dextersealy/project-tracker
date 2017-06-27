@@ -168,17 +168,24 @@ class StoryForm extends React.Component {
 
   renderTasks() {
     const { tasks } = this.props.story;
-    const items = tasks && Object.keys(tasks).map(id => (
-      <StoryTask key={id} task={tasks[id]}/>
-    ));
+    const items = [];
+    let completed = 0;
+    if (tasks) {
+      Object.keys(tasks).forEach(id => {
+        const task = tasks[id];
+        items.push(<StoryTask key={id} task={task}/>);
+        completed += task.done ? 1 : 0;
+      });
+    }
+
     return (
       <section className='story-tasks-section'>
         <div className='story-section-caption'>
-          Tasks (0/0)
+          Tasks ({`${completed}/${items.length}`})
         </div>
         <div className='story-section-content'>
           {items}
-          <button onClick={this.handleAddTask}>
+          <button className='story-add-task-btn' onClick={this.handleAddTask}>
             <i className='fa fa-plus'/>Add a task
           </button>
         </div>
