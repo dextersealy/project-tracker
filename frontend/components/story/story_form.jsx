@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import * as _ from 'lodash';
 import * as FormUtil from '../../util/form_util';
 import * as StoryUtil from './story_util';
-import StoryMenu from './story_menu';
 import { selectUser } from '../../util/selectors';
 import { clearErrors } from '../../actions/error_actions';
+import { fetchStory } from '../../actions/story_actions';
 import ErrorMsg from '../util/error';
 import {
   createStory,
@@ -13,6 +13,8 @@ import {
   deleteStory,
   removeStory,
 } from '../../actions/story_actions';
+import StoryMenu from './story_menu';
+import StoryTask from './story_task';
 
 class StoryForm extends React.Component {
   constructor(props) {
@@ -22,6 +24,14 @@ class StoryForm extends React.Component {
     this.handleCaret = this.handleCaret.bind(this);
     this.handleSave = this.handleSave.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.handleAddTask = this.handleAddTask.bind(this);
+  }
+
+  componentDidMount() {
+    const { story } = this.props;
+    if (!StoryUtil.isNew(story)) {
+      this.props.fetchStory(story.id);
+    }
   }
 
   componentWillUnmount() {
@@ -157,13 +167,18 @@ class StoryForm extends React.Component {
   }
 
   renderTasks() {
+    const { tasks } = this.props.story;
+    const items = tasks && Object.keys(tasks).map(id => (
+      <StoryTask key={id} task={tasks[id]}/>
+    ));
     return (
       <section className='story-tasks-section'>
         <div className='story-section-caption'>
           Tasks (0/0)
         </div>
         <div className='story-section-content'>
-          <button>
+          {items}
+          <button onClick={this.handleAddTask}>
             <i className='fa fa-plus'/>Add a task
           </button>
         </div>
@@ -202,6 +217,9 @@ class StoryForm extends React.Component {
   handleDelete(e) {
     this.props.remove(this.props.story);
   }
+
+  handleAddTask(e) {
+  }
 }
 
 const mapStateToProps = (state, { story }) => ({
@@ -217,6 +235,7 @@ const mapDispatchToProps = (dispatch, {story}) => {
     commit: story => dispatch(commit(story)),
     remove: story => dispatch(remove(story)),
     clearErrors: () => dispatch(clearErrors()),
+    fetchStory: id => dispatch(fetchStory(id)),
   };
 };
 

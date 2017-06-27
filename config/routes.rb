@@ -14,7 +14,7 @@ Rails.application.routes.draw do
 
     resources :memberships, only: [:create, :index]
 
-    resources :stories, only: [:update, :destroy] do
+    resources :stories, only: [:show, :update, :destroy] do
       resources :comments, only: [:create, :index]
       resources :tasks, only: [:create, :index]
     end

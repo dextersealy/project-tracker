@@ -14,6 +14,12 @@ const receiveDeleteStory = story => ({
   story
 });
 
+export const fetchStory = id => dispatch => (
+  APIUtil.fetchStory(id)
+    .done(story => dispatch(receiveStory(story)))
+    .fail(errors => dispatch(receiveErrors(errors)))
+);
+
 export const createStory = story => dispatch => (
   APIUtil.createStory(story)
     .done(story => dispatch(receiveStory(story)))

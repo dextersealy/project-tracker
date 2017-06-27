@@ -8,6 +8,10 @@ class StoriesController < ApplicationController
     @stories = project.stories
   end
 
+  def show
+    @story = find_story(params[:id])
+  end
+
   def create
     do_action do
       @story = Story.new(story_params)
