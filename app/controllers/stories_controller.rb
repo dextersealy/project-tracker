@@ -1,4 +1,6 @@
 class StoriesController < ApplicationController
+  include StoriesHelper
+
   before_action :require_login
 
   def index
@@ -15,41 +17,24 @@ class StoriesController < ApplicationController
 
   def update
     @story = find_story(params[:id])
-    do_action { @story.update(story_params) }
+    do_action { @story.update(story_params) } if allowed?
   end
 
   def destroy
     @story = find_story(params[:id])
-    do_action { @story.destroy }
+    do_action { @story.destroy } if allowed?
   end
 
   private
 
-  def require_login
-    render json: [], status: 401 unless logged_in?
-  end
+  def allowed?
+    return true if can_edit?(@story)
+    render json: ["Permission denied"], status: 422
+    false
+end
 
-  def find_story(id)
-    story = Story.includes(:project).find(id)
-    raise ActiveRecord::RecordNotFound unless current_user.projects.include?(story.project)
-    story
-  end
-
-  def do_action(&prc)
-    render json: ["Permission denied"], status: 422 unless can_edit?(@story)
-    begin
-      if prc.call
-        render :show
-      else
-        render json: @story.errors.full_messages, status: 422
-      end
-    rescue ArgumentError => exception
-      if exception.message.include? 'is not a valid'
-        render json: [exception.message], status: 422
-      else
-        raise
-      end
-    end
+  def action_object
+    @story
   end
 
   def can_edit?(story)

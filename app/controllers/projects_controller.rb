@@ -16,34 +16,28 @@ class ProjectsController < ApplicationController
 
   def update
     @project = current_user.projects.find(params[:id])
-    do_action { @project.update(project_params) }
+    do_action { @project.update(project_params) } if allowed?
   end
 
   def destroy
     @project = current_user.projects.find(params[:id])
-    do_action { @project.destroy }
+    do_action { @project.destroy } if allowed?
   end
 
   private
 
-  def require_login
-    render json: [], status: 401 unless logged_in?
+  def action_object
+    @project
   end
 
-  def do_action(&prc)
-    if owner?(@project)
-      if prc.call
-        render :show
-      else
-        render json: @project.errors.full_messages, status: 422
-      end
-    else
-      render json: ["Permission denied"], status: 422
-    end
+  def allowed?
+    return true if owner?(@project)
+    render json: ["Permission denied"], status: 422
+    false
   end
 
   def owner?(project)
-    return true unless project.persisted?
+    return true unless project && project.persisted?
     project.owner?(current_user)
   end
 
@@ -63,7 +57,9 @@ class ProjectsController < ApplicationController
   end
 
   def project_params
-    params.require(:project).permit(:title)
+    result = params.require(:project).permit(:title)
+    result[:title].strip!
+    result
   end
 
 end

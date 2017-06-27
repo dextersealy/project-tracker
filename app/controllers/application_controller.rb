@@ -26,6 +26,26 @@ class ApplicationController < ActionController::Base
     @current_user ||= User.find_by_session_token(session[:session_token])
   end
 
+  def require_login
+    render json: [], status: 401 unless logged_in?
+  end
+
+  def do_action(&prc)
+    begin
+      if prc.call
+        render :show
+      else
+        render json: action_object.errors.full_messages, status: 422
+      end
+    rescue ArgumentError => exception
+      if exception.message.include? 'is not a valid'
+        render json: [exception.message], status: 422
+      else
+        raise
+      end
+    end
+  end
+
   def version
     ProjectTracker::Application::version
   end
