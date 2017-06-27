@@ -2,18 +2,9 @@
   flex: 1 1 0px;
   background-color: #484F57;
 
-  button {
-    font-size: 10px;
-    border-radius: 2px;
-    margin-right: 5px;
-    &:last-child {
-      margin-right: 0;
-    }
-  }
-
-  p i {
-    padding-left: 5px;
-    padding-right: 10px;
+  .index {
+    overflow-y: auto;
+    height: 100%;
   }
 
   .fa-plus {
@@ -24,9 +15,8 @@
     color: #e0c85e;
   }
 
-  .index {
-    overflow-y: auto;
-    height: 100%;
+  p i {
+    padding-left: 5px;
+    padding-right: 10px;
   }
-
 }

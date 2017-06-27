@@ -1,19 +1,36 @@
 .story-form {
-  background-color: #f3f4f4;
   display: flex;
   flex-direction: column;
-  font-size: 12px;
-  padding: 10px;
   background: #f1f0ea;
   border-top: 1px solid white;
   border-bottom: 1px solid lightgrey;
+  padding: 10px;
+  font-size: 12px;
 
-  button {
-    background-color: darken(grey, 10%);
+  section {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-top: 10px;
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  input,
+  textarea {
+    border: 1px solid lightgrey;
+    border-radius: 2px;
+    background-color: white;
+    padding: 3px;
+    width: 100%;
+    resize: none;
   }
 
   i {
-    padding-right: 10px;
+    padding-right: 8px;
     font-size: 14px;
   }
 
@@ -22,73 +39,73 @@
     cursor: pointer;
   }
 
-  div.title {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
-
-  input, textarea {
-    border: 1px solid lightgrey;
-    border-radius: 2px;
-    padding: 3px;
-    width: 100%;
-    resize: none;
-    background-color: white;
-  }
-
-  label {
-    color: black;
-    display: block;
-    margin-bottom: 5px;
-    font-size: 11px;
-    font-weight: 600;
+  .story-section-caption {
     text-transform: uppercase;
+    font-size: 11px;
+    color: grey;
   }
 
-  .actions {
+  .story-actions-section {
     margin-top: 5px;
-    display: flex;
-    flex-direction: row;
     justify-content: flex-end;
+    button {
+      font-size: 10px;
+      background-color: darken(grey, 10%);
+      border-radius: 2px;
+      margin-right: 5px;
+      &:last-child {
+        margin-right: 0;
+      }
+    }
   }
 
-  .options {
+  .story-options-section {
     border: 1px solid lightgrey;
     border-radius: 2px;
     margin-top: 10px;
 
-    > div {
-      border-bottom: 1px solid lightgrey;
+    > section {
       padding: 5px;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
+      margin-top: 0;
+      border-bottom: 1px solid lightgrey;
       &:last-child {
         border-bottom: none;
       }
     }
   }
 
-  div.story-type {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+  .story-description-section,
+  .story-tasks-section {
+    flex-direction: column;
+    align-items: flex-start;
+
+    .story-section-caption {
+      font-weight: bold;
+      color: black;
+      margin-bottom: 5px;
+    }
   }
 
-  .requester-name {
-    font-size: 10px;
+  .story-requester-section {
+    .story-section-content {
+      font-size: 10px;
+    }
   }
 
-  .description {
-    margin-top: 10px;
-  }
+  .story-tasks-section {
+    .story-section-content {
+      width: 100%;
+    }
 
-  .label {
-    text-transform: uppercase;
-    font-size: 11px;
-    color: grey;
+    button {
+      color: grey;
+      padding: 5px;
+      background: darken(#f1f0ea, 5%);
+      border-radius: 4px;
+      width: 100%;
+    }
+    i {
+      padding: 0 5px;
+    }
   }
-
 }

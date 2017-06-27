@@ -34,13 +34,14 @@ class StoryForm extends React.Component {
         {this.renderTitle()}
         <ErrorMsg msg={errorMsg}/>
         {this.renderActions()}
-        <div className='options'>
+        <div className='story-options-section'>
           {this.renderKind()}
           {this.renderPoints()}
           {this.renderState()}
           {this.renderRequester()}
         </div>
         {this.renderDescription()}
+        {this.renderTasks()}
       </div>
     );
   }
@@ -48,24 +49,24 @@ class StoryForm extends React.Component {
   renderTitle() {
     const { title } = this.state;
     return (
-      <div className='title'>
+      <section className='story-title-section'>
         <i onClick={this.handleCaret} className='caret fa fa-caret-down'/>
         <input type='text' value={title} onChange={this.handleChange('title')}/>
-      </div>
+      </section>
     );
   }
 
   renderActions() {
     const isNew = StoryUtil.isNew(this.props.story);
     return (
-      <div className='actions'>
+      <section className='story-actions-section'>
         <button type='button' onClick={this.handleDelete}>
           {isNew ? 'Cancel' : 'Delete'}
         </button>
         <button type='button' onClick={this.handleSave}>
           {isNew ? 'Save' : 'Close'}
         </button>
-      </div>
+      </section>
     );
   }
 
@@ -78,14 +79,14 @@ class StoryForm extends React.Component {
     };
     const { kind } = this.state;
     return (
-      <div>
-        <span className='label'>Story type</span>
-        <div className='story-type'>
+      <section className='story-type-section'>
+        <div className='story-section-caption'>Story type</div>
+        <div className='story-section-content'>
           {StoryUtil.renderKind(kind)}
           <StoryMenu items={items} currentValue={kind}
             handleSelect={this.handleMenu('kind')}/>
         </div>
-      </div>
+      </section>
     );
   }
 
@@ -98,13 +99,13 @@ class StoryForm extends React.Component {
     };
     const { points } = this.state;
     return (
-      <div>
-        <span className='label'>Points</span>
-        <div className='story-points'>
+      <section className='story-points-section'>
+        <span className='story-section-caption'>Points</span>
+        <div className='story-section-content'>
           <StoryMenu items={items} currentValue={points}
             handleSelect={this.handleMenu('points')}/>
         </div>
-      </div>
+      </section>
     );
   }
 
@@ -119,36 +120,53 @@ class StoryForm extends React.Component {
     }
     const { state } = this.state;
     return (
-      <div>
-        <span className='label'>State</span>
-        <div className='story-state'>
+      <section className='story-state-section'>
+        <span className='story-section-caption'>State</span>
+        <div className='story-section-content'>
           <StoryMenu items={items} currentValue={state}
             handleSelect={this.handleMenu('state')}/>
         </div>
-      </div>
+      </section>
     );
   }
 
   renderRequester() {
     const { requester } = this.props;
     return (
-      <div>
-        <span className='label'>Requester</span>
-        <div className='story-requester'>
-          <div className='requester-name'>{requester}</div>
+      <section className='story-requester-section'>
+        <span className='story-section-caption'>Requester</span>
+        <div className='story-section-content'>
+          {requester}
         </div>
-      </div>
+      </section >
     );
   }
 
   renderDescription() {
     const { description } = this.state;
     return (
-      <div className='description'>
-        <label htmlFor='description'>Description</label>
+      <section className='story-description-section'>
+        <label htmlFor='description' className='story-section-caption'>
+          Description
+        </label>
         <textarea id='description' placeholder='Add a description' rows='3'
           onChange={this.handleChange('description')} value={description}/>
-      </div>
+      </section>
+    );
+  }
+
+  renderTasks() {
+    return (
+      <section className='story-tasks-section'>
+        <div className='story-section-caption'>
+          Tasks (0/0)
+        </div>
+        <div className='story-section-content'>
+          <button>
+            <i className='fa fa-plus'/>Add a task
+          </button>
+        </div>
+      </section>
     );
   }
 

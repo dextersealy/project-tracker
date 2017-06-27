@@ -47,8 +47,14 @@
   }
 
   button {
+    font-size: 10px;
     padding-top: 4px;
     padding-bottom: 4px;
+    border-radius: 2px;
+    margin-right: 5px;
+    &:last-child {
+      margin-right: 0;
+    }
 
     &.start, &.restart {
       background: #e0e2e5;
