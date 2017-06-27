@@ -1,7 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import * as _ from 'lodash';
 import Header from '../util/header';
 import * as StorageAPI from '../../util/storage_util';
-import { connect } from 'react-redux';
 import { fetchProject } from '../../actions/project_actions';
 import { selectProject, currentStories } from '../../util/selectors';
 import { addStory } from '../../actions/story_actions';
@@ -156,7 +157,8 @@ class Project extends React.Component {
   }
 
   retrieveState(project_id = null) {
-    const state = Object.assign({}, { tabs: theTabs }, this.state);
+    debugger;
+    const state = _.merge({}, { tabs: theTabs }, this.state);
     const { tabs } = state;
     const savedState = StorageAPI.get(this.getKey(project_id));
     Object.keys(savedState).forEach(key => {

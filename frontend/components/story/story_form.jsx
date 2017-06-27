@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import * as _ from 'lodash';
 import * as FormUtil from '../../util/form_util';
 import * as StoryUtil from './story_util';
 import StoryMenu from './story_menu';
@@ -16,7 +17,7 @@ import {
 class StoryForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = Object.assign({}, this.props.story);
+    this.state = _.merge({}, this.props.story);
     this.handleChange = FormUtil.handleChange.bind(this);
     this.handleCaret = this.handleCaret.bind(this);
     this.handleSave = this.handleSave.bind(this);
