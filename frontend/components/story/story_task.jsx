@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as FormUtil from '../../util/form_util';
-import { updateTask } from '../../actions/task_actions';
+import { updateTask, deleteTask } from '../../actions/task_actions';
 
 class StoryTask extends React.Component {
   constructor(props) {
@@ -11,6 +11,7 @@ class StoryTask extends React.Component {
     this.handleFocus = this.handleFocus.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSave = this.handleSave.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
     this.handleCheckbox = this.handleCheckbox.bind(this);
   }
 
@@ -51,6 +52,10 @@ class StoryTask extends React.Component {
     }
   }
 
+  handleDelete(e) {
+    this.props.deleteTask(this.props.task);
+  }
+
   render() {
     const { task } = this.props;
     const { title } = this.state;
@@ -63,9 +68,11 @@ class StoryTask extends React.Component {
           onFocus={this.handleFocus(true)}
           onBlur={this.handleFocus(false)}
           onChange={this.handleChange} />
-        <button ref={instance => this.saveButton = instance}
-          className='hide'
-          onClick={this.handleSave}>
+        <button className='story-task-delete-btn' onClick={this.handleDelete}>
+          <i className='fa fa-trash-o'/>
+        </button>
+        <button className='hide' onClick={this.handleSave}
+          ref={instance => this.saveButton = instance}>
           Save
         </button>
       </div>
@@ -74,7 +81,8 @@ class StoryTask extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  commit: task => dispatch(updateTask(task))
+  commit: task => dispatch(updateTask(task)),
+  deleteTask: task => dispatch(deleteTask(task))
 });
 
 export default connect(

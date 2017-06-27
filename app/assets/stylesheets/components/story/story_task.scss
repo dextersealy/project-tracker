@@ -52,9 +52,18 @@
       background-color: darken(grey, 10%);
       border-radius: 2px;
       margin-right: 10px;
-      &.hide {
-        display: none;
-      }
+    }
+
+    .story-task-delete-btn {
+      background: #f1f0ea;
+      border: 1px solid grey;
+      color: grey;
+      border-radius: 2px;
+      padding: 3px 1px;
+      margin-right: 5px;
+    }
+    .hide {
+      display: none;
     }
   }
 }
