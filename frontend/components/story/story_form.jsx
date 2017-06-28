@@ -185,7 +185,6 @@ class StoryForm extends React.Component {
           if (!task.id.match(`${this.id}$`)) {
             return;
           }
-          console.log(task.id);
           allowAdd = false;
         }
         items.push(<StoryTask key={id} task={task}

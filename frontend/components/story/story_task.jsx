@@ -21,7 +21,7 @@ class StoryTask extends React.Component {
   }
 
   componentDidMount() {
-    if (StoryUtil.isNew(this.props.task)) {
+    if (this.props.isNew) {
       this.textInput.focus();
     }
     this.resizeInput();
@@ -32,8 +32,7 @@ class StoryTask extends React.Component {
   }
 
   render() {
-    const { task } = this.props;
-    const isNew = StoryUtil.isNew(task);
+    const { task, isNew } = this.props;
     return (
       <div className={`story-task${task.done ? ' done' : ''}`}>
         <input
@@ -87,9 +86,9 @@ class StoryTask extends React.Component {
   }
 
   handleSave(e) {
-    const { task } = this.props;
+    const { task, isNew } = this.props;
     this.props.commit(task).then(() => {
-      if (StoryUtil.isNew(task)) {
+      if (isNew) {
         this.props.remove(task);
       }
     });
@@ -101,8 +100,10 @@ class StoryTask extends React.Component {
 
   resizeInput() {
     window.setTimeout(() => {
-      this.textInput.style.height = 'auto';
-      this.textInput.style.height = this.textInput.scrollHeight  + 'px';
+      if (this.textInput) {
+        this.textInput.style.height = 'auto';
+        this.textInput.style.height = this.textInput.scrollHeight  + 'px';
+      }
     }, 0);
   }
 }
@@ -112,6 +113,7 @@ const mapDispatchToProps = (dispatch, { task }) => {
   const commit = isNew ? createTask : updateTask;
   const remove = isNew ? removeTask : deleteTask;
   return {
+    isNew,
     commit: task => dispatch(commit(task)),
     remove: task => dispatch(remove(task))
   }
