@@ -14,8 +14,15 @@ import {
   deleteStory,
   removeStory,
 } from '../../actions/story_actions';
-import StoryMenu from './story_menu';
-import StoryTask from './story_task';
+
+import StoryTitle from './story_form_title';
+import StoryActions from './story_form_actions';
+import StoryKind from './story_form_kind';
+import StoryPoints from './story_form_points';
+import StoryState from './story_form_state';
+import StoryRequester from './story_form_requester';
+import StoryDescription from './story_form_description';
+import StoryTasks from './story_form_tasks';
 
 class StoryForm extends React.Component {
   constructor(props) {
@@ -27,6 +34,7 @@ class StoryForm extends React.Component {
     this.handleSave = this.handleSave.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.handleAddTask = this.handleAddTask.bind(this);
+    this.handleTaskChange = this.handleTaskChange.bind(this);
     this.id = `${Math.random() * 1e6}`;
   }
 
@@ -42,7 +50,9 @@ class StoryForm extends React.Component {
   }
 
   componentWillUnmount() {
-    this.props.clearErrors();
+    if (this.props.errorMsg) {
+      this.props.clearErrors();
+    }
   }
 
   render() {
@@ -65,148 +75,76 @@ class StoryForm extends React.Component {
   }
 
   renderTitle() {
-    const { title } = this.state;
     return (
-      <section className='story-title-section'>
-        <i onClick={this.handleCaret} className='caret fa fa-caret-down'/>
-        <input type='text' value={title} onChange={this.handleChange('title')}/>
-      </section>
+      <StoryTitle
+        story={this.state}
+        handleCaret={this.handleCaret}
+        handleChange={this.handleChange('title')}
+        />
     );
   }
 
   renderActions() {
-    const isNew = StoryUtil.isNew(this.props.story);
     return (
-      <section className='story-actions-section'>
-        <button type='button' onClick={this.handleDelete}>
-          {isNew ? 'Cancel' : 'Delete'}
-        </button>
-        <button type='button' onClick={this.handleSave}>
-          {isNew ? 'Save' : 'Close'}
-        </button>
-      </section>
+      <StoryActions
+        story={this.state}
+        handleDelete={this.handleDelete}
+        handleSave={this.handleSave}
+        />
     );
   }
 
   renderKind() {
-    const items = {
-      feature: { title: 'Feature', icon: 'fa fa-star' },
-      bug: { title: 'Bug', icon: 'fa fa-bug' },
-      chore: { title: 'Chore', icon: 'fa fa-gear' },
-      release: { title: 'Release', icon: 'fa fa-flag' },
-    };
-    const { kind } = this.state;
     return (
-      <section className='story-type-section'>
-        <div className='story-section-caption'>Story type</div>
-        <div className='story-section-content'>
-          {StoryUtil.renderKind(kind)}
-          <StoryMenu items={items} currentValue={kind}
-            handleSelect={this.handleMenu('kind')}/>
-        </div>
-      </section>
+      <StoryKind
+        story={this.state}
+        handleMenu={this.handleMenu('kind')}
+        />
     );
   }
 
   renderPoints() {
-    const items = {
-      zero: { title: '0\xa0Points' },
-      easy: { title: '1\xa0Point' },
-      medium: { title: '2\xa0Points' },
-      hard: { title: '3\xa0Points' },
-    };
-    const { points } = this.state;
     return (
-      <section className='story-points-section'>
-        <span className='story-section-caption'>Points</span>
-        <div className='story-section-content'>
-          <StoryMenu items={items} currentValue={points}
-            handleSelect={this.handleMenu('points')}/>
-        </div>
-      </section>
+      <StoryPoints
+        story={this.state}
+        handleMenu={this.handleMenu('points')}/>
     );
   }
 
   renderState() {
-    const items = {
-      unstarted: { title: 'Unstarted' },
-      started: { title: 'Started' },
-      finished: { title: 'Finished' },
-      delivered: { title: 'Delivered' },
-      rejected: { title: 'Rejected' },
-      accepted: { title: 'Accepted' },
-    }
-    const { state } = this.state;
     return (
-      <section className='story-state-section'>
-        <span className='story-section-caption'>State</span>
-        <div className='story-section-content'>
-          <StoryMenu items={items} currentValue={state}
-            handleSelect={this.handleMenu('state')}/>
-        </div>
-      </section>
+      <StoryState
+        story={this.state}
+        handleMenu={this.handleMenu('state')}
+        />
     );
   }
 
   renderRequester() {
-    const { requester } = this.props;
     return (
-      <section className='story-requester-section'>
-        <span className='story-section-caption'>Requester</span>
-        <div className='story-section-content'>
-          {requester}
-        </div>
-      </section >
+      <StoryRequester
+        story={this.props}
+        />
     );
   }
 
   renderDescription() {
-    const { description } = this.state;
     return (
-      <section className='story-description-section'>
-        <label htmlFor='description' className='story-section-caption'>
-          Description
-        </label>
-        <textarea id='description' placeholder='Add a description' rows='3'
-          onChange={this.handleChange('description')} value={description}/>
-      </section>
+      <StoryDescription
+        story={this.state}
+        handleChange={this.handleChange('description')}
+        />
     );
   }
 
   renderTasks() {
-    const { tasks } = this.state;
-    const items = [];
-    let completed = 0;
-    let allowAdd = true;
-    if (tasks) {
-      Object.keys(tasks).forEach(id => {
-        const task = tasks[id];
-        if (StoryUtil.isNew(task)) {
-          if (!task.id.match(`${this.id}$`)) {
-            return;
-          }
-          allowAdd = false;
-        }
-        items.push(<StoryTask key={id} task={task}
-          handleChange={this.handleTaskChange(task)}/>);
-        completed += task.done ? 1 : 0;
-      });
-    }
-
-    return (
-      <section className='story-tasks-section'>
-        <div className='story-section-caption'>
-          Tasks ({`${completed}/${items.length}`})
-        </div>
-        <div className='story-section-content'>
-          {items}
-          { allowAdd &&
-            <button className='story-add-task-btn' onClick={this.handleAddTask}>
-              <i className='fa fa-plus'/>Add a task
-            </button>
-          }
-        </div>
-      </section>
+    return(
+      <StoryTasks
+        story={this.state}
+        form_id={this.id}
+        handleAdd={this.handleAddTask}
+        handleChange={this.handleTaskChange}
+        />
     );
   }
 
@@ -224,7 +162,7 @@ class StoryForm extends React.Component {
       this.setState(prevState => (
         Object.assign({}, prevState, {[field]: value})
       ));
-    }
+    };
   }
 
   handleTaskChange({ id }) {
