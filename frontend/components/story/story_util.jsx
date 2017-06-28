@@ -42,3 +42,7 @@ export const initTask = ({ id, user_id, story_id }) => ({
   title: '',
   done: false,
 });
+
+export const DragDropItemTypes = {
+  STORY: 'STORY'
+};

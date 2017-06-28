@@ -88,7 +88,8 @@ class Project extends React.Component {
 
   filterStories(key) {
     const { stories } = this.props;
-    return stories && stories.filter(story => this.filter(story, key));
+    return stories && stories.filter(story => this.filter(story, key))
+      .sort((a, b) => parseInt(a.priority) - parseInt(b.priority));
   }
 
   filter(story, key) {

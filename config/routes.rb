@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     resources :stories, only: [:show, :update, :destroy] do
       resources :comments, only: [:create, :index]
       resources :tasks, only: [:create, :index]
+      patch '/prioritize', to: 'stories#prioritize'
     end
 
     resources :comments, only: [:update, :destroy]

@@ -30,10 +30,10 @@ class ApplicationController < ActionController::Base
     render json: [], status: 401 unless logged_in?
   end
 
-  def do_action(&prc)
+  def do_action(template = :show, &prc)
     begin
       if prc.call
-        render :show
+        render template
       else
         render json: action_object.errors.full_messages, status: 422
       end

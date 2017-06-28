@@ -3,6 +3,7 @@ import { receiveErrors } from './error_actions';
 
 export const RECEIVE_STORY = 'RECEIVE_STORY';
 export const RECEIVE_DELETE_STORY = 'RECEIVE_DELETE_STORY';
+export const RECEIVE_STORY_CHANGES = 'RECEIVE_STORY_CHANGES';
 
 const receiveStory = story => ({
   type: RECEIVE_STORY,
@@ -12,6 +13,11 @@ const receiveStory = story => ({
 const receiveDeleteStory = story => ({
   type: RECEIVE_DELETE_STORY,
   story
+});
+
+const receiveStoryChanges = changes => ({
+  type: RECEIVE_STORY_CHANGES,
+  changes
 });
 
 export const fetchStory = id => dispatch => (
@@ -40,3 +46,9 @@ export const deleteStory = story => dispatch => (
 
 export const addStory = story => receiveStory(story);
 export const removeStory = story => receiveDeleteStory(story);
+
+export const prioritizeStory = (story, priority) => dispatch => (
+  APIUtil.prioritizeStory(story, priority)
+    .done(changes => dispatch(receiveStoryChanges(changes)))
+    .fail(errors => dispatch(receiveErrors(errors)))
+)

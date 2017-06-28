@@ -18,3 +18,9 @@ export const deleteStory = story => $.ajax({
   method: 'DELETE',
   url: `/api/stories/${story.id}`,
 });
+
+export const prioritizeStory = (story, priority) => $.ajax({
+  method: 'PATCH',
+  url: `/api/stories/${story.id}/prioritize`,
+  data: { story : { priority } }
+});

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { DragSource, DropTarget } from 'react-dnd';
 import { selectUser } from '../../util/selectors';
 import * as StoryUtil from './story_util';
-import { updateStory } from '../../actions/story_actions';
+import { updateStory, prioritizeStory } from '../../actions/story_actions';
 import StoryForm from './story_form';
 
 const workflow = {
@@ -102,24 +102,28 @@ class StoryItem extends React.Component {
   }
 }
 
-//  redux
-
-const mapStateToProps = (state, {story}) => ({
-  initials: selectUser(state, story.author_id)['initials']
-});
-
-const mapDispatchToProps = dispatch => ({
-  commit: story => dispatch(updateStory(story))
-})
-
-//  drag source
+//  drag & drop
 
 const storySource = {
-  beginDrag(props) {
-    return {
-      sourceId: props.story.id
-    };
+  canDrag: ({ story }) => !StoryUtil.isCompleted(story),
+  beginDrag: ({ story }) => ({ sourceId: story.id }),
+  endDrag(props, monitor) {
+    if (monitor.didDrop()) {
+      const story = monitor.getDropResult();
+      const old_priority = parseInt(props.story.priority);
+      let new_priority = parseInt(story.priority);
+      if (old_priority < new_priority) {
+        new_priority -= 1;
+      }
+      if (old_priority !== new_priority) {
+        props.prioritize(props.story, new_priority);
+      }
+    }
   }
+}
+
+const storyTarget = {
+  drop: ({ story }) => story
 }
 
 const collectSource = (connect, monitor) => ({
@@ -127,42 +131,35 @@ const collectSource = (connect, monitor) => ({
   isDragging: monitor.isDragging(),
 });
 
-//  drop target
-
-const storyTarget = {
-  drop(props, monitor) {
-    const { story } = props;
-    const { sourceId } = monitor.getItem();
-    console.log(`story ${sourceId} dropped on ${story.id}`);
-  }
-}
-
 const collectTarget = (connect, monitor) => ({
   connectDropTarget: connect.dropTarget(),
   isOver: monitor.isOver()
 });
 
-// connect everything
-
-const connectedComponent = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(StoryItem);
-
-const ItemTypes = {
-  STORY: 'STORY'
-};
-
-const connectedDragSource = DragSource(
-  ItemTypes.STORY,
+const dragSource = DragSource(
+  StoryUtil.DragDropItemTypes.STORY,
   storySource,
   collectSource
-)(connectedComponent);
+)(StoryItem);
 
-const connectedDragSourceAndDropTarget = DropTarget(
-  ItemTypes.STORY,
+const dragSourceAndDropTarget = DropTarget(
+  StoryUtil.DragDropItemTypes.STORY,
   storyTarget,
   collectTarget
-)(connectedDragSource);
+)(dragSource);
+
+const mapStateToProps = (state, {story}) => ({
+  initials: selectUser(state, story.author_id)['initials']
+});
+
+const mapDispatchToProps = dispatch => ({
+  commit: story => dispatch(updateStory(story)),
+  prioritize: (story, priority) => dispatch(prioritizeStory(story, priority))
+})
+
+const connectedDragSourceAndDropTarget = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(dragSourceAndDropTarget);
 
 export default connectedDragSourceAndDropTarget;
