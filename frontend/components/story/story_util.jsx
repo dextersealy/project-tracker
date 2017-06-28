@@ -4,11 +4,9 @@ const icons = {
   feature: 'star', bug: 'bug', chore: 'cog', release: 'flag'
 };
 
-export const renderKind = kind => {
-  return (
-    <i className={`kind fa fa-${icons[kind]}`}/>
-  );
-}
+export const renderKind = kind => (
+  <i className={`kind fa fa-${icons[kind]}`}/>
+);
 
 export const initStory = ({ user_id, project_id, state }) => ({
   id: `new_${state}`,
@@ -21,7 +19,6 @@ export const initStory = ({ user_id, project_id, state }) => ({
   state,
   description: '',
 });
-
 
 export const isNew = ({ id }) => Boolean(`${id}`.match(/^new/));
 export const isEmpty = story => {
@@ -37,3 +34,11 @@ export const isCurrent = ({ state }) => (
 export const belongsToUser = ({ owner_id }, user_id) => {
   return owner_id == user_id
 }
+
+export const initTask = ({ id, user_id, story_id }) => ({
+  id: `new_${id || story_id}`,
+  story_id,
+  author_id: user_id,
+  title: '',
+  done: false,
+});

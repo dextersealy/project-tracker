@@ -28,7 +28,11 @@ const StoriesReducer = (state = defaultState, action) => {
       let newState = _.merge({}, state);
       const story = newState[task.story_id];
       if (story) {
-        story.tasks[task.id] = task;
+        if (story.tasks) {
+          story.tasks[task.id] = task;
+        } else {
+          story.tasks = {[task.id]: task}
+        }
       }
       return newState;
     }
@@ -37,7 +41,7 @@ const StoriesReducer = (state = defaultState, action) => {
       const { task } = action;
       let newState = _.merge({}, state);
       const story = newState[task.story_id];
-      if (story) {
+      if (story && story.tasks) {
         delete story.tasks[task.id];
       }
       return newState;

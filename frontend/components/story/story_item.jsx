@@ -25,7 +25,7 @@ class StoryItem extends React.Component {
   render() {
     return this.state.open
       ? <StoryForm story={this.props.story} handleClose={this.handleCaret}/>
-    : this.renderItem();
+      : this.renderItem();
   }
 
   renderItem() {

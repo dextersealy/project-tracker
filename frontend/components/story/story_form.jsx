@@ -6,6 +6,7 @@ import * as StoryUtil from './story_util';
 import { selectUser } from '../../util/selectors';
 import { clearErrors } from '../../actions/error_actions';
 import { fetchStory } from '../../actions/story_actions';
+import { addTask } from '../../actions/task_actions';
 import ErrorMsg from '../util/error';
 import {
   createStory,
@@ -19,12 +20,14 @@ import StoryTask from './story_task';
 class StoryForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = _.merge({}, this.props.story);
+
+    this.state = this.props.story;
     this.handleChange = FormUtil.handleChange.bind(this);
     this.handleCaret = this.handleCaret.bind(this);
     this.handleSave = this.handleSave.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.handleAddTask = this.handleAddTask.bind(this);
+    this.id = `${Math.random() * 1e6}`;
   }
 
   componentDidMount() {
@@ -32,6 +35,10 @@ class StoryForm extends React.Component {
     if (!StoryUtil.isNew(story)) {
       this.props.fetchStory(story.id);
     }
+  }
+
+  componentWillReceiveProps(newProps) {
+    this.state = newProps.story;
   }
 
   componentWillUnmount() {
@@ -167,13 +174,22 @@ class StoryForm extends React.Component {
   }
 
   renderTasks() {
-    const { tasks } = this.props.story;
+    const { tasks } = this.state;
     const items = [];
     let completed = 0;
+    let allowAdd = true;
     if (tasks) {
       Object.keys(tasks).forEach(id => {
         const task = tasks[id];
-        items.push(<StoryTask key={id} task={task}/>);
+        if (StoryUtil.isNew(task)) {
+          if (!task.id.match(`${this.id}$`)) {
+            return;
+          }
+          console.log(task.id);
+          allowAdd = false;
+        }
+        items.push(<StoryTask key={id} task={task}
+          handleChange={this.handleTaskChange(task)}/>);
         completed += task.done ? 1 : 0;
       });
     }
@@ -185,9 +201,11 @@ class StoryForm extends React.Component {
         </div>
         <div className='story-section-content'>
           {items}
-          <button className='story-add-task-btn' onClick={this.handleAddTask}>
-            <i className='fa fa-plus'/>Add a task
-          </button>
+          { allowAdd &&
+            <button className='story-add-task-btn' onClick={this.handleAddTask}>
+              <i className='fa fa-plus'/>Add a task
+            </button>
+          }
         </div>
       </section>
     );
@@ -210,6 +228,14 @@ class StoryForm extends React.Component {
     }
   }
 
+  handleTaskChange({ id }) {
+    return function (field, value) {
+      const newState = _.merge({}, this.state);
+      newState.tasks[id][field] = value;
+      this.setState(newState)
+    }.bind(this);
+  }
+
   handleSave(e) {
     const { story, commit, remove, handleClose } = this.props;
     commit(this.state).then(() => {
@@ -226,11 +252,17 @@ class StoryForm extends React.Component {
   }
 
   handleAddTask(e) {
+    this.props.addTask(StoryUtil.initTask({
+      id: this.id,
+      story_id: this.props.story.id,
+      user_id: this.props.user_id,
+    }));
   }
 }
 
 const mapStateToProps = (state, { story }) => ({
   requester: selectUser(state, story.author_id)['name'],
+  user_id: state.session.currentUser.id,
   errorMsg: state.errors[0],
 });
 
@@ -243,6 +275,7 @@ const mapDispatchToProps = (dispatch, {story}) => {
     remove: story => dispatch(remove(story)),
     clearErrors: () => dispatch(clearErrors()),
     fetchStory: id => dispatch(fetchStory(id)),
+    addTask: task => dispatch(addTask(task)),
   };
 };
 

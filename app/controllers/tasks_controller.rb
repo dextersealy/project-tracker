@@ -9,6 +9,7 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
+    @task[:story_id] = params[:story_id] if find_story(params[:story_id])
     do_action { @task.save }
   end
 

@@ -4,7 +4,7 @@ export const fetchTasks = story => $.ajax({
 
 export const createTask = task => $.ajax({
   method: 'POST',
-  url: `/api/tasks/${task.story_id}/tasks`,
+  url: `/api/stories/${task.story_id}/tasks`,
   data: { task },
 });
 
