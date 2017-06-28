@@ -17,6 +17,7 @@ const workflow = {
 class StoryItem extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = { open: StoryUtil.isNew(this.props.story) }
     this.handleCaret = this.handleCaret.bind(this);
     this.handleAction = this.handleAction.bind(this);
@@ -44,11 +45,8 @@ class StoryItem extends React.Component {
   }
 
   renderCaret() {
-    return (
-      <i onClick={this.handleCaret}
-        className={`caret fa fa-caret-${this.state.open ? 'down' : 'right'}`}
-      />
-    );
+    const icon = `fa fa-caret-${this.state.open ? 'down' : 'right'}`
+    return <i className={`caret ${icon}`} onClick={this.handleCaret} />
   }
 
   renderKind() {
@@ -59,9 +57,9 @@ class StoryItem extends React.Component {
     const { story, initials } = this.props;
     return (
       <div>
-        <span className='title'>{story.title}
-        </span> (<span className='initials'>{initials}
-        </span>)
+        <span className='title'>
+          {story.title}
+        </span> (<span className='initials'>{initials}</span>)
       </div>
     );
   }
@@ -71,8 +69,11 @@ class StoryItem extends React.Component {
     const buttons = actions && Object.keys(actions).map(action => {
       const title = actions[action];
       return (
-        <button type='button' key={action} onClick={this.handleAction(action)}
-          className={action.replace(/ed$/, '')}>
+        <button
+          key={action}
+          type='button'
+          className={action.replace(/ed$/, '')}
+          onClick={this.handleAction(action)}>
           {title}
         </button>
       );

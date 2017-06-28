@@ -5,7 +5,9 @@ import StoryIndex from './story_index';
 const StoryPanel = ({title, stories, handleAdd, handleClose}) => {
   return (
     <div className='story panel'>
-      <PanelHeader title={title} handleAdd={handleAdd}
+      <PanelHeader
+        title={title}
+        handleAdd={handleAdd}
         handleClose={handleClose}/>
       <StoryIndex stories={stories}/>
     </div>
