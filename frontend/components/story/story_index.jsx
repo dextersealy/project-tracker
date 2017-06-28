@@ -1,5 +1,7 @@
 import React from 'react';
 import StoryItem from './story_item';
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 
 class StoryIndex extends React.Component {
   render() {
@@ -11,14 +13,12 @@ class StoryIndex extends React.Component {
   }
 
   renderItems(stories) {
-    const items = stories && stories.map(story =>
-      <StoryItem
-        key={story.id}
-        story={story}
-        />
-    );
-    return items;
+    return stories && stories.map(story => (
+      <StoryItem key={story.id} story={story}/>
+    ));
   }
 }
 
-export default StoryIndex;
+export default DragDropContext(
+  HTML5Backend
+)(StoryIndex);

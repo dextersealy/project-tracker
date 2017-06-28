@@ -8,14 +8,22 @@
   padding: 5px;
   font-size: 12px;
 
-  &:hover {
-    background-color: darken(#f3f3d1, 5%)
+  &.drop-target {
+    margin-top: 6px;
   }
 
+  &:hover {
+    background-color: darken(#f3f3d1, 5%);
+  }
+
+  &.drag-source {
+    background-color: #ffff99;
+  }
+  
   &.accepted {
     background-color: #daebcf;
     &:hover {
-      background-color: darken(#daebcf, 5%)
+      background-color: darken(#daebcf, 5%);
     }
   }
 

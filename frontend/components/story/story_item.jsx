@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { DragSource, DropTarget } from 'react-dnd';
 import { selectUser } from '../../util/selectors';
-import StoryForm from './story_form';
 import * as StoryUtil from './story_util';
 import { updateStory } from '../../actions/story_actions';
+import StoryForm from './story_form';
 
 const workflow = {
   unstarted: { started: 'Start'},
@@ -30,8 +31,16 @@ class StoryItem extends React.Component {
   }
 
   renderItem() {
-    return (
-      <div className={`story-item ${this.props.story.state}`}>
+    const { story } = this.props;
+    const { connectDragSource, isDragging } = this.props;
+    const { connectDropTarget, isOver } = this.props;
+
+    const className =`story-item ${story.state}`
+      + (isDragging ? ' drag-source' : '')
+      + (isOver ? ' drop-target' : '');
+
+    return connectDropTarget(connectDragSource(
+      <div className={className}>
         <div>
           {this.renderCaret()}
           {this.renderKind()}
@@ -41,7 +50,7 @@ class StoryItem extends React.Component {
           {this.renderActions()}
         </div>
       </div>
-    );
+    ));
   }
 
   renderCaret() {
@@ -93,6 +102,8 @@ class StoryItem extends React.Component {
   }
 }
 
+//  redux
+
 const mapStateToProps = (state, {story}) => ({
   initials: selectUser(state, story.author_id)['initials']
 });
@@ -101,7 +112,57 @@ const mapDispatchToProps = dispatch => ({
   commit: story => dispatch(updateStory(story))
 })
 
-export default connect(
+//  drag source
+
+const storySource = {
+  beginDrag(props) {
+    return {
+      sourceId: props.story.id
+    };
+  }
+}
+
+const collectSource = (connect, monitor) => ({
+  connectDragSource: connect.dragSource(),
+  isDragging: monitor.isDragging(),
+});
+
+//  drop target
+
+const storyTarget = {
+  drop(props, monitor) {
+    const { story } = props;
+    const { sourceId } = monitor.getItem();
+    console.log(`story ${sourceId} dropped on ${story.id}`);
+  }
+}
+
+const collectTarget = (connect, monitor) => ({
+  connectDropTarget: connect.dropTarget(),
+  isOver: monitor.isOver()
+});
+
+// connect everything
+
+const connectedComponent = connect(
   mapStateToProps,
   mapDispatchToProps
 )(StoryItem);
+
+const ItemTypes = {
+  STORY: 'STORY'
+};
+
+const connectedDragSource = DragSource(
+  ItemTypes.STORY,
+  storySource,
+  collectSource
+)(connectedComponent);
+
+const connectedDragSourceAndDropTarget = DropTarget(
+  ItemTypes.STORY,
+  storyTarget,
+  collectTarget
+)(connectedDragSource);
+
+export default connectedDragSourceAndDropTarget;
