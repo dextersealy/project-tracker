@@ -4,7 +4,8 @@ const PanelHeader = ({title, handleAdd, handleClose}) => {
   return (
     <div className='header'>
       { title &&
-      <p><i className='fa fa-times' onClick={handleClose}/>{title}</p> }
+        <i className='fa fa-times' onClick={handleClose}/> }
+      { title && <p>{title}</p> }
       { handleAdd &&
         <i className='fa fa-plus' onClick={handleAdd}/> }
     </div>

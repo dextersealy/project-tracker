@@ -17,8 +17,8 @@ const theTabs = {
     storyToAdd: 'unstarted'
   },
   current: {
-    title: 'Current iteration/backlog',
-    navTitle: 'Current/backlog',
+    title: 'Current iteration/Backlog',
+    navTitle: 'Current/Backlog',
     visible: true,
     storyToAdd: 'started'
   },
