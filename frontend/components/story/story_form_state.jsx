@@ -2,8 +2,6 @@ import React from 'react';
 import StoryWorkflowActions from './story_workflow_actions';
 import StoryMenu from './story_menu';
 
-
-// TODO: Move duplicated workflow actions
 const items = {
   unstarted: { title: 'Unstarted' },
   started: { title: 'Started' },
