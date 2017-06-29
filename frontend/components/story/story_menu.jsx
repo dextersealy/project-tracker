@@ -10,11 +10,10 @@ const StoryMenu = ({ items, currentValue, handleSelect }) => (
 
 const renderItems = items => Object.keys(items).map(key => {
   const item = items[key];
-  const icon = item.icon && <i className={`${item.icon}`}/>
   return (
     <li key={key} className='drop-down-menuItemWrapper'>
       <MenuItem value={key} className='drop-down-menuItem'>
-        <div>{icon} {item.title}</div>
+        <div>{item.icon}{item.title}</div>
       </MenuItem>
     </li>
   );
