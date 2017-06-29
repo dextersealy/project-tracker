@@ -1,11 +1,12 @@
 import React from 'react';
+import { DragSource, DropTarget } from 'react-dnd';
+
 import StoryItem from './story_item';
-import { DragDropContext } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
+import { DragDropItemTypes } from './story_util';
 
 class StoryIndex extends React.Component {
   render() {
-    return (
+    return this.props.connectDropTarget(
       <div className='index'>
         {this.renderItems(this.props.stories)}
       </div>
@@ -19,6 +20,22 @@ class StoryIndex extends React.Component {
   }
 }
 
-export default DragDropContext(
-  HTML5Backend
+const indexTarget = {
+  drop: ({stories}, monitor) => {
+    if (!monitor.didDrop()) {
+      if (stories) {
+        return stories[stories.length - 1];
+      }
+    }
+  }
+}
+
+const collectTarget = (connect, monitor) => ({
+  connectDropTarget: connect.dropTarget(),
+});
+
+export default DropTarget(
+  DragDropItemTypes.STORY,
+  indexTarget,
+  collectTarget
 )(StoryIndex);

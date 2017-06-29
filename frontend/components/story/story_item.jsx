@@ -110,13 +110,12 @@ const storySource = {
   endDrag(props, monitor) {
     if (monitor.didDrop()) {
       const story = monitor.getDropResult();
-      const old_priority = parseInt(props.story.priority);
-      let new_priority = parseInt(story.priority);
-      if (old_priority < new_priority) {
-        new_priority -= 1;
-      }
-      if (old_priority !== new_priority) {
-        props.prioritize(props.story, new_priority);
+      if (story) {
+        const old_priority = parseInt(props.story.priority);
+        let new_priority = parseInt(story.priority);
+        if (old_priority !== new_priority) {
+          props.prioritize(props.story, new_priority);
+        }
       }
     }
   }

@@ -9,7 +9,8 @@
   font-size: 12px;
 
   &.drop-target {
-    margin-top: 6px;
+    margin: 3px 0 3px 3px;
+    padding: 2px;
   }
 
   &:hover {
@@ -19,7 +20,7 @@
   &.drag-source {
     background-color: #ffff99;
   }
-  
+
   &.accepted {
     background-color: #daebcf;
     &:hover {
