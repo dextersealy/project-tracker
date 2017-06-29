@@ -38,4 +38,8 @@ export const deleteTask = task => dispatch => (
     .fail(errors => dispatch(receiveErrors(errors)))
 );
 
-export const removeTask = task => receiveDeleteTask(task);
+export const removeTask = task => dispatch => {
+  return new Promise((resolve, reject) => {
+    resolve(dispatch(receiveDeleteTask(task)))
+  });
+}

@@ -26,6 +26,7 @@ export const isEmpty = story => {
   return story.title.trim().length === 0
     && story.description.trim().length === 0;
 }
+export const isEmptyTask = task => task.title.trim().length === 0;
 
 export const isUnstarted = ({ state }) => state === 'unstarted';
 export const isCompleted = ({ state }) => state === 'accepted';
