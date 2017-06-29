@@ -8,6 +8,15 @@
   padding: 5px;
   font-size: 12px;
 
+  > div {
+    display: flex;
+    align-items: center;
+  }
+
+  &.can-drag {
+    cursor: move;
+  }
+
   &.drop-target {
     margin: 3px 0 3px 3px;
     padding: 2px;
@@ -26,12 +35,6 @@
     &:hover {
       background-color: darken(#daebcf, 5%);
     }
-  }
-
-  > div {
-    display: flex;
-    align-items: center;
-    cursor: default;
   }
 
   i {

@@ -31,13 +31,14 @@ class StoryItem extends React.Component {
   }
 
   renderItem() {
-    const { story } = this.props;
+    const { story, canDrag } = this.props;
     const { connectDragSource, isDragging } = this.props;
     const { connectDropTarget, isOver } = this.props;
 
     const className =`story-item ${story.state}`
       + (isDragging ? ' drag-source' : '')
-      + (isOver ? ' drop-target' : '');
+      + (isOver ? ' drop-target' : '')
+      + (canDrag(story) ? ' can-drag' : '');
 
     return connectDropTarget(connectDragSource(
       <div className={className}>
@@ -105,7 +106,7 @@ class StoryItem extends React.Component {
 //  drag & drop
 
 const storySource = {
-  canDrag: ({ story }) => !StoryUtil.isCompleted(story),
+  canDrag: ({ story, canDrag }) => canDrag(story),
   beginDrag: ({ story }) => ({ sourceId: story.id }),
   endDrag(props, monitor) {
     if (monitor.didDrop()) {

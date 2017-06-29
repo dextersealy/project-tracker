@@ -79,6 +79,7 @@ class Project extends React.Component {
             stories={this.filterStories(key)}
             handleAdd={this.handleAdd(key)}
             handleClose={this.handleClose(key)}
+            canDrag={this.canDrag(key)}
             />
         );
       }
@@ -130,6 +131,10 @@ class Project extends React.Component {
     return theTabs[tab_id].storyToAdd
       ? (e) => this.addStory(theTabs[tab_id].storyToAdd)
       : null;
+  }
+
+  canDrag(tab_id) {
+    return () => !['done', 'assigned'].includes(tab_id)
   }
 
   addStory(state) {
