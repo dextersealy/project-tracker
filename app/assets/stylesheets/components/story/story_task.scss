@@ -1,5 +1,10 @@
 .story-tasks-section {
 
+  .story-section-content {
+    display: flex;
+    flex-direction: column;
+  }
+
   .story-add-task-btn {
     color: grey;
     background: darken(#f1f0ea, 5%);
