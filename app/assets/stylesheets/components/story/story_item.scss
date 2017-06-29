@@ -1,10 +1,10 @@
 .story-item {
-  background-color: #f3f3d1;
-  border-top: 1px solid white;
-  border-bottom: 1px solid lightgrey;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  background-color: #f3f3d1;
+  border-top: 1px solid white;
+  border-bottom: 1px solid lightgrey;
   padding: 3px;
   font-size: 12px;
 
@@ -52,9 +52,5 @@
 
   .initials {
     color: #3e7293;
-  }
-
-  .action {
-    align-items: flex-start;
   }
 }

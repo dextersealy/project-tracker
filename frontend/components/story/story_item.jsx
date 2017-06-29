@@ -43,9 +43,7 @@ class StoryItem extends React.Component {
           {this.renderKind()}
           {this.renderTitle()}
         </div>
-        <div className='action'>
-          {this.renderWorkflow()}
-        </div>
+        {this.renderWorkflow()}
       </div>
     ));
   }
