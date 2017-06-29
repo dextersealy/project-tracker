@@ -104,7 +104,7 @@ class Project extends React.Component {
   }
 
   isWorkItem(story) {
-    return story.assignee_id === this.props.user_id
+    return !StoryUtil.isNew(story) && story.assignee_id === this.props.user_id
       && ['started', 'finished', 'rejected'].includes(story.state);
   }
 
