@@ -1,6 +1,9 @@
 import React from 'react';
+import StoryWorkflowActions from './story_workflow_actions';
 import StoryMenu from './story_menu';
 
+
+// TODO: Move duplicated workflow actions
 const items = {
   unstarted: { title: 'Unstarted' },
   started: { title: 'Started' },
@@ -10,11 +13,12 @@ const items = {
   accepted: { title: 'Accepted' },
 }
 
-const StoryState = ({story, handleMenu}) => {
+const StoryState = ({story, handleMenu, handleAction}) => {
   return (
     <section className='story-state-section'>
       <span className='story-section-caption'>State</span>
       <div className='story-section-content'>
+        <StoryWorkflowActions story={story} handleAction={handleAction}/>
         <StoryMenu items={items} currentValue={story.state}
           handleSelect={handleMenu}/>
       </div>

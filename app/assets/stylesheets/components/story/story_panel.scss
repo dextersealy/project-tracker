@@ -8,6 +8,10 @@
       height: 100%;
     }
 
+    .story-workflow-actions {
+      display: flex;
+    }
+
     .fa-star {
       color: #e0c85e;
     }
@@ -23,6 +27,51 @@
     p i {
       padding-left: 5px;
       padding-right: 10px;
+    }
+
+    .story-workflow-actions {
+      button {
+        font-size: 10px;
+        padding-top: 4px;
+        padding-bottom: 4px;
+        border-radius: 2px;
+        margin-right: 5px;
+
+        &.start, &.restart {
+          background: #e0e2e5;
+          color: black;
+          border: 1px solid lightgrey;
+          padding-top: 3px;
+          padding-bottom: 3px;
+          &:hover {
+            background: darken(#e0e2e5, 5%);
+          }
+        }
+        &.finish {
+          background: #203e64;
+          &:hover {
+            background: darken(#203e64, 5%);
+          }
+        }
+        &.deliver {
+          background: #f39300;
+          &:hover {
+            background: darken(#f39300, 5%);
+          }
+        }
+        &.accept {
+          background: #629200;
+          &:hover {
+            background: darken(#629200, 5%);
+          }
+        }
+        &.reject {
+          background: #a71f39;
+          &:hover {
+            background: darken(#a71f39, 5%);
+          }
+        }
+      }
     }
   }
 }

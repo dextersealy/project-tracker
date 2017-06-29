@@ -74,6 +74,10 @@
     }
   }
 
+  .story-section-content {
+    display: flex;
+  }
+
   .story-description-section,
   .story-tasks-section {
     flex-direction: column;

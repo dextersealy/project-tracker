@@ -6,14 +6,7 @@ import { selectUser } from '../../util/selectors';
 import * as StoryUtil from './story_util';
 import { updateStory, prioritizeStory } from '../../actions/story_actions';
 import StoryForm from './story_form';
-
-const workflow = {
-  unstarted: { started: 'Start'},
-  started: { finished: 'Finish'},
-  finished: { delivered: 'Deliver'},
-  delivered: { accepted: 'Accept', rejected: 'Reject'},
-  rejected: { started: 'Restart'},
-};
+import StoryWorkflowActions from './story_workflow_actions';
 
 class StoryItem extends React.Component {
   constructor(props) {
@@ -26,7 +19,10 @@ class StoryItem extends React.Component {
 
   render() {
     return this.state.open
-      ? <StoryForm story={this.props.story} handleClose={this.handleCaret}/>
+      ? <StoryForm
+        story={this.props.story}
+        handleClose={this.handleCaret}
+        handleAction={this.handleAction}/>
       : this.renderItem();
   }
 
@@ -48,7 +44,7 @@ class StoryItem extends React.Component {
           {this.renderTitle()}
         </div>
         <div className='action'>
-          {this.renderActions()}
+          {this.renderWorkflowActions()}
         </div>
       </div>
     ));
@@ -74,21 +70,14 @@ class StoryItem extends React.Component {
     );
   }
 
-  renderActions() {
-    const actions = workflow[this.props.story.state];
-    const buttons = actions && Object.keys(actions).map(action => {
-      const title = actions[action];
-      return (
-        <button
-          key={action}
-          type='button'
-          className={action.replace(/ed$/, '')}
-          onClick={this.handleAction(action)}>
-          {title}
-        </button>
-      );
-    });
-    return buttons;
+  renderWorkflowActions() {
+    const story = this.props;
+    return (
+      <StoryWorkflowActions
+        story={this.props.story}
+        handleAction={this.handleAction}
+        />
+    )
   }
 
   handleCaret(e) {
