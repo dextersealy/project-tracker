@@ -1,5 +1,5 @@
 import React from 'react';
-import StoryWorkflowActions from './story_workflow_actions';
+import StoryWorkflow from './story_workflow';
 import StoryMenu from './story_menu';
 
 const items = {
@@ -11,12 +11,12 @@ const items = {
   accepted: { title: 'Accepted' },
 }
 
-const StoryState = ({story, handleMenu, handleAction}) => {
+const StoryState = ({story, handleMenu, handleWorkflow}) => {
   return (
     <section className='story-state-section'>
       <span className='story-section-caption'>State</span>
       <div className='story-section-content'>
-        <StoryWorkflowActions story={story} handleAction={handleAction}/>
+        <StoryWorkflow story={story} handleWorkflow={handleWorkflow}/>
         <StoryMenu items={items} currentValue={story.state}
           handleSelect={handleMenu}/>
       </div>

@@ -6,7 +6,7 @@ import { selectUser } from '../../util/selectors';
 import * as StoryUtil from './story_util';
 import { updateStory, prioritizeStory } from '../../actions/story_actions';
 import StoryForm from './story_form';
-import StoryWorkflowActions from './story_workflow_actions';
+import StoryWorkflow from './story_workflow';
 
 class StoryItem extends React.Component {
   constructor(props) {
@@ -14,7 +14,7 @@ class StoryItem extends React.Component {
 
     this.state = { open: StoryUtil.isNew(this.props.story) }
     this.handleCaret = this.handleCaret.bind(this);
-    this.handleAction = this.handleAction.bind(this);
+    this.handleWorkflow = this.handleWorkflow.bind(this);
   }
 
   render() {
@@ -22,7 +22,7 @@ class StoryItem extends React.Component {
       ? <StoryForm
         story={this.props.story}
         handleClose={this.handleCaret}
-        handleAction={this.handleAction}/>
+        handleWorkflow={this.handleWorkflow}/>
       : this.renderItem();
   }
 
@@ -44,7 +44,7 @@ class StoryItem extends React.Component {
           {this.renderTitle()}
         </div>
         <div className='action'>
-          {this.renderWorkflowActions()}
+          {this.renderWorkflow()}
         </div>
       </div>
     ));
@@ -70,12 +70,12 @@ class StoryItem extends React.Component {
     );
   }
 
-  renderWorkflowActions() {
+  renderWorkflow() {
     const story = this.props;
     return (
-      <StoryWorkflowActions
+      <StoryWorkflow
         story={this.props.story}
-        handleAction={this.handleAction}
+        handleWorkflow={this.handleWorkflow}
         />
     )
   }
@@ -84,7 +84,7 @@ class StoryItem extends React.Component {
     this.setState(prevState => ({ open: !prevState.open }));
   }
 
-  handleAction(action) {
+  handleWorkflow(action) {
     return (e) => {
       const story = Object.assign({}, this.props.story, { state: action });
       this.props.commit(story);

@@ -36,7 +36,6 @@ class StoryForm extends React.Component {
     this.handleAddTask = this.handleAddTask.bind(this);
     this.handleTaskChange = this.handleTaskChange.bind(this);
     this.handleDoubleClick = this.handleDoubleClick.bind(this);
-    this.handleWorkflowAction = this.handleWorkflowAction.bind(this);
     this.id = `${Math.random() * 1e6}`;
   }
 
@@ -118,7 +117,7 @@ class StoryForm extends React.Component {
       <StoryState
         story={this.state}
         handleMenu={this.handleMenu('state')}
-        handleAction={this.handleWorkflowAction}
+        handleWorkflow={this.props.handleWorkflow}
         />
     );
   }
@@ -203,13 +202,6 @@ class StoryForm extends React.Component {
       story_id: this.props.story.id,
       user_id: this.props.user_id,
     }));
-  }
-
-  handleWorkflowAction(action) {
-    return (e) => {
-      const story = Object.assign({}, this.props.story, { state: action });
-      this.props.commit(story);
-    }
   }
 }
 

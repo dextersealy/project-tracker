@@ -8,7 +8,7 @@ const workflow = {
   rejected: { started: 'Restart'},
 };
 
-const StoryWorkflowActions = ({ story, handleAction }) => {
+const StoryWorkflow = ({ story, handleWorkflow }) => {
   const actions = workflow[story.state];
   const buttons = actions && Object.keys(actions).map(action => {
     const title = actions[action];
@@ -17,7 +17,7 @@ const StoryWorkflowActions = ({ story, handleAction }) => {
         key={action}
         type='button'
         className={action.replace(/ed$/, '')}
-        onClick={handleAction(action)}>
+        onClick={handleWorkflow(action)}>
         {title}
       </button>
     );
@@ -29,4 +29,4 @@ const StoryWorkflowActions = ({ story, handleAction }) => {
   );
 }
 
-export default StoryWorkflowActions;
+export default StoryWorkflow;
