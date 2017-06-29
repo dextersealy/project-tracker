@@ -35,6 +35,7 @@ class StoryForm extends React.Component {
     this.handleDelete = this.handleDelete.bind(this);
     this.handleAddTask = this.handleAddTask.bind(this);
     this.handleTaskChange = this.handleTaskChange.bind(this);
+    this.handleDoubleClick = this.handleDoubleClick.bind(this);
     this.id = `${Math.random() * 1e6}`;
   }
 
@@ -58,7 +59,7 @@ class StoryForm extends React.Component {
   render() {
     const { errorMsg } = this.props;
     return (
-      <div className='story-form'>
+      <div className='story-form' onDoubleClick={this.handleDoubleClick}>
         {this.renderTitle()}
         <ErrorMsg msg={errorMsg}/>
         {this.renderActions()}
@@ -154,6 +155,12 @@ class StoryForm extends React.Component {
       remove(story);
     } else {
       this.handleSave(e)
+    }
+  }
+
+  handleDoubleClick(e) {
+    if (Object.is(e.target, e.currentTarget)) {
+      this.handleCaret(e)
     }
   }
 

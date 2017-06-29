@@ -41,7 +41,7 @@ class StoryItem extends React.Component {
       + (canDrag(story) ? ' can-drag' : '');
 
     return connectDropTarget(connectDragSource(
-      <div className={className}>
+      <div className={className} onDoubleClick={this.handleCaret}>
         <div>
           {this.renderCaret()}
           {this.renderKind()}
