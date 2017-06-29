@@ -5,7 +5,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 5px;
+  padding: 3px;
   font-size: 12px;
 
   > div {
@@ -18,8 +18,8 @@
   }
 
   &.drop-target {
-    margin: 3px 0 3px 3px;
-    padding: 2px;
+    margin: 2px 0 2px 2px;
+    padding: 1px;
   }
 
   &:hover {
