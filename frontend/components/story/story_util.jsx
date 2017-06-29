@@ -18,6 +18,7 @@ export const initStory = ({ user_id, project_id, state }) => ({
   points: 'zero',
   state,
   description: '',
+  priority: 0,
 });
 
 export const isNew = ({ id }) => Boolean(`${id}`.match(/^new/));
