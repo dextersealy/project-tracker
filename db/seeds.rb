@@ -117,11 +117,12 @@ Story.transaction do
   priority = Story.maximum(:priority)
   stories.each do |story|
     priority += 1
+    assignee = story[:assignee] || user
     storyObj = Story.find_or_create_by({ project: project, title: story[:title] })
     storyObj.update!({
-      author: user, owner: user, state: story[:state], priority: priority,
+      author: user, owner: user, assignee_id: assignee.id,
+      state: story[:state], kind: story[:kind] || :feature, priority: priority,
       description: story[:description].gsub(/\s+/, " ").strip,
-      kind: story[:kind] || :feature
     })
 
     if story[:tasks]

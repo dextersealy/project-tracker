@@ -24,6 +24,10 @@ class User < ApplicationRecord
   has_many :ownerships, -> { owned }, class_name: 'Membership'
   has_many :owned_projects, through: :ownerships, source: :project
 
+  has_many :assignments,
+    class_name: 'Story',
+    foreign_key: :assignee_id
+
   attr_accessor :password
 
   after_initialize :ensure_session_token

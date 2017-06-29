@@ -14,6 +14,7 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  kind        :integer          default("0"), not null
+#  assignee_id :integer
 #
 
 class Story < ApplicationRecord
@@ -34,6 +35,10 @@ class Story < ApplicationRecord
   belongs_to :owner,
     class_name: 'User',
     foreign_key: :owner_id
+
+  # belongs_to :assignee,
+  #   class_name: 'User',
+  #   foreign_key: :assignee_id
 
   has_many :tasks
 end

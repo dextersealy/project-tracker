@@ -16,15 +16,15 @@ const theTabs = {
     visible: true,
     storyToAdd: 'unstarted'
   },
+  assigned: {
+    title: 'My Work',
+    visible: true
+  },
   current: {
     title: 'Current iteration/Backlog',
     navTitle: 'Current/Backlog',
     visible: true,
     storyToAdd: 'started'
-  },
-  assigned: {
-    title: 'My Work',
-    visible: true
   },
   unstarted: {
     title: 'Icebox',
@@ -104,9 +104,8 @@ class Project extends React.Component {
   }
 
   isWorkItem(story) {
-    return !StoryUtil.isNew(story)
-      && StoryUtil.isCurrent(story)
-      && StoryUtil.belongsToUser(story, this.props.user_id);
+    return story.assignee_id === this.props.user_id
+      && ['started', 'finished', 'rejected'].includes(story.state);
   }
 
   handleClose(id) {
@@ -139,7 +138,12 @@ class Project extends React.Component {
 
   addStory(state) {
     const { user_id, project_id } = this.props;
-    this.props.addStory(StoryUtil.initStory({ user_id, project_id, state }));
+    const story = StoryUtil.initStory({ user_id, project_id, state });
+    if (state === 'started') {
+      story.assignee_id = user_id;
+    }
+
+    this.props.addStory(story);
     if (state === 'unstarted' && !this.state.tabs['unstarted'].visible) {
       this.toggleNav('unstarted');
     }

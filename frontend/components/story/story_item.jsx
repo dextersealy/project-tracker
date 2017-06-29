@@ -85,6 +85,9 @@ class StoryItem extends React.Component {
   handleWorkflow(action) {
     return (e) => {
       const story = Object.assign({}, this.props.story, { state: action });
+      if (action === 'started') {
+        story.assignee_id = this.props.user_id;
+      }
       this.props.commit(story);
     }
   }
@@ -136,6 +139,7 @@ const dragSourceAndDropTarget = DropTarget(
 )(dragSource);
 
 const mapStateToProps = (state, {story}) => ({
+  user_id: state.session.currentUser.id,
   initials: selectUser(state, story.author_id)['initials']
 });
 
