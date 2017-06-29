@@ -4,12 +4,12 @@ import { receiveErrors } from './error_actions';
 export const RECEIVE_TASK = 'RECEIVE_TASK';
 export const RECEIVE_DELETE_TASK = 'RECEIVE_DELETE_TASK';
 
-const receiveTask = task => ({
+export const receiveTask = task => ({
   type: RECEIVE_TASK,
   task
 });
 
-const receiveDeleteTask = task => ({
+export const receiveDeleteTask = task => ({
   type: RECEIVE_DELETE_TASK,
   task
 });
@@ -38,5 +38,4 @@ export const deleteTask = task => dispatch => (
     .fail(errors => dispatch(receiveErrors(errors)))
 );
 
-export const addTask = task => receiveTask(task);
 export const removeTask = task => receiveDeleteTask(task);

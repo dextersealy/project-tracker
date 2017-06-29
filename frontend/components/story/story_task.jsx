@@ -1,13 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import * as FormUtil from '../../util/form_util';
-import * as StoryUtil from './story_util';
-import {
-  createTask,
-  updateTask,
-  deleteTask,
-  removeTask
-} from '../../actions/task_actions';
+import { isNew } from './story_util.jsx';
 
 class StoryTask extends React.Component {
   constructor(props) {
@@ -81,21 +74,16 @@ class StoryTask extends React.Component {
   }
 
   handleCheckbox(e) {
-    const { task } = this.props;
-    this.props.commit(Object.assign({}, task, { done: !task.done }));
+    const task = this.props.task;
+    this.props.handleSave(Object.assign({}, task, { done: !task.done }));
   }
 
   handleSave(e) {
-    const { task, isNew } = this.props;
-    this.props.commit(task).then(() => {
-      if (isNew) {
-        this.props.remove(task);
-      }
-    });
+    this.props.handleSave(this.props.task)
   }
 
   handleDelete(e) {
-    this.props.remove(this.props.task);
+    this.props.handleDelete(this.props.task);
   }
 
   resizeInput() {
@@ -108,18 +96,8 @@ class StoryTask extends React.Component {
   }
 }
 
-const mapDispatchToProps = (dispatch, { task }) => {
-  const isNew = StoryUtil.isNew(task);
-  const commit = isNew ? createTask : updateTask;
-  const remove = isNew ? removeTask : deleteTask;
-  return {
-    isNew,
-    commit: task => dispatch(commit(task)),
-    remove: task => dispatch(remove(task))
-  }
-}
+const mapStateToProps = (state, {task}) => ({
+  isNew: isNew(task) // used to set initial focus
+});
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(StoryTask);
+export default connect(mapStateToProps)(StoryTask);

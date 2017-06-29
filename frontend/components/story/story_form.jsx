@@ -1,20 +1,24 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import * as _ from 'lodash';
-import * as FormUtil from '../../util/form_util';
 import * as StoryUtil from './story_util';
 import { selectUser } from '../../util/selectors';
 import { clearErrors } from '../../actions/error_actions';
-import { fetchStory } from '../../actions/story_actions';
-import { addTask } from '../../actions/task_actions';
 import ErrorMsg from '../util/error';
 import {
+  fetchStory,
+  receiveStory,
   createStory,
   updateStory,
   deleteStory,
   removeStory,
 } from '../../actions/story_actions';
-
+import {
+  receiveTask,
+  createTask,
+  updateTask,
+  deleteTask,
+  removeTask,
+} from '../../actions/task_actions';
 import StoryTitle from './story_form_title';
 import StoryActions from './story_form_actions';
 import StoryKind from './story_form_kind';
@@ -28,26 +32,23 @@ class StoryForm extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = this.props.story;
-    this.handleChange = FormUtil.handleChange.bind(this);
+    this.handleDoubleClick = this.handleDoubleClick.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.handleCaret = this.handleCaret.bind(this);
     this.handleSave = this.handleSave.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.handleAddTask = this.handleAddTask.bind(this);
-    this.handleTaskChange = this.handleTaskChange.bind(this);
-    this.handleDoubleClick = this.handleDoubleClick.bind(this);
+    this.handleChangeTask = this.handleChangeTask.bind(this);
+    this.handleSaveTask = this.handleSaveTask.bind(this);
+    this.handleDeleteTask = this.handleDeleteTask.bind(this);
     this.id = `${Math.random() * 1e6}`;
+    this.task_id = 0;
   }
 
   componentDidMount() {
-    const { story } = this.props;
-    if (!StoryUtil.isNew(story)) {
-      this.props.fetchStory(story.id);
+    if (!this.props.isNew) {
+      this.props.fetchStory(this.props.story.id);
     }
-  }
-
-  componentWillReceiveProps(newProps) {
-    this.state = newProps.story;
   }
 
   componentWillUnmount() {
@@ -78,7 +79,7 @@ class StoryForm extends React.Component {
   renderTitle() {
     return (
       <StoryTitle
-        story={this.state}
+        story={this.props.story}
         handleCaret={this.handleCaret}
         handleChange={this.handleChange('title')}
         />
@@ -88,7 +89,7 @@ class StoryForm extends React.Component {
   renderActions() {
     return (
       <StoryActions
-        story={this.state}
+        story={this.props.story}
         handleDelete={this.handleDelete}
         handleSave={this.handleSave}
         />
@@ -98,7 +99,7 @@ class StoryForm extends React.Component {
   renderKind() {
     return (
       <StoryKind
-        story={this.state}
+        story={this.props.story}
         handleMenu={this.handleMenu('kind')}
         />
     );
@@ -107,7 +108,7 @@ class StoryForm extends React.Component {
   renderPoints() {
     return (
       <StoryPoints
-        story={this.state}
+        story={this.props.story}
         handleMenu={this.handleMenu('points')}/>
     );
   }
@@ -115,7 +116,7 @@ class StoryForm extends React.Component {
   renderState() {
     return (
       <StoryState
-        story={this.state}
+        story={this.props.story}
         handleMenu={this.handleMenu('state')}
         handleWorkflow={this.props.handleWorkflow}
         />
@@ -133,7 +134,7 @@ class StoryForm extends React.Component {
   renderDescription() {
     return (
       <StoryDescription
-        story={this.state}
+        story={this.props.story}
         handleChange={this.handleChange('description')}
         />
     );
@@ -142,20 +143,65 @@ class StoryForm extends React.Component {
   renderTasks() {
     return(
       <StoryTasks
-        story={this.state}
+        story={this.props.story}
         form_id={this.id}
         handleAdd={this.handleAddTask}
-        handleChange={this.handleTaskChange}
+        handleChange={this.handleChangeTask}
+        handleSave={this.handleSaveTask}
+        handleDelete={this.handleDeleteTask}
         />
     );
   }
 
-  handleCaret(e) {
-    const { story, remove } = this.props;
-    if (StoryUtil.isNew(story) && StoryUtil.isEmpty(this.state)) {
-      remove(story);
+  handleChange(field) {
+    return (e) => {
+      e.preventDefault();
+      const value = e.currentTarget.value;
+      const story = Object.assign({}, this.props.story, {[field]: value});
+      this.props.receiveStory(story);
+    }
+  }
+
+  handleMenu(field) {
+    return (value, e) => {
+      const story = Object.assign({}, this.props.story, {[field]: value});
+      this.props.receiveStory(story);
+    };
+  }
+
+  handleAddTask(e) {
+    const task = StoryUtil.initTask({
+      id: `${this.id}_${this.task_id++}`,
+      story_id: this.props.story.id,
+      user_id: this.props.user_id,
+    });
+    this.props.receiveTask(task);
+  }
+
+  handleChangeTask({ id }) {
+    return function (field, value) {
+      const story = this.props.story;
+      const task = Object.assign({}, story.tasks[id], {[field]: value})
+      this.props.receiveTask(task);
+    }.bind(this);
+  }
+
+  handleSaveTask(task) {
+    if (this.props.isNew) {
+      return this.props.receiveTask(task);
+    } else if (StoryUtil.isNew(task)) {
+      return this.props.createTask(task)
+        .then(() => this.props.removeTask(task))
     } else {
-      this.handleSave(e)
+      return this.props.updateTask(task);
+    }
+  }
+
+  handleDeleteTask(task) {
+    if (this.props.isNew || StoryUtil.isNew(task)) {
+      return this.props.removeTask(task);
+    } else {
+      return this.props.deleteTask(task);
     }
   }
 
@@ -165,43 +211,30 @@ class StoryForm extends React.Component {
     }
   }
 
-  handleMenu(field) {
-    return (value, e) => {
-      this.setState(prevState => (
-        Object.assign({}, prevState, {[field]: value})
-      ));
-    };
-  }
-
-  handleTaskChange({ id }) {
-    return function (field, value) {
-      const newState = _.merge({}, this.state);
-      newState.tasks[id][field] = value;
-      this.setState(newState)
-    }.bind(this);
+  handleCaret(e) {
+    if (this.props.isNew && StoryUtil.isEmpty(this.props.story)) {
+      this.props.removeStory(this.props.story);
+    } else {
+      this.handleSave(e)
+    }
   }
 
   handleSave(e) {
-    const { story, commit, remove, handleClose } = this.props;
-    commit(this.state).then(() => {
-      if (StoryUtil.isNew(story)) {
-        remove(story);
-      } else {
-        handleClose(e)
-      }
-    });
+    if (this.props.isNew) {
+      this.props.createStory(this.props.story)
+        .then(() => this.props.removeStory(this.props.story));
+    } else {
+      this.props.updateStory(this.props.story)
+        .then(() => this.props.handleClose(e));
+    }
   }
 
   handleDelete(e) {
-    this.props.remove(this.props.story);
-  }
-
-  handleAddTask(e) {
-    this.props.addTask(StoryUtil.initTask({
-      id: this.id,
-      story_id: this.props.story.id,
-      user_id: this.props.user_id,
-    }));
+    if (this.props.isNew) {
+      this.props.removeStory(this.props.story);
+    } else {
+      this.props.deleteStory(this.props.story);
+    }
   }
 }
 
@@ -212,16 +245,23 @@ const mapStateToProps = (state, { story }) => ({
 });
 
 const mapDispatchToProps = (dispatch, {story}) => {
-  const isNew = StoryUtil.isNew(story);
-  const commit = isNew ? createStory : updateStory;
-  const remove = isNew ? removeStory : deleteStory;
   return {
-    commit: story => dispatch(commit(story)),
-    remove: story => dispatch(remove(story)),
+    isNew: StoryUtil.isNew(story),
     clearErrors: () => dispatch(clearErrors()),
     fetchStory: id => dispatch(fetchStory(id)),
-    addTask: task => dispatch(addTask(task)),
-  };
+
+    receiveStory: story => dispatch(receiveStory(story)),
+    createStory: story => dispatch(createStory(story)),
+    deleteStory: story => dispatch(deleteStory(story)),
+    updateStory: story => dispatch(updateStory(story)),
+    removeStory: story => dispatch(removeStory(story)),
+
+    receiveTask: task => dispatch(receiveTask(task)),
+    createTask: task => dispatch(createTask(task)),
+    deleteTask: task => dispatch(deleteTask(task)),
+    updateTask: task => dispatch(updateTask(task)),
+    removeTask: task => dispatch(removeTask(task)),
+  }
 };
 
 export default connect(

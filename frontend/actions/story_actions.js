@@ -5,17 +5,17 @@ export const RECEIVE_STORY = 'RECEIVE_STORY';
 export const RECEIVE_DELETE_STORY = 'RECEIVE_DELETE_STORY';
 export const RECEIVE_STORY_CHANGES = 'RECEIVE_STORY_CHANGES';
 
-const receiveStory = story => ({
+export const receiveStory = story => ({
   type: RECEIVE_STORY,
   story
 });
 
-const receiveDeleteStory = story => ({
+export const receiveDeleteStory = story => ({
   type: RECEIVE_DELETE_STORY,
   story
 });
 
-const receiveStoryChanges = changes => ({
+export const receiveStoryChanges = changes => ({
   type: RECEIVE_STORY_CHANGES,
   changes
 });
