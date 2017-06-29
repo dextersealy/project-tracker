@@ -19,11 +19,10 @@
 class Story < ApplicationRecord
   enum kind: [:feature, :bug, :chore, :release]
   enum state: [:unstarted, :started, :finished, :delivered, :accepted, :rejected]
-  enum points: { zero: 0, easy: 1, medium: 2, hard: 4, huge: 8 }
 
   validates :project, :author, :owner, :title, presence: true
   validates :state, presence: true, inclusion: { in: states.keys }
-  validates :points, presence: true, inclusion: { in: points.keys }
+  validates :points, presence: true, inclusion: { in: [0, 1, 2, 3] }
   validates :kind, presence: true, inclusion: { in: kinds.keys }
 
   belongs_to :project
