@@ -17,6 +17,13 @@ class StoriesController < ApplicationController
       @story = Story.new(story_params)
       @story.transaction do
         @story.priority = Story.maximum(:priority) + 1
+        tasks = params.require(:story).permit(tasks: {});
+        tasks[:tasks].to_h.each do |_, task|
+          Task.create!({
+            story: @story, author: current_user,
+            title: task[:title], done: task[:done]
+            })
+        end
         @story.save
       end
     end

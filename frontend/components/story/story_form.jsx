@@ -188,7 +188,9 @@ class StoryForm extends React.Component {
 
   handleSaveTask(task) {
     if (this.props.isNew) {
-      return this.props.receiveTask(task);
+      return new Promise((resolve, reject) => {
+        resolve(this.props.receiveTask(task))
+      });
     } else if (StoryUtil.isNew(task)) {
       return this.props.createTask(task)
         .then(() => this.props.removeTask(task))
@@ -221,7 +223,7 @@ class StoryForm extends React.Component {
 
   handleSave(e) {
     if (this.props.isNew) {
-      this.props.createStory(this.props.story)
+      this.props.createStory(this.flatten(this.props.story))
         .then(() => this.props.removeStory(this.props.story));
     } else {
       this.props.updateStory(this.props.story)
@@ -236,7 +238,17 @@ class StoryForm extends React.Component {
       this.props.deleteStory(this.props.story);
     }
   }
+
+  flatten(story) {
+    const result = Object.assign({}, story)
+    result.tasks = story.tasks && Object.keys(story.tasks).map(id => ({
+      title: story.tasks[id].title,
+      done: story.tasks[id].done
+    }));
+    return result;
+  }
 }
+
 
 const mapStateToProps = (state, { story }) => ({
   requester: selectUser(state, story.author_id)['name'],
