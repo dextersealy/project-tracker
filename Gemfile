@@ -36,6 +36,8 @@ gem 'rake', '< 11.0'
 # Use Capistrano for deploysment
 # gem 'capistrano-rails', group: :development
 
+gem 'pusher'
+
 group :development, :test do
   gem 'rspec-rails'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -56,7 +58,6 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'annotate'
   gem 'pry-rails'
-  gem 'pusher'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
