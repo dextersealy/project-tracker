@@ -2,6 +2,7 @@ class TasksController < ApplicationController
   include StoriesHelper
 
   before_action :require_login
+  after_action :push_mod_notification, only: [:create, :update, :destroy]
 
   def index
     @tasks = find_story(params[:story_id]).tasks
@@ -24,6 +25,11 @@ class TasksController < ApplicationController
   end
 
   private
+
+  def push_mod_notification
+    story = @task.story
+    push_notification(story.project_id, 'mod', {id: story.id, at: ''})
+  end
 
   def find_task(task_id)
     task = Task.includes(:project).find(task_id)

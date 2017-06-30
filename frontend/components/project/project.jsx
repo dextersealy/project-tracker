@@ -4,11 +4,15 @@ import * as _ from 'lodash';
 import Header from '../util/header';
 import * as StorageAPI from '../../util/storage_util';
 import { fetchProject } from '../../actions/project_actions';
-import { selectProject, currentStories } from '../../util/selectors';
-import { addStory } from '../../actions/story_actions';
-import * as StoryUtil from '../story/story_util'
-import NavPanel from './nav_panel'
-import StoryPanel from '../story/story_panel'
+import { selectProject, selectStories } from '../../util/selectors';
+import {
+  fetchStory,
+  receiveStory,
+  receiveDeleteStory
+} from '../../actions/story_actions';
+import * as StoryUtil from '../story/story_util';
+import NavPanel from './nav_panel';
+import StoryPanel from '../story/story_panel';
 
 const theTabs = {
   add: {
@@ -42,6 +46,33 @@ class Project extends React.Component {
     super(props);
     this.state = this.retrieveState();
     this.handleNav = this.handleNav.bind(this);
+    this.handleModUpdate = this.handleModUpdate.bind(this);
+    this.handleDelUpdate = this.handleDelUpdate.bind(this);
+
+    const { pusher } = this.props;
+    this.channelId = `private-project${props.project_id}`
+    this.channel = pusher.subscribe(this.channelId);
+    this.channel.bind('mod', data => window.setTimeout(
+      () => this.handleModUpdate(data), 100)
+    );
+    this.channel.bind('del', data => window.setTimeout(
+      () => this.handleDelUpdate(data), 100)
+    );
+  }
+
+  handleModUpdate(story) {
+    const { id, at } = story;
+    const { stories } = this.props;
+    if (!stories[id] || stories[id].updated_at !== at) {
+      this.props.fetchStory(story)
+    }
+  }
+
+  handleDelUpdate(story) {
+    const { stories } = this.props;
+    if (stories[story.id]) {
+      this.props.removeStory(story);
+    }
   }
 
   componentDidMount() {
@@ -52,6 +83,11 @@ class Project extends React.Component {
     if (project_id !== this.props.project_id) {
       this.setState(this.retrieveState(project_id));
     }
+  }
+
+  componentWillUnmount() {
+    this.channel.unbind();
+    this.props.pusher.unsubscribe(this.channelId);
   }
 
   render() {
@@ -89,7 +125,8 @@ class Project extends React.Component {
 
   filterStories(key) {
     const { stories } = this.props;
-    return stories && stories.filter(story => this.filter(story, key))
+    return stories && Object.keys(stories).map(id => stories[id])
+      .filter(story => this.filter(story, key))
       .sort((a, b) => parseInt(a.priority) - parseInt(b.priority));
   }
 
@@ -184,18 +221,19 @@ class Project extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
+  const pusher = state.session.pusher;
   const user_id = state.session.currentUser.id;
   const project_id = ownProps.match.params.id;
   const project = selectProject(state, ownProps);
-  const stories = project && Object.keys(state.stories)
-    .map(id => state.stories[id])
-    .filter(story => story.project_id == project.id);
-  return { user_id, project_id, project, stories };
+  const stories = selectStories(state, project);
+  return { user_id, project_id, project, stories, pusher };
 };
 
 const mapDispatchToProps = dispatch => ({
   fetchProject: id => dispatch(fetchProject(id)),
-  addStory: story => dispatch(addStory(story)),
+  fetchStory: ({id}) => dispatch(fetchStory(id)),
+  addStory: story => dispatch(receiveStory(story)),
+  removeStory: story => dispatch(receiveDeleteStory(story)),
 });
 
 export default connect(

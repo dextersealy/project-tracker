@@ -10,7 +10,7 @@ import {
   createStory,
   updateStory,
   deleteStory,
-  removeStory,
+  receiveDeleteStory,
 } from '../../actions/story_actions';
 import {
   receiveTask,
@@ -266,7 +266,7 @@ const mapDispatchToProps = (dispatch, {story}) => {
     createStory: story => dispatch(createStory(story)),
     deleteStory: story => dispatch(deleteStory(story)),
     updateStory: story => dispatch(updateStory(story)),
-    removeStory: story => dispatch(removeStory(story)),
+    removeStory: story => dispatch(receiveDeleteStory(story)),
 
     receiveTask: task => dispatch(receiveTask(task)),
     createTask: task => dispatch(createTask(task)),

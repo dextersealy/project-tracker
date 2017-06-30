@@ -1,6 +1,6 @@
 import { RECEIVE_CURRENT_USER } from '../actions/session_actions';
 
-const defaultState = { currentUser: null };
+const defaultState = { currentUser: null, pusher: null };
 
 const SessionReducer = (state = defaultState, action) => {
   switch (action.type) {

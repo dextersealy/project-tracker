@@ -44,9 +44,6 @@ export const deleteStory = story => dispatch => (
     .fail(errors => dispatch(receiveErrors(errors)))
 );
 
-export const addStory = story => receiveStory(story);
-export const removeStory = story => receiveDeleteStory(story);
-
 export const prioritizeStory = (story, priority) => dispatch => (
   APIUtil.prioritizeStory(story, priority)
     .done(changes => dispatch(receiveStoryChanges(changes)))

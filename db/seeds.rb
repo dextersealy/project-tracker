@@ -12,15 +12,15 @@ user = User.find_or_create_by(email: 'dsealy@alum.mit.edu') do |user|
   user.password = 'password'
 end
 
-project = Project.find_by(title: "Demo Project")
-if !project
-  project = Project.create!({ title: "Demo Project" });
-  Membership.create!({
-    user: user,
-    project: project,
-    role: 'owner'
-  })
+user2 = User.find_or_create_by(email: 'dextersealy@gmail.com') do |user|
+  user.name =  "Dexter Sealy"
+  user.initials = 'DS',
+  user.password = 'password'
 end
+
+project = Project.find_or_create_by(title: "Demo Project")
+Membership.find_or_create_by({user: user, project: project, role: 'owner' })
+Membership.find_or_create_by({user: user2, project: project, role: 'member' })
 
 stories = [
   { state: :accepted,

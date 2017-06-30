@@ -1,3 +1,4 @@
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -51,4 +52,14 @@ Rails.application.configure do
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+
+  # Configure Pusher package
+
+  require 'pusher'
+
+  Pusher.logger = Rails.logger
+  Pusher.app_id = "360620"
+  Pusher.key = "21bb54ccd4232f234a21"
+  Pusher.secret = "fd3b7450a7a545384475"
+  Pusher.cluster = "mt1"
 end

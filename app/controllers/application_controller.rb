@@ -46,6 +46,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def push_notification(project_id, action, data)
+    Pusher["private-project#{project_id}"].trigger(action, data)
+  end
+
   def version
     ProjectTracker::Application::version
   end

@@ -2,6 +2,8 @@ class StoriesController < ApplicationController
   include StoriesHelper
 
   before_action :require_login
+  after_action :push_mod_notification, only: [:create, :update]
+  after_action :push_del_notification, only: [:destroy]
 
   def index
     project = current_user.projects.find(params[:project_id])
@@ -65,6 +67,15 @@ class StoriesController < ApplicationController
   end
 
   private
+
+  def push_mod_notification
+    push_notification(@story.project_id, 'mod', {id: @story.id,
+      at: @story.updated_at})
+  end
+
+def push_del_notification
+    push_notification(@story.project_id, 'del', {id: @story.id})
+  end
 
   def allowed?
     return true if can_edit?(@story)
