@@ -20,6 +20,7 @@ class User < ApplicationRecord
 
   has_many :memberships, dependent: :destroy
   has_many :projects, through: :memberships
+  
   has_many :ownerships, -> { owned }, class_name: 'Membership'
   has_many :owned_projects, through: :ownerships, source: :project
 
