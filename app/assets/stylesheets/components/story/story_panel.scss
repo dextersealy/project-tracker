@@ -10,6 +10,7 @@
 
     .story-workflow-actions {
       display: flex;
+      align-items: flex-start;
     }
 
     .fa-star {
@@ -70,6 +71,11 @@
           &:hover {
             background: darken(#a71f39, 5%);
           }
+        }
+        &:disabled {
+          background: transparent;
+          border: 1px solid lightgrey;
+          color: grey;
         }
       }
     }

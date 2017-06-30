@@ -7,10 +7,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const store = configureStore({
     session: {
       currentUser: window.currentUser ? window.currentUser : null,
-      pusher: new Pusher('75e079d6bf780b54eea1')
+      pusher: new Pusher(window.pusherKey ? window.pusherKey : '75e079d6bf780b54eea1')
     }
   });
   delete window.currentUser;
+  delete window.pusherKey;
 
   // BEGIN TEST
   window.getState = store.getState;

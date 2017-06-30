@@ -141,8 +141,13 @@ class Project extends React.Component {
   }
 
   isWorkItem(story) {
-    return !StoryUtil.isNew(story) && story.assignee_id === this.props.user_id
-      && ['started', 'finished', 'rejected'].includes(story.state);
+    if (StoryUtil.isNew(story)) {
+      return false;
+    } else if ('delivered' === story.state) {
+      return story.owner_id === this.props.user_id;
+    } else if (['started', 'finished', 'rejected'].includes(story.state)) {
+      return story.assignee_id === this.props.user_id;
+    }
   }
 
   handleClose(id) {

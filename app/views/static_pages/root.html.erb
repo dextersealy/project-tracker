@@ -1,5 +1,6 @@
 <script>
   <% if logged_in? %>
+    window.pusherKey = "<%= Pusher.key %>"
     window.currentUser = <%= render(
       'users/user.json.jbuilder',
       user: current_user
