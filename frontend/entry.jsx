@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const store = configureStore({
     session: {
       currentUser: window.currentUser ? window.currentUser : null,
-      pusher: new Pusher('21bb54ccd4232f234a21')
+      pusher: new Pusher('75e079d6bf780b54eea1')
     }
   });
   delete window.currentUser;
