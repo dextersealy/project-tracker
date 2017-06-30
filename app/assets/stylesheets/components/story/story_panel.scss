@@ -44,31 +44,31 @@
           border: 1px solid lightgrey;
           padding-top: 3px;
           padding-bottom: 3px;
-          &:hover {
+          &:hover:not(:disabled) {
             background: darken(#e0e2e5, 5%);
           }
         }
         &.finish {
           background: #203e64;
-          &:hover {
+          &:hover:not(:disabled) {
             background: darken(#203e64, 5%);
           }
         }
         &.deliver {
           background: #f39300;
-          &:hover {
+          &:hover:not(:disabled) {
             background: darken(#f39300, 5%);
           }
         }
         &.accept {
           background: #629200;
-          &:hover {
+          &:hover:not(:disabled) {
             background: darken(#629200, 5%);
           }
         }
         &.reject {
           background: #a71f39;
-          &:hover {
+          &:hover:not(:disabled) {
             background: darken(#a71f39, 5%);
           }
         }
