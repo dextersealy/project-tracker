@@ -1,7 +1,7 @@
 # Project Tracker
 
 Project Tracker is a full-stack web application, modeled on [Pivotal Tracker](http://www.pivotaltracker.com),
-that help agile teams keep in sync. It has a Ruby on Rails (Postgresql) back end,
+that help agile teams keep in sync. It has a Ruby on Rails back end (Postgresql)
 and React.js front end with a Redux framework.
 
 ## Features
@@ -10,7 +10,8 @@ and React.js front end with a Redux framework.
 
 Project Tracker consists of three major objects: projects, stories and tasks. A ***story*** is any intermediate project deliverable. It can be a new feature, a bug fix, a maintenance chore, or a release milestone. A ***project*** is a collection of stories that are worked on together by the project's members. Stories can have ***tasks*** that represent intermediate steps to be checked-off as they are completed.
 
-The main application interface is a real-time project dashboard, where you can create and edit stories and track their progress through the development pipeline. The dashboard has for sections:
+The main application interface is a configurable, real-time project dashboard, where you can create and edit stories and track their progress through the development pipeline. The dashboard has four sections:
+
 - Stories start off in an ***Icebox*** that holds anticipated deliverables
 - When work commences on a deliverable, it moves to ***Current***
 - When a deliverable is finished and accepted, it moves to ***Done***
@@ -28,7 +29,7 @@ Stories, projects and tasks are stored in separate tables: **```stories```** con
 
 ### Models
 
-Each table has an associated ActiveRecord model that validate data before it gets persisted, and that removes dependent rows when the primary relation is removed. The Membership model uses a scoped relation that identifies project "owners" and "owned projects".
+Each table has an associated ActiveRecord model that validates data before it gets persisted, and that removes dependent rows when the primary relation is deleted. **Of note:** the memberships model uses a scoped relation to identify "project owners" and "owned projects".
 
 ### Controllers
 
@@ -38,7 +39,7 @@ These controllers implement the RESTful interface between front and back end com
 - ```Sessions``` has actions to create and destroy active sessions (i.e., log in/out).
 - ```Projects``` has CRUD (**C**reate, **R**ead, **U**pdate, and **D**elete) actions for projects.
 - ```Stories``` has CRUD actions for stories and, index and show actions that respectively return all the stories in a project, and all the data for one story (including its tasks). It also implements a custom ***prioritize*** action that the front end invokes when you use drag & drop to reorder deliverables.
-- ```Tasks``` contains CRUD actions to associate task with stories.
+- ```Tasks``` contains CRUD actions for tasks.
 
 These controllers are internal plumbing:
 - ```StaticPages``` renders a root page that bootstraps the web application with the current user's identity
