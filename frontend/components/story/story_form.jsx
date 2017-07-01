@@ -33,10 +33,11 @@ class StoryForm extends React.Component {
     super(props);
 
     this.handleDoubleClick = this.handleDoubleClick.bind(this);
-    this.handleChange = this.handleChange.bind(this);
     this.handleCaret = this.handleCaret.bind(this);
     this.handleSave = this.handleSave.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleMenu = this.handleMenu.bind(this);
     this.handleAddTask = this.handleAddTask.bind(this);
     this.handleChangeTask = this.handleChangeTask.bind(this);
     this.handleSaveTask = this.handleSaveTask.bind(this);
@@ -46,12 +47,17 @@ class StoryForm extends React.Component {
   }
 
   componentDidMount() {
-    if (!this.props.isNew) {
-      this.props.fetchStory(this.props.story.id);
+    if (this.props.isNew) {
+      this.props.handleEdit(this.props.story, 'start');
+    } else {
+      this.props.fetchStory(this.props.story.id).then(function() {
+        this.props.handleEdit(this.props.story, 'start');
+      }.bind(this));
     }
   }
 
   componentWillUnmount() {
+    this.props.handleEdit(this.props.story, 'end')
     if (this.props.errorMsg) {
       this.props.clearErrors();
     }
@@ -153,20 +159,63 @@ class StoryForm extends React.Component {
     );
   }
 
+  handleDoubleClick(e) {
+    if (Object.is(e.target, e.currentTarget)) {
+      this.handleCaret(e)
+    }
+  }
+
+  handleCaret(e) {
+    if (this.props.isNew && StoryUtil.isEmpty(this.props.story)) {
+      this.props.removeStory(this.props.story);
+    } else {
+      this.handleSave(e)
+    }
+  }
+
+  handleDelete(e) {
+    if (this.props.isNew) {
+      this.props.removeStory(this.props.story);
+    } else {
+      this.props.deleteStory(this.props.story);
+    }
+  }
+
+  handleSave(e) {
+    if (this.props.isNew) {
+      this.props.createStory(this.flatten(this.props.story))
+        .then(() => this.props.removeStory(this.props.story));
+    } else {
+      this.props.updateStory(this.props.story)
+        .then(() => this.props.handleClose(e));
+    }
+  }
+
+  flatten(story) {
+    const result = Object.assign({}, story)
+    result.tasks = story.tasks && Object.keys(story.tasks).map(id => ({
+      title: story.tasks[id].title,
+      done: story.tasks[id].done
+    }));
+    return result;
+  }
+
   handleChange(field) {
     return (e) => {
       e.preventDefault();
-      const value = e.currentTarget.value;
-      const story = Object.assign({}, this.props.story, {[field]: value});
-      this.props.receiveStory(story);
-    }
+      this.setValue(field, e.currentTarget.value);
+    };
   }
 
   handleMenu(field) {
     return (value, e) => {
-      const story = Object.assign({}, this.props.story, {[field]: value});
-      this.props.receiveStory(story);
+      this.setValue(field, value);
     };
+  }
+
+  setValue(field, value) {
+    this.props.receiveStory(Object.assign({}, this.props.story,
+      {[field]: value}));
   }
 
   handleAddTask(e) {
@@ -206,49 +255,7 @@ class StoryForm extends React.Component {
       return this.props.deleteTask(task);
     }
   }
-
-  handleDoubleClick(e) {
-    if (Object.is(e.target, e.currentTarget)) {
-      this.handleCaret(e)
-    }
-  }
-
-  handleCaret(e) {
-    if (this.props.isNew && StoryUtil.isEmpty(this.props.story)) {
-      this.props.removeStory(this.props.story);
-    } else {
-      this.handleSave(e)
-    }
-  }
-
-  handleSave(e) {
-    if (this.props.isNew) {
-      this.props.createStory(this.flatten(this.props.story))
-        .then(() => this.props.removeStory(this.props.story));
-    } else {
-      this.props.updateStory(this.props.story)
-        .then(() => this.props.handleClose(e));
-    }
-  }
-
-  handleDelete(e) {
-    if (this.props.isNew) {
-      this.props.removeStory(this.props.story);
-    } else {
-      this.props.deleteStory(this.props.story);
-    }
-  }
-
-  flatten(story) {
-    const result = Object.assign({}, story)
-    result.tasks = story.tasks && Object.keys(story.tasks).map(id => ({
-      title: story.tasks[id].title,
-      done: story.tasks[id].done
-    }));
-    return result;
-  }
 }
-
 
 const mapStateToProps = (state, { story }) => ({
   requester: selectUser(state, story.author_id)['name'],

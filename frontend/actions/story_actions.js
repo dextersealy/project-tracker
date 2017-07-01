@@ -49,3 +49,15 @@ export const prioritizeStory = (story, priority) => dispatch => (
     .done(changes => dispatch(receiveStoryChanges(changes)))
     .fail(errors => dispatch(receiveErrors(errors)))
 )
+
+export const addStory = story => dispatch => {
+  return new Promise((resolve, reject) => {
+    resolve(dispatch(receiveStory(story)))
+  });
+}
+
+export const removeStory = story => dispatch => {
+  return new Promise((resolve, reject) => {
+    resolve(dispatch(receiveDeleteStory(story)))
+  });
+}

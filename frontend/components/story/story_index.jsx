@@ -15,7 +15,12 @@ class StoryIndex extends React.Component {
 
   renderItems(stories) {
     return stories && stories.map(story => (
-      <StoryItem key={story.id} story={story} canDrag={this.props.canDrag}/>
+      <StoryItem
+        key={story.id}
+        story={story}
+        handleEdit={this.props.handleEdit}
+        canDrag={this.props.canDrag}
+        />
     ));
   }
 }

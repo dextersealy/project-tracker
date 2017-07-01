@@ -2,9 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { DragSource, DropTarget } from 'react-dnd';
-import { selectUser } from '../../util/selectors';
 import * as StoryUtil from './story_util';
-import { updateStory, prioritizeStory } from '../../actions/story_actions';
+import { selectUser } from '../../util/selectors';
+import {
+  updateStory,
+  receiveStory,
+  prioritizeStory
+} from '../../actions/story_actions';
 import StoryForm from './story_form';
 import StoryWorkflow from './story_workflow';
 
@@ -22,7 +26,9 @@ class StoryItem extends React.Component {
       ? <StoryForm
         story={this.props.story}
         handleClose={this.handleCaret}
-        handleWorkflow={this.handleWorkflow}/>
+        handleEdit={this.props.handleEdit}
+        handleWorkflow={this.handleWorkflow}
+        />
       : this.renderItem();
   }
 
@@ -84,11 +90,15 @@ class StoryItem extends React.Component {
 
   handleWorkflow(action) {
     return (e) => {
-      const story = Object.assign({}, this.props.story, { state: action });
-      if (action === 'started') {
+      const story = Object.assign({}, this.props.story, { state: action, });
+      if (action === 'started' || !story.assignee_id) {
         story.assignee_id = this.props.user_id;
       }
-      this.props.commit(story);
+      if (this.state.open) {
+        this.props.receiveStory(story);
+      } else {
+        this.props.updateStory(story);
+      }
     }
   }
 }
@@ -105,7 +115,7 @@ const storySource = {
         const old_priority = parseInt(props.story.priority);
         let new_priority = parseInt(story.priority);
         if (old_priority !== new_priority) {
-          props.prioritize(props.story, new_priority);
+          props.prioritizeStory(props.story, new_priority);
         }
       }
     }
@@ -144,8 +154,11 @@ const mapStateToProps = (state, {story}) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  commit: story => dispatch(updateStory(story)),
-  prioritize: (story, priority) => dispatch(prioritizeStory(story, priority))
+  updateStory: story => dispatch(updateStory(story)),
+  receiveStory: story => dispatch(receiveStory(story)),
+  prioritizeStory: (story, priority) => (
+    dispatch(prioritizeStory(story, priority))
+  )
 })
 
 const connectedDragSourceAndDropTarget = connect(
