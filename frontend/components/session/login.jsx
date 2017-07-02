@@ -6,54 +6,33 @@ import { clearErrors } from '../../actions/error_actions';
 import { login } from '../../actions/session_actions';
 import Header from '../util/header';
 import ErrorMsg from '../util/error';
+import { Input, PasswordInput, SubmitButton } from './session_util';
 
 class LoginForm extends React.Component {
   constructor(props) {
 		super(props);
+
 		this.state = { email: '', password: '' };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = FormUtil.handleChange.bind(this);
   }
 
   componentDidMount() {
-    this.props.clearErrors();
     document.body.classList.toggle('auth', true);
   }
 
   componentWillUnmount() {
+    this.props.clearErrors();
     document.body.classList.toggle('auth', false);
   }
 
-  handleSubmit(e) {
-    e.preventDefault();
-    const user = Object.assign({}, this.state);
-    this.props.login(user).then(() => this.props.history.push('/projects'));
-  }
-
   render() {
-    const {email, password} = this.state;
     return (
       <div>
         <Header />
         <section className='auth-form'>
           <h2>Sign In</h2>
-          <form>
-            <label htmlFor='email'>Email:</label>
-            <input
-              id='email'
-              onChange={this.handleChange('email')}
-              value={email}
-              autoFocus={true}
-              />
-            <label htmlFor='password'>Password:</label>
-            <input type='password' id='password' onChange={this.handleChange('password')} value={password}/>
-            <ErrorMsg msg={this.props.errors[0]}/>
-            <button
-              type='submit'
-              disabled={!(this.state.email && this.state.password)}
-              onClick={this.handleSubmit}
-              >Sign In</button>
-          </form>
+          {this.renderForm()}
           <div className='redirect'>
             <span>New user?</span><Link to='/signup'>Sign Up</Link>
           </div>
@@ -61,11 +40,38 @@ class LoginForm extends React.Component {
       </div>
     );
   }
+
+  renderForm() {
+    const {email, password} = this.state;
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <Input
+          label={'Email:'}
+          value={email}
+          handleChange={this.handleChange('email')}
+          autoFocus={true}/>
+        <PasswordInput
+          value={password}
+          handleChange={this.handleChange('password')}/>
+        <ErrorMsg msg={this.props.error}/>
+        <SubmitButton
+          title={'Sign In'}
+          disabled={!Boolean(email && password)}/>
+      </form>
+    );
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    this.props.login(this.state).then(() => (
+      this.props.history.push('/projects')
+    ));
+  }
 }
 
 const mapStateToProps = state => {
   return ({
-    errors: state.errors,
+    error: state.errors[0],
   });
 };
 
