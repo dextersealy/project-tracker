@@ -11,7 +11,7 @@ class ProjectsForm extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { title: props.project.title }
+    this.state = props.project;
     this.handleChange = FormUtil.handleChange.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -25,22 +25,54 @@ class ProjectsForm extends React.Component {
     this.props.clearErrors();
   }
 
-  componentWillReceiveProps(newProps) {
-    if (newProps.project && this.props.project.id !== newProps.project.id) {
-      this.setState({ title: newProps.project.title });
+  componentWillReceiveProps({ project }) {
+    if (this.state.id !== project.id) {
+      this.setState(project);
     }
   }
 
-  handleSubmit(e) {
-    e.preventDefault();
-    const { isNew } = this.props;
-    const project = Object.assign({}, this.props.project, this.state);
-    this.props.submit(project).then(resp => {
-      this.props.history.push(isNew
-        ? `/project/${resp.project.id}`
-        : '/projects'
+  render() {
+    const { isNew, project } = this.props;
+    const exists = Boolean(project.id) || isNew;
+    if (!exists) {
+      return(
+        <Redirect to='/projects'/>
       );
-    });
+    }
+
+    return (
+      <form className='form' onSubmit={this.handleSubmit}>
+        <h2>{isNew ? 'Create a new project' : 'Edit project'}</h2>
+        {this.renderInputs()}
+        <ErrorMsg msg={this.props.error}/>
+        {this.renderActions()}
+      </form>
+    );
+  }
+
+  renderInputs() {
+    return (
+      <div className='form-body'>
+        <label htmlFor='title'>Project Name</label>
+        <input
+          id='title'
+          ref={instance => this.textInput = instance }
+          onChange={this.handleChange('title')}
+          placeholder='Enter a name for your project'
+          value={this.state.title} />
+      </div>
+    );
+  }
+
+  renderActions() {
+    return (
+      <div className='form-footer'>
+        <button type='button' onClick={this.handleCancel}>Cancel</button>
+        <button type='submit' disabled={!this.state.title}>
+          {this.props.isNew ? 'Create Project' : 'Save'}
+        </button>
+      </div>
+    );
   }
 
   handleCancel(e) {
@@ -48,42 +80,23 @@ class ProjectsForm extends React.Component {
     this.props.history.push('/projects');
   }
 
-  render() {
-    const { isNew, project } = this.props;
-    if (!(isNew || (project && project.id))) {
-      return(
-        <Redirect to='/projects'/>
+  handleSubmit(e) {
+    e.preventDefault();
+    const { isNew } = this.props;
+    this.props.submit(this.state).then(resp => {
+      this.props.history.push(isNew
+        ? `/project/${resp.project.id}`
+        : '/projects'
       );
-    }
-
-    const { title } = this.state;
-    return (
-      <form className='form' onSubmit={this.handleSubmit}>
-        <h2>{isNew ? 'Create a new project' : 'Edit project'}</h2>
-        <div className='form-body'>
-          <label htmlFor='title'>Project Name</label>
-          <input
-            id='title'
-            ref={instance => this.textInput = instance }
-            onChange={this.handleChange('title')}
-            placeholder='Enter a name for your project'
-            value={title} />
-        </div>
-        <ErrorMsg msg={this.props.error}/>
-        <div className='form-footer'>
-          <button type='button' onClick={this.handleCancel}>Cancel</button>
-          <button type='submit' disabled={!this.state.title}>
-            {isNew ? 'Create Project' : 'Save'}
-          </button>
-        </div>
-      </form>
-    );
+    });
   }
 }
 
+const emptyProject = {title: ''};
+
 const mapStateToProps = (state, ownProps) => ({
-    project: selectProject(state, ownProps, {}),
-    error: state.errors[0],
+  project: selectProject(state, ownProps) || emptyProject,
+  error: state.errors[0],
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => {
