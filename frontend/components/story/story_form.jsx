@@ -189,7 +189,7 @@ class StoryForm extends React.Component {
       }
     } else {
       this.props.updateStory(story).then(() => {
-        if (this.refs.myRef) {
+        if (this.myRef) {
           this.props.handleClose(e)
         }
       });
