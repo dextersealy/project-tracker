@@ -33,7 +33,7 @@ class StoryForm extends React.Component {
     super(props);
 
     this.handleDoubleClick = this.handleDoubleClick.bind(this);
-    this.handleCaret = this.handleCaret.bind(this);
+    this.handleClose = this.handleClose.bind(this);
     this.handleSave = this.handleSave.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -66,7 +66,8 @@ class StoryForm extends React.Component {
   render() {
     const { errorMsg } = this.props;
     return (
-      <div className='story-form' onDoubleClick={this.handleDoubleClick}>
+      <div ref={instance => this.myRef = instance} className='story-form'
+        onDoubleClick={this.handleDoubleClick}>
         {this.renderTitle()}
         <ErrorMsg msg={errorMsg}/>
         {this.renderActions()}
@@ -86,7 +87,7 @@ class StoryForm extends React.Component {
     return (
       <StoryTitle
         story={this.props.story}
-        handleCaret={this.handleCaret}
+        handleCaret={this.handleClose}
         handleChange={this.handleChange('title')}
         />
     );
@@ -161,16 +162,12 @@ class StoryForm extends React.Component {
 
   handleDoubleClick(e) {
     if (Object.is(e.target, e.currentTarget)) {
-      this.handleCaret(e)
+      this.handleClose(e)
     }
   }
 
-  handleCaret(e) {
-    if (this.props.isNew && StoryUtil.isEmpty(this.props.story)) {
-      this.props.removeStory(this.props.story);
-    } else {
-      this.handleSave(e)
-    }
+  handleClose(e) {
+    this.handleSave(e)
   }
 
   handleDelete(e) {
@@ -182,12 +179,20 @@ class StoryForm extends React.Component {
   }
 
   handleSave(e) {
-    if (this.props.isNew) {
-      this.props.createStory(this.flatten(this.props.story))
-        .then(() => this.props.removeStory(this.props.story));
+    const { story, isNew } = this.props;
+    if (isNew) {
+      if (StoryUtil.isEmpty(story)) {
+        this.props.removeStory(story);
+      } else {
+        this.props.createStory(this.flatten(story))
+          .then(() => this.props.removeStory(story));
+      }
     } else {
-      this.props.updateStory(this.props.story)
-        .then(() => this.props.handleClose(e));
+      this.props.updateStory(story).then(() => {
+        if (this.refs.myRef) {
+          this.props.handleClose(e)
+        }
+      });
     }
   }
 
