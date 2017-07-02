@@ -15,8 +15,7 @@ class StoriesController < ApplicationController
   end
 
   def create
-    create_params = story_params
-    tasks = create_params.extract!(:tasks)
+    create_params, tasks = story_params
     do_action do
       @story = Story.new(create_params)
       @story.transaction do
@@ -34,8 +33,9 @@ class StoriesController < ApplicationController
   end
 
   def update
+    update_params, _ = story_params
     @story = find_story(params[:id])
-    do_action { @story.update(story_params) } if allowed?
+    do_action { @story.update(update_params) } if allowed?
   end
 
   def destroy
@@ -105,7 +105,7 @@ class StoriesController < ApplicationController
       )
     result[:title].strip! if result[:title]
     result[:description].strip! if result[:description]
-    result
+    [result, result.extract!(:tasks)]
   end
 
 end
