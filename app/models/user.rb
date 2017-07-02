@@ -20,7 +20,7 @@ class User < ApplicationRecord
 
   has_many :memberships, dependent: :destroy
   has_many :projects, through: :memberships
-  
+
   has_many :ownerships, -> { owned }, class_name: 'Membership'
   has_many :owned_projects, through: :ownerships, source: :project
 
@@ -36,7 +36,7 @@ class User < ApplicationRecord
   end
 
   def self.find_by_session_token(session_token)
-    session = Session.find_by(session_token: session_token)
+    session = Session.includes(:user).find_by(session_token: session_token)
     session ? session.user : nil
   end
 

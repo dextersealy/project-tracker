@@ -6,7 +6,7 @@ class UsersController < ApplicationController
       login(@user)
       render :show
     else
-      render json: @user.errors.full_messages, status: 422
+      render json: @user.errors.full_messages, status: :unprocessable_entity
     end
   end
 

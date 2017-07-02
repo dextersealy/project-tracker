@@ -9,16 +9,13 @@ class SessionsController < ApplicationController
       login(@user)
       render '/users/show'
     else
-      render json: ["Invalid email/password"], status: 422
+      render json: ["Invalid email/password"], status: :unprocessable_entity
     end
   end
 
   def destroy
-    if logout
-      render json: {}
-    else
-      render json: {}, status: 404
-    end
+    logout
+    render json: {}
   end
 
   private

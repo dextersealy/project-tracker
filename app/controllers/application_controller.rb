@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
 
   def logout
     return false unless logged_in?
-    current_user.end_session!(session[:session_token])
+    @current_user.end_session!(session[:session_token])
     session[:session_token] = nil
     @current_user = nil
     return true
@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
   end
 
   def require_login
-    render json: [], status: 401 unless logged_in?
+    render json: [], status: :bad_request unless logged_in?
   end
 
   def do_action(template = :show, &prc)
@@ -35,11 +35,11 @@ class ApplicationController < ActionController::Base
       if prc.call
         render template
       else
-        render json: action_object.errors.full_messages, status: 422
+        render json: action_object.errors.full_messages, status: :unprocessable_entity
       end
     rescue ArgumentError => exception
       if exception.message.include? 'is not a valid'
-        render json: [exception.message], status: 422
+        render json: [exception.message], status: :unprocessable_entity
       else
         raise
       end

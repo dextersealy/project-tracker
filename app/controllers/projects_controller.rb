@@ -32,7 +32,7 @@ class ProjectsController < ApplicationController
 
   def allowed?
     return true if owner?(@project)
-    render json: ["Permission denied"], status: 422
+    render json: ["Permission denied"], status: :unprocessable_entity
     false
   end
 

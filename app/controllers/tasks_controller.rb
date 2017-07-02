@@ -43,7 +43,7 @@ class TasksController < ApplicationController
 
   def allowed?
     return true if can_edit?(@task)
-    render json: ["Permission denied"], status: 422
+    render json: ["Permission denied"], status: :unprocessable_entity
     false
   end
 

@@ -15,18 +15,20 @@ class StoriesController < ApplicationController
   end
 
   def create
+    create_params = story_params
+    tasks = create_params.extract!(:tasks)
     do_action do
-      @story = Story.new(story_params)
+      @story = Story.new(create_params)
       @story.transaction do
         @story.priority = Story.maximum(:priority) + 1
-        tasks = params.require(:story).permit(tasks: {});
-        tasks[:tasks].to_h.each do |_, task|
-          Task.create!({
-            story: @story, author: current_user,
-            title: task[:title], done: task[:done]
-            })
+        if @story.save
+          tasks[:tasks].to_h.each do |_, task|
+            Task.create!({
+              story: @story, author: current_user,
+              title: task[:title], done: task[:done]
+              })
+          end
         end
-        @story.save
       end
     end
   end
@@ -69,17 +71,19 @@ class StoriesController < ApplicationController
   private
 
   def push_mod_notification
+    return unless response.status == :ok
     push_notification(@story.project_id, 'mod', {id: @story.id,
       at: @story.updated_at})
   end
 
-def push_del_notification
+  def push_del_notification
+    return unless response.status == :ok
     push_notification(@story.project_id, 'del', {id: @story.id})
   end
 
   def allowed?
     return true if can_edit?(@story)
-    render json: ["Permission denied"], status: 422
+    render json: ["Permission denied"], status: :unprocessable_entity
     false
   end
 
@@ -96,7 +100,8 @@ def push_del_notification
     result = params.require(:story).permit(
       :project_id, :author_id, :owner_id, :assignee_id,
       :kind, :state, :points,
-      :title, :description
+      :title, :description,
+      tasks: {}
       )
     result[:title].strip! if result[:title]
     result[:description].strip! if result[:description]
