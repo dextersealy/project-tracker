@@ -18,15 +18,27 @@ class Dashboard extends React.Component {
     return (
       <div className='dashboard'>
         <Header/>
-        <div className='heading'>
-          <h2>Projects</h2>
-          <Link className='button' to='/projects/new'>Create Project</Link>
-        </div>
-        <div className='body'>
-          <ProjectIndex/>
-          <Route path='/projects/new' component={ProjectForm} />
-          <Route path='/projects/edit/:id' component={ProjectForm} />
-        </div>
+        {this.renderHeading()}
+        {this.renderIndex()}
+      </div>
+    );
+  }
+
+  renderHeading() {
+    return (
+      <div className='heading'>
+        <h2>Projects</h2>
+        <Link className='button' to='/projects/new'>Create Project</Link>
+      </div>
+    );
+  }
+
+  renderIndex() {
+    return(
+      <div className='body'>
+        <ProjectIndex/>
+        <Route path='/projects/new' component={ProjectForm} />
+        <Route path='/projects/edit/:id' component={ProjectForm} />
       </div>
     );
   }
