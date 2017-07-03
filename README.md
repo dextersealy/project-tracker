@@ -23,9 +23,15 @@ Project Tracker pushes changes to logged in users and updates the dashboard in r
 
 ### Schema
 
-**```Users```** holds the user profile and ```password_digest```, and **```sessions```** tracks active sessions so users can log in simultaneously from multiple locations.
+User and session information are maintained by two tables:
+- **users**: stores user profiles and password digests
+- **sessions**: tracks active sessions and allows users to log in simultaneously from multiple locations
 
-Stories, projects and tasks are stored in separate tables: **```stories```** contains a ```project_id``` column that associates stories with projects, and **``tasks``** contains a similar ```story_id``` column linking tasks to stories. The **```projects```** table contains no foreign keys. A separate **```memberships```** join table associates user's with projects and their level of access (e.g., *owner*, *member* or *viewer*).
+Information about stories, projects and tasks are stored in these tables:
+- **stories**: this table contains a ```project_id``` column that associates stories with projects
+- **tasks**: contains a similar ```story_id``` column linking tasks to stories
+- **projects**: contains only the project title; there are no foreign keys
+- **memberships**: this join table associates users with projects and their level of access (e.g., *owner*, *member* or *viewer*).
 
 ### Models
 
@@ -35,15 +41,15 @@ Each table has an associated ActiveRecord model that validates data before it ge
 
 These controllers implement the RESTful interface between front and back end components.
 
-- ```Users``` has a single action for creating new accounts.
-- ```Sessions``` has actions to create and destroy active sessions (i.e., log in/out).
-- ```Projects``` has CRUD (**C**reate, **R**ead, **U**pdate, and **D**elete) actions for projects.
-- ```Stories``` has CRUD actions for stories and, index and show actions that respectively return all the stories in a project, and all the data for one story (including its tasks). It also implements a custom ***prioritize*** action that the front end invokes when you use drag & drop to reorder deliverables.
-- ```Tasks``` contains CRUD actions for tasks.
+- **Users**: has a single action for creating new accounts.
+- **Sessions**: has actions to create and destroy active sessions (i.e., log in/out).
+- **Projects**: has CRUD (**C**reate, **R**ead, **U**pdate, and **D**elete) actions for projects.
+- **Stories**: has CRUD actions for stories and, index and show actions that respectively return all the stories in a project, and all the data for one story (including its tasks). It also implements a custom ***prioritize*** action that the front end invokes when you use drag & drop to reorder deliverables.
+- **Tasks**: contains CRUD actions for tasks.
 
 These controllers are internal plumbing:
-- ```StaticPages``` renders a root page that bootstraps the web application with the current user's identity
-- ```Pusher``` implements the authentication endpoint for [Pusher](https://pusher.com/) real-time notifications.
+- **StaticPages**: renders the root page that bootstraps the web application with the current user's identity
+- **Pusher**: implements the authentication endpoint for [Pusher](https://pusher.com/) real-time notifications.
 
 ## Front end
 
