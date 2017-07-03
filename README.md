@@ -57,4 +57,9 @@ These controllers are internal plumbing:
 
 The application's entry point renders the ***Root*** component, who's sole purpose is to wrap the main App component within the store provider and hash router.
 
-The ***App*** component defines the routes for the application: ```/signin``` ```/login``` and ```/logout``` manage user sessions, ```/projects``` handles project maintenace, and ```/project``` implements the real-time project dashboard.
+The ***App*** component defines these routes for the application:
+Route | Purpose
+---|---
+ ```/signin```<br>```/login```<br>```/logout``` | manage user sessions
+ ```/projects``` | create, edit and delete projects
+ ```/project``` | the project dashboard
