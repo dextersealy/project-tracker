@@ -29,7 +29,7 @@ class SignUpForm extends React.Component{
   render() {
     return (
       <div>
-        <Header />
+        <Header/>
         <section className='auth-form'>
           <h2>Sign Up</h2>
           {this.renderForm()}
@@ -51,8 +51,7 @@ class SignUpForm extends React.Component{
           label={'Name:'}
           value={name}
           handleChange={this.handleChange('name')}
-          autoFocus={true}
-          />
+          autoFocus={true}/>
         <ErrorMsg msg={errors.name}/>
         <Input
           label={'Email:'}

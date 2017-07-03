@@ -14,7 +14,7 @@ class LoggedOut extends React.Component {
   render() {
     return (
       <div>
-        <Header />
+        <Header/>
         <section className='logout'>
           <h2>You have been logged out.</h2>
           <p>Thank you for using ProjectTracker.</p>

@@ -29,7 +29,7 @@ class LoginForm extends React.Component {
   render() {
     return (
       <div>
-        <Header />
+        <Header/>
         <section className='auth-form'>
           <h2>Sign In</h2>
           {this.renderForm()}
@@ -42,7 +42,8 @@ class LoginForm extends React.Component {
   }
 
   renderForm() {
-    const {email, password} = this.state;
+    const { email, password } = this.state;
+    const disabled = !Boolean(email && password);
     return (
       <form onSubmit={this.handleSubmit}>
         <Input
@@ -56,7 +57,7 @@ class LoginForm extends React.Component {
         <ErrorMsg msg={this.props.error}/>
         <SubmitButton
           title={'Sign In'}
-          disabled={!Boolean(email && password)}/>
+          disabled={disabled}/>
       </form>
     );
   }
