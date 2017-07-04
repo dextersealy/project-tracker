@@ -2,21 +2,21 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { selectProject } from '../../util/selectors';
+import LogoMenu from './logo_menu';
 
-const Logo = ({project}) => {
-  const title = project ? project.title : 'Project Tracker';
+const Logo = ({ loggedIn }) => {
   return (
     <logo>
       <Link to='/'>
         <img className='logo-image' src={window.images.logo} alt='logo'/>
       </Link>
-      <Link to='/'><p>{title}</p></Link>
+      {loggedIn ? <LogoMenu/> : <Link to='/'><p>Project Tracker</p></Link> }
     </logo>
   );
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  project: selectProject(state, ownProps)
+  loggedIn: Boolean(state.session.currentUser),
 });
 
 export default withRouter(connect(

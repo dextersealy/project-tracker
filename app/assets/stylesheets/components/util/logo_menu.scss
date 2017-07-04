@@ -1,4 +1,4 @@
-.story-form {
+logo {
   .drop-down {
     display: inline-block;
     position: relative;
@@ -6,10 +6,9 @@
   }
 
   .drop-down-trigger {
-    cursor: pointer;
     display: inline-block;
-    font-size: 10px;
-    text-transform: capitalize;
+    font-size: 20px;
+    cursor: pointer;
   }
 
   .drop-down-trigger::after {
@@ -21,7 +20,7 @@
     border-color: currentColor transparent transparent;
     border-width: 5px 4px;
     border-style: solid;
-    color: grey;
+    color: white;
   }
 
   .drop-down-menu {
@@ -29,30 +28,33 @@
     border: 1px solid lightgrey;
     position: absolute;
     top: 80%;
-    right: 0;
+    left: 25%;
     z-index: 99;
     margin: 4px 0 0 0;
     box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
   }
 
   .drop-down-menuItem {
-    cursor: pointer;
+    font-size: 12px;
+    font-weight: normal;
     padding: 5px 20px 5px 10px;
-    text-transform: capitalize;
-    font-size: 10px;
+    color: black;
+    cursor: pointer;
+  }
+
+  .drop-down-menuItemWrapper:last-child:not(:first-child) {
+    border-top: 1px solid lightgrey;
   }
 
   .drop-down-menuItem div {
     display: inline-flex;
+    align-items: center;
   }
 
-  /*
-  .drop-down-menuItem:focus {
-    border: 1px dashed grey;
-    border-radius: 2px;
-    padding: 4px 19px 4px 9px;
+  .fa {
+    margin-right: 5px;
+    color: grey;
   }
-  */
 
   .drop-down-menuItem:hover {
     background-color: #eee;

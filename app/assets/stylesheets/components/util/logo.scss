@@ -1,17 +1,17 @@
 logo {
   display: flex;
-}
-
-.logo-image {
-  display: block;
-  height: 40px;
-  width: 40px;
-}
-
-logo p {
-  font-family: 'Open Sans', serif;
-  font-size: 20pt;
+  align-items: center;
+  font-size: 16pt;
   font-weight: bold;
   color: white;
-  margin-top: 5px;
+
+  .logo-image {
+    display: block;
+    height: 40px;
+    width: 40px;
+  }
+
+  p {
+    color:white;
+  }
 }
