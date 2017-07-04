@@ -1,9 +1,10 @@
-const path = require('path');
-const webpack = require("webpack");
+var path = require('path');
+var webpack = require('webpack');
 
-const plugins = []; // if using any plugins for both dev and production
-const devPlugins = []; // if using any plugins for development
-const prodPlugins = [
+var plugins = []; // if using any plugins for both dev and production
+var devPlugins = []; // if using any plugins for development
+
+var prodPlugins = [
   new webpack.DefinePlugin({
     'process.env': {
       'NODE_ENV': JSON.stringify('production')
@@ -17,8 +18,8 @@ const prodPlugins = [
 ];
 
 plugins = plugins.concat(
-  (process.env.NODE_ENV === 'production') ? prodPlugins : devPlugins
-)
+  process.env.NODE_ENV === 'production' ? prodPlugins : devPlugins
+);
 
 module.exports = {
   context: __dirname,
@@ -32,7 +33,7 @@ module.exports = {
     loaders: [
       {
         test: /\.jsx?$/,
-        exclude: /(node_modules)/,
+        exclude: /node_modules/,
         loader: 'babel-loader',
         query: {
           presets: ['react', 'es2015']
