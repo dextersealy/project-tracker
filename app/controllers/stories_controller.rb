@@ -4,6 +4,7 @@ class StoriesController < ApplicationController
   before_action :require_login
   after_action :push_mod_notification, only: [:create, :update]
   after_action :push_del_notification, only: [:destroy]
+  after_action :push_prioritize_notification, only: [:prioritize]
 
   def index
     project = current_user.projects.find(params[:project_id])
@@ -62,8 +63,9 @@ class StoriesController < ApplicationController
           @changes = stories.map{ |story| {id: story.id, priority: story.priority + 1} }
           stories.update_all('priority = priority + 1')
         end
-        @changes.append({ id: @story.id, priority: new_p })
         @story.update(priority: new_p)
+        @changes.append({ id: @story.id, priority: new_p,
+          updated_at: @story.updated_at })
       end
     end
   end
@@ -79,6 +81,14 @@ class StoriesController < ApplicationController
   def push_del_notification
     return unless response.status == 200
     push_notification(@story.project_id, 'del', {id: @story.id})
+  end
+
+  def push_prioritize_notification
+    return unless response.status == 200
+    push_notification(@story.project_id, 'prioritize', {
+      story: { id: @story.id, at: @story.updated_at},
+      changes: @changes
+    });
   end
 
   def allowed?

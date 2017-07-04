@@ -5,7 +5,12 @@ import * as StoryUtil from '../story/story_util';
 import * as StorageAPI from '../../util/storage_util';
 import { fetchProject } from '../../actions/project_actions';
 import { selectProject, selectStories } from '../../util/selectors';
-import { fetchStory, addStory, removeStory } from '../../actions/story_actions';
+import {
+  fetchStory,
+  addStory,
+  removeStory,
+  prioritizeStories
+} from '../../actions/story_actions';
 import Header from '../util/header';
 import NavPanel from './nav_panel';
 import StoryPanel from '../story/story_panel';
@@ -106,6 +111,9 @@ class Project extends React.Component {
     this.channel.bind('del', data => window.setTimeout(
       () => this.handleDelUpdate(data), 100)
     );
+    this.channel.bind('prioritize', data=> window.setTimeout(
+      () => this.handlePrioritizeUpdate(data), 100)
+    );
   }
 
   stopListeningForUpdates() {
@@ -132,6 +140,14 @@ class Project extends React.Component {
     const { stories } = this.props;
     if (stories[story.id]) {
       this.props.removeStory(story);
+    }
+  }
+
+  handlePrioritizeUpdate(payload) {
+    const { stories } = this.props;
+    const { id, at } = payload.story;
+    if (!stories[id] || stories[id].updated_at !== at) {
+      this.props.prioritizeStories(payload);
     }
   }
 
@@ -255,6 +271,7 @@ const mapDispatchToProps = dispatch => ({
   fetchStory: ({id}) => dispatch(fetchStory(id)),
   addStory: story => dispatch(addStory(story)),
   removeStory: story => dispatch(removeStory(story)),
+  prioritizeStories: payload => dispatch(prioritizeStories(payload))
 });
 
 export default connect(

@@ -1,7 +1,8 @@
 import {
   RECEIVE_STORY,
   RECEIVE_DELETE_STORY,
-  RECEIVE_STORY_CHANGES
+  RECEIVE_STORY_CHANGES,
+  RECEIVE_PRIORITIZE_STORIES,
  } from '../actions/story_actions';
 import { RECEIVE_PROJECT } from '../actions/project_actions';
 import { RECEIVE_TASK, RECEIVE_DELETE_TASK } from '../actions/task_actions';
@@ -37,6 +38,21 @@ const StoriesReducer = (state = defaultState, action) => {
       } else {
         return state;
       }
+    }
+
+    case RECEIVE_PRIORITIZE_STORIES: {
+      const { story, changes } = action.payload;
+      let newState = Object.assign({}, state);
+      changes.forEach(change => {
+        const { id, priority, updated_at } = change;
+        if (newState[id]) {
+          newState[id].priority = priority;
+          if (updated_at) {
+            newState[id].updated_at = updated_at;
+          }
+        }
+      });
+      return newState;
     }
 
     case RECEIVE_TASK: {

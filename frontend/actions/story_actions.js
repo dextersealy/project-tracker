@@ -4,6 +4,7 @@ import { receiveErrors } from './error_actions';
 export const RECEIVE_STORY = 'RECEIVE_STORY';
 export const RECEIVE_DELETE_STORY = 'RECEIVE_DELETE_STORY';
 export const RECEIVE_STORY_CHANGES = 'RECEIVE_STORY_CHANGES';
+export const RECEIVE_PRIORITIZE_STORIES = 'RECEIVE_PRIORITIZE_STORIES'
 
 export const receiveStory = story => ({
   type: RECEIVE_STORY,
@@ -18,6 +19,11 @@ export const receiveDeleteStory = story => ({
 export const receiveStoryChanges = changes => ({
   type: RECEIVE_STORY_CHANGES,
   changes
+});
+
+export const receivePrioritizeStories = payload => ({
+  type: RECEIVE_PRIORITIZE_STORIES,
+  payload
 });
 
 export const fetchStory = id => dispatch => (
@@ -54,10 +60,16 @@ export const addStory = story => dispatch => {
   return new Promise((resolve, reject) => {
     resolve(dispatch(receiveStory(story)))
   });
-}
+};
 
 export const removeStory = story => dispatch => {
   return new Promise((resolve, reject) => {
     resolve(dispatch(receiveDeleteStory(story)))
   });
-}
+};
+
+export const prioritizeStories = payload => dispatch => {
+  return new Promise((resolve, reject) => {
+    resolve(dispatch(receivePrioritizeStories(payload)))
+  });
+};
