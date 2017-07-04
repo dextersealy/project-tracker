@@ -80,7 +80,7 @@ class SignUpForm extends React.Component{
       this.props.reportError('Passwords do not match');
     } else {
       user.initials = this.getInitials(user.name);
-      this.props.signup(user).then(() => this.props.history.push('/projects'));
+      this.props.signup(user);
     }
   }
 

@@ -12,12 +12,11 @@ class Greeting extends React.Component {
 
   handleGuestLogin() {
     const user = { email: 'dsealy@alum.mit.edu', password: 'password' };
-    this.props.login(user).then(() => this.props.history.push('/projects'));
+    this.props.login(user);
   }
 
   handleLogout() {
-    this.props.logout()
-      .then(() => this.props.history.push('/logout'));
+    this.props.logout().then(() => this.props.history.push('/logout'));
   }
 
   render() {
