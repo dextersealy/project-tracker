@@ -71,13 +71,13 @@ class StoriesController < ApplicationController
   private
 
   def push_mod_notification
-    return unless response.status == :ok
+    return unless response.status == 200
     push_notification(@story.project_id, 'mod', {id: @story.id,
       at: @story.updated_at})
   end
 
   def push_del_notification
-    return unless response.status == :ok
+    return unless response.status == 200
     push_notification(@story.project_id, 'del', {id: @story.id})
   end
 
