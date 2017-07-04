@@ -1,18 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { deleteProject } from '../../actions/project_actions';
 
 class ProjectIndexItem extends React.Component {
   constructor(props) {
     super(props);
 
+    this.handleClick = this.handleClick.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
   }
 
   render() {
     return (
-      <li className='item'>
+      <li className='item' onClick={this.handleClick}>
         {this.renderTitle()}
         {this.renderActions()}
       </li>
@@ -20,26 +22,32 @@ class ProjectIndexItem extends React.Component {
   }
 
   renderTitle() {
-    const { project } = this.props;
     return (
-      <Link className='title' to={`/project/${project.id}`}>
-        {project.title}
-      </Link>
+      <div className='title'>{this.props.project.title}</div>
     );
   }
 
   renderActions() {
-    const { project } = this.props;
     return (
       <div className='controls'>
-        <Link className='button' to={`/projects/edit/${project.id}`}>Edit</Link>
+        <button type='button' onClick={this.handleEdit}>Edit</button>
         <button type='button' onClick={this.handleDelete}>Delete</button>
       </div>
     );
   }
 
+  handleClick(e) {
+    e.stopPropagation();
+    this.props.history.push(`/project/${this.props.project.id}`)
+  }
+
+  handleEdit(e) {
+    e.stopPropagation();
+    this.props.history.push(`/projects/edit/${this.props.project.id}`)
+  }
+
   handleDelete(e) {
-    e.preventDefault();
+    e.stopPropagation();
     this.props.deleteProject(this.props.project);
   }
 }
@@ -48,7 +56,7 @@ const mapDisptachToProps = dispatch => ({
   deleteProject: (project) => dispatch(deleteProject(project))
 });
 
-export default connect(
+export default withRouter(connect(
   null,
   mapDisptachToProps
-)(ProjectIndexItem);
+)(ProjectIndexItem));
