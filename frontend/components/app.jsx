@@ -10,9 +10,11 @@ import Project from './project/project';
 import Login from './session/login';
 import SignUp from './session/signup';
 import LogOut from './session/logout';
+import Analytics from './util/analytics';
 
 const App = () => (
   <div>
+    <Analytics/>
     <Route exact path='/' component={Home} />
     <AuthRoute path='/login' component={Login} />
     <AuthRoute path='/signup' component={SignUp} />
