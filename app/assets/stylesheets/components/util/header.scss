@@ -4,6 +4,12 @@ header {
   background-color: #214254;
   padding: 10px;
 
+  .contact a {
+    color: white;
+    font-size: 30px;
+    margin: 10px;
+  }
+
   .greeting {
     display: flex;
     align-items: center;
