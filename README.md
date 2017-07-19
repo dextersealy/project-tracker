@@ -1,8 +1,8 @@
 # Project Tracker
 
-Project Tracker is a full-stack web application, modeled on [Pivotal Tracker](http://www.pivotaltracker.com),
-that help agile teams keep in sync. It has a Ruby on Rails back end (Postgresql)
-and React.js front end with a Redux framework.
+Project Tracker ([Live](http://projecttracker.dextersealy.com)) is a full-stack web application, modeled on [Pivotal Tracker](http://www.pivotaltracker.com),
+that help agile teams keep in sync. It has a Ruby on Rails back-end (Postgresql)
+and React/Redux front-end.
 
 ## Features
 
@@ -39,12 +39,12 @@ Each table has an associated ActiveRecord model that validates data before it ge
 
 ### Controllers
 
-These controllers implement the RESTful interface between front and back end components.
+These controllers implement the RESTful interface between front and back-end components.
 
 - **Users**: has a single action for creating new accounts.
 - **Sessions**: has actions to create and destroy active sessions (i.e., log in/out).
 - **Projects**: has CRUD (**C**reate, **R**ead, **U**pdate, and **D**elete) actions for projects.
-- **Stories**: has CRUD actions for stories and, index and show actions that respectively return all the stories in a project, and all the data for one story (including its tasks). It also implements a custom ***prioritize*** action that the front end invokes when you use drag & drop to reorder deliverables.
+- **Stories**: has CRUD actions for stories and, index and show actions that respectively return all the stories in a project, and all the data for one story (including its tasks). It also implements a custom ***prioritize*** action that the front-end invokes when you use drag & drop to reorder deliverables.
 - **Tasks**: contains CRUD actions for tasks.
 
 These controllers are internal plumbing:
