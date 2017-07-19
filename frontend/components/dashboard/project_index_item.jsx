@@ -28,10 +28,14 @@ class ProjectIndexItem extends React.Component {
   }
 
   renderActions() {
+    const owner = this.props.project.role === 'owner'
     return (
       <div className='controls'>
-        <button type='button' onClick={this.handleEdit}>Edit</button>
-        <button type='button' onClick={this.handleDelete}>Delete</button>
+        <button type='button' onClick={this.handleClick}>Open</button>
+        <button type='button' onClick={this.handleEdit}
+          disabled={!owner}>Edit</button>
+        <button type='button' onClick={this.handleDelete}
+          disabled={!owner}>Delete</button>
       </div>
     );
   }
