@@ -10,9 +10,11 @@ class Greeting extends React.Component {
     this.handleLogout = this.handleLogout.bind(this);
   }
 
-  handleGuestLogin() {
-    const user = { email: 'dsealy@alum.mit.edu', password: 'password' };
-    this.props.login(user);
+  handleGuestLogin(email) {
+    return () => {
+      const user = { email, password: 'password' };
+      this.props.login(user);
+    }
   }
 
   handleLogout() {
@@ -30,8 +32,13 @@ class Greeting extends React.Component {
           <Link className='button' to='/login'>Sign In</Link> }
         { !user &&
           <button type='button' className='guest'
-            onClick={this.handleGuestLogin}>
-            Guest Sign In
+            onClick={this.handleGuestLogin("guest1@dsealy.com")}>
+            Guest One
+          </button> }
+        { !user &&
+          <button type='button' className='guest'
+            onClick={this.handleGuestLogin("guest2@dsealy.com")}>
+            Guest Two
           </button> }
       </div>
     );

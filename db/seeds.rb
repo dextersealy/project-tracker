@@ -6,123 +6,82 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-user = User.find_or_create_by(email: 'dsealy@alum.mit.edu') do |user|
-  user.name =  "Guest User"
-  user.initials = 'GU',
+guest1 = User.find_or_create_by(email: 'guest1@dsealy.com') do |user|
+  user.name =  "Guest One"
+  user.initials = 'GU1'
   user.password = 'password'
 end
 
-user2 = User.find_or_create_by(email: 'dextersealy@gmail.com') do |user|
-  user.name =  "Dexter Sealy"
-  user.initials = 'DS',
+guest2 = User.find_or_create_by(email: 'guest2@dsealy.com') do |user|
+  user.name =  "Guest Two"
+  user.initials = 'GU2'
   user.password = 'password'
 end
 
-project = Project.find_or_create_by(title: "Demo Project")
-Membership.find_or_create_by({user: user, project: project, role: 'owner' })
-Membership.find_or_create_by({user: user2, project: project, role: 'member' })
+demo_project_title = "Demo Project (Start Here)"
+project = Project.find_or_create_by!(title: demo_project_title)
+project.stories.destroy_all
+
+Membership.find_or_create_by!({user: guest1, project: project, role: 'member' })
+Membership.find_or_create_by!({user: guest2, project: project, role: 'owner' })
 
 stories = [
-  { state: :accepted,
-    title: "Phase 1: New user can sign up",
-    description: <<~HEREDOC },
-    Sign Up button is on home page. Sign Up page enforces password guidelines
-    and prevents duplicate username or email.
-    HEREDOC
-  { state: :accepted,
-    title: "Phase 1: User can sign in",
-    description: <<~HEREDOC },
-    Sign in button is on the home page. Sign Up page validates account
-    information.
-    HEREDOC
-  { state: :accepted,
-    title: "Phase 1: User remains signed in",
-    description: <<~HEREDOC },
-    The user remains signed in when the page is refreshed.
-    HEREDOC
-
-  { state: :accepted,
-    title: "Phase 2: User can create/rename projects",
-    tasks: [
-      {title: "Style the project dashboard", done: true},
-      {title: "After create, open new project immediately", done: true}
-    ],
-    description: <<~HEREDOC },
-    HEREDOC
-  { state: :delivered,
-    title: "Phase 3: User can create stories",
-    description: <<~HEREDOC },
-    HEREDOC
-  { state: :delivered,
-    title: "Phase 3: User can edit stories",
-    description: <<~HEREDOC },
-    HEREDOC
-  { state: :rejected,
-    title: "Phase 3: User can delete stories",
-    tasks: [{title: "Only owner can delete story"}],
-    description: <<~HEREDOC },
-    HEREDOC
-  { state: :started, kind: :release,
-    title: "Demo day!",
-    description: <<~HEREDOC },
-    HEREDOC
-  { state: :finished,
-    title: "Phase 4: User can move stories through workflow",
-    description: <<~HEREDOC },
-    HEREDOC
   { state: :started,
-    title: "Phase 4: Only story owner can Accept or Reject",
-    description: <<~HEREDOC },
-    HEREDOC
-  { state: :unstarted,
-    title: "Phase 4: User can toggle hiding/showing accepted stories",
-    description: <<~HEREDOC },
-    HEREDOC
-  { state: :accepted,
-    title: "Phase 5: User can create and edit tasks",
-    description: <<~HEREDOC },
-    HEREDOC
-  { state: :accepted,
-    title: "Phase 5: User can change task status",
-    description: <<~HEREDOC },
-    HEREDOC
-  { state: :unstarted, kind: :bug,
-    title: "Editing a task discards pending edits to other story attributes",
-    description: <<~HEREDOC },
-    HEREDOC
-  { state: :unstarted,
-    title: "Phase 6: User can comment on story",
-    description: <<~HEREDOC },
-    HEREDOC
-  { state: :unstarted,
-    title: "Phase 6: User can edit own comments",
-    description: <<~HEREDOC },
-    HEREDOC
-  { state: :unstarted,
-    title: "Phase 6: User who rejects story is prompted to enter a comment",
-    description: <<~HEREDOC },
-    HEREDOC
-  { state: :delivered,
-    title: "Phase 7: User can prioritize stories via drag & drop",
-    description: <<~HEREDOC },
-    HEREDOC
-  { state: :started, kind: :chore,
-    title: "Use callbacks to pass state changes up the component hierarchy.",
-    description: <<~HEREDOC },
-    HEREDOC
+    title: "Current iteration/backlog shows all work in progress." },
+  { state: :started,
+    title: "** Double-click to expand a story",
+    description: "Stories can have long, detailed descriptions, and sub-tasks.",
+    tasks: [
+      {title: "A completed task", done: true},
+      {title: "An incomplete task", done: false}
+    ],
+  },
+  { state: :started, assignee: guest1,
+    title: '"My Work" shows your assigned stories' },
+  { state: :started, assignee: guest1,
+    title: "** Click Finish to move story to the next step in the workflow" },
+  { state: :finished, assignee: guest1,
+    title: "** Click Deliver to submit a finished story for approval" },
+  { state: :delivered, owner: guest1,
+    title: "When a story is Delivered, its owner Accepts or Rejects it" },
+  { state: :rejected, kind: :chore,
+    title: "Rejected stories are flagged for Restart" },
 
+  { state: :unstarted, kind: :release,
+    title: "The Icebox holds unscheduled stories" },
+  { state: :unstarted,
+    title: "There are four kinds: Feature, Bug, Chore and Release" },
+  { state: :unstarted,
+    title: "**Click Start to claim a story", },
+  { state: :unstarted,
+    title: "**Click + or 'Add Story' to create a new, unscheduled story" },
+  { state: :unstarted,
+    title: "**Drag and drop stories up/down in the Icebox or Current/backlog to prioritize them." },
+
+  { state: :accepted,
+    title: "Accepted stories move to Done",
+    tasks: [
+      {title: "Design sign up page", done: true},
+      {title: "Build user model", done: false},
+      {title: "Build session model", done: false},
+    ],
+  },
+  { state: :accepted,
+    title: "**To reopen one, expand it and change the State" },
 ]
 
 Story.transaction do
   priority = Story.maximum(:priority)
   stories.each do |story|
     priority += 1
-    assignee = story[:assignee] || user
+    assignee = story[:assignee] || guest2
+    owner = story[:owner] || guest2
+    description = story[:description] || ''
     storyObj = Story.find_or_create_by({ project: project, title: story[:title] })
     storyObj.update!({
-      author: user, owner: user, assignee_id: assignee.id,
+      author: owner, owner: owner, assignee_id: assignee.id,
       state: story[:state], kind: story[:kind] || :feature, priority: priority,
-      description: story[:description].gsub(/\s+/, " ").strip,
+      description: description.gsub(/\s+/, " ").strip,
     })
 
     if story[:tasks]
