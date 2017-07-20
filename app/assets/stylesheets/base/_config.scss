@@ -1,16 +1,13 @@
-html {
-  height: calc(100% - 70px)
-}
-
 body {
   font-family: 'Open Sans', sans-serif;
+}
+
+html, body {
   height: 100%;
 }
 
-main {
-  height: 100%
-}
-
-main > div {
-  height: 100%
+body, main, main > div {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }

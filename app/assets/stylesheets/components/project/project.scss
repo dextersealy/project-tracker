@@ -1,6 +1,7 @@
 .project {
-  position: relative;
-  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 
   header {
     background-color: #3E7293;
@@ -12,15 +13,14 @@
   .content {
     display: flex;
     flex-direction: row;
+    flex: 1;
     background-color: #212121;
-    height: 100%;
-  }
 
-  .panel {
-    border-left: 1px solid black;
-    border-right: 1px solid black;
-    border-bottom: 1px solid black;
-    height: 100%;
-    margin-left: 5px;
+    .panel {
+      border-left: 1px solid black;
+      border-right: 1px solid black;
+      border-bottom: 1px solid black;
+      margin-left: 5px;
+    }
   }
 }

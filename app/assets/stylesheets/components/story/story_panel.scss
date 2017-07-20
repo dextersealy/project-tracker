@@ -1,16 +1,13 @@
 .story {
   &.panel {
-    flex: 1 1 0px;
+    display: flex;
+    flex-direction: column;
     background-color: #484F57;
+    flex: 1 1 0px;
 
     .index {
+      flex: 1;
       overflow-y: auto;
-      height: 100%;
-    }
-
-    .story-workflow-actions {
-      display: flex;
-      align-items: flex-start;
     }
 
     .fa-star {
@@ -31,6 +28,9 @@
     }
 
     .story-workflow-actions {
+      display: flex;
+      align-items: flex-start;
+
       button {
         font-size: 10px;
         padding-top: 4px;
