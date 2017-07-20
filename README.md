@@ -49,8 +49,8 @@ User and session information are maintained by two tables:
 - **sessions**: tracks active sessions so users can log in simultaneously from multiple locations
 
 Information about stories, projects and tasks are stored in these tables:
-- **stories**: the ```project_id``` column associates stories with projects
-- **tasks**: contains a similar ```story_id``` column linking tasks to stories
+- **stories**: the `project_id` column associates stories with projects
+- **tasks**: contains a similar `story_id` column linking tasks to stories
 - **projects**: contains only the project title; there are no foreign keys
 - **memberships**: this join table associates users with projects and their level of access (e.g., *owner*, *member* or *viewer*).
 
