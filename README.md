@@ -4,9 +4,24 @@ Project Tracker ([Live](http://projecttracker.dextersealy.com)) is a full-stack 
 
 ![](docs/images/full-screen.png)
 
+## Contents
+
+- [What it Does](#what-it-does)
+  - [Projects, Stories and Tasks](#projects-stories-and-tasks)
+  - [Real-time Push Notifications](#real-time-push-notifications)
+- [How it Does It](#how-it-does-it)
+  - [Back-end](#back-end)
+    - [Schema](#schema)
+    - [ActiveRecord Models](#activerecord-models)
+    - [Controllers](#controllers)
+  - [Front-end](#front-end)
+    - [Routes](#routes)
+    - [Components and State](#components-and-state)
+- [License](#license)
+
 ## What it Does
 
-### Project, Stories and Tasks
+### Projects, Stories and Tasks
 
 Project Tracker consists of three major objects: projects, stories and tasks. A ***story*** is any intermediate project deliverable. It can be a new feature, a bug fix, a maintenance chore, or a release milestone. A ***project*** is a collection of stories that are worked on together by the project's members. Stories can have ***tasks*** that represent intermediate steps to be checked-off as they are completed.
 
@@ -88,7 +103,6 @@ end
 ## Front end
 
 Project Tracker's front-end uses React with Redux for its framework.
-
 
 ### Routes
 
