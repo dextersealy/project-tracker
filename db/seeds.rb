@@ -27,10 +27,10 @@ Membership.find_or_create_by!({user: guest2, project: project, role: 'owner' })
 
 stories = [
   { state: :started,
-    title: "Current iteration/backlog shows all work in progress." },
+    title: "Current iteration/backlog shows all work in progress" },
   { state: :started,
     title: "** Double-click to expand a story",
-    description: "Stories can have long, detailed descriptions, and sub-tasks.",
+    description: "Stories can have long, detailed descriptions, and sub-tasks",
     tasks: [
       {title: "A completed task", done: true},
       {title: "An incomplete task", done: false}
@@ -39,11 +39,11 @@ stories = [
   { state: :started, assignee: guest1,
     title: '"My Work" shows your assigned stories' },
   { state: :started, assignee: guest1,
-    title: "** Click Finish to move story to the next step in the workflow" },
+    title: "** Click Finish to move a story to the next step in the workflow" },
   { state: :finished, assignee: guest1,
     title: "** Click Deliver to submit a finished story for approval" },
   { state: :delivered, owner: guest1,
-    title: "When a story is Delivered, its owner Accepts or Rejects it" },
+    title: "When a story is Delivered, the owner (you in this case) Accepts or Rejects it" },
   { state: :rejected, kind: :chore,
     title: "Rejected stories are flagged for Restart" },
 
@@ -56,7 +56,9 @@ stories = [
   { state: :unstarted,
     title: "**Click + or 'Add Story' to create a new, unscheduled story" },
   { state: :unstarted,
-    title: "**Drag and drop stories up/down in the Icebox or Current/backlog to prioritize them." },
+    title: "**Drag and drop stories up/down in the Icebox or Current/backlog to prioritize them" },
+  { state: :unstarted,
+    title: "**Click 'Done' on the far left to show/hide completed tasks"},
 
   { state: :accepted,
     title: "Accepted stories move to Done",
@@ -67,7 +69,7 @@ stories = [
     ],
   },
   { state: :accepted,
-    title: "**To reopen one, expand it and change the State" },
+    title: "**To reopen one, expand it and change the state" },
 ]
 
 Story.transaction do
