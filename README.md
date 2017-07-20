@@ -3,7 +3,8 @@
 Project Tracker ([Live](http://projecttracker.dextersealy.com)) is a full-stack web application that keeps agile teams in sync. It's modeled after [Pivotal Tracker](http://www.pivotaltracker.com). The back-end uses Ruby on Rails and Postgresql. The front-end uses a React/Redux framework, and leverages the Pusher service for real-time notifications.
 
 ![](docs/images/full-screen.png)
-## How it Works
+
+## What it Does
 
 ### Project, Stories and Tasks
 
@@ -20,7 +21,7 @@ The main application interface is a configurable, real-time project dashboard, w
 
 When you make a change in Project Tracker it notifies other running instances and propagates changes in real-time. Everyone always sees the same up-to-date view of the project.
 
-## Implementation
+## How it Does It
 
 ### Back-end
 
@@ -141,3 +142,9 @@ A story can appear in more than one panel and stories move between panels depend
 Thus, if a story is displayed in multiple panels, Project Tracker show the edits in all places simultaneously:
 
 ![](docs/images/simultanenous-edits.gif)
+
+## License
+
+Project Tracker Copyright (c) Dexter Sealy
+
+Project Tracker is free software; you can distribute it and/or modify it subject to the terms of the [MIT license](https://opensource.org/licenses/MIT).
