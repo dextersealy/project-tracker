@@ -136,8 +136,8 @@ The Redux state contains the logging in user's identity, his projects and, when 
 
 StoryPanel renders a **\<PanelHeader>** and a **\<StoryIndex>**. StoryIndex in turn renders one **\<StoryItem>** for each story in the panel. If the story is expanded, the StoryItem renders a **\<StoryForm>**. Otherwise it renders the story details directly.
 
-A story can appear in more than one panel and stories move between panels depending on their state. StoryForm does not maintain any internal state. When you edit a story, it instead dispatches state changes that are picked up an rendered by **\<Project>**.
+A story can appear in more than one panel and stories move between panels depending on their state. StoryForm does not maintain any internal state. When you edit a story, it instead dispatches state changes that are picked up and rendered by **\<Project>**.
 
-If the story is displayed in multiple panels, Project Tracker show the edits in all places simultaneously:
+Thus, if a story is displayed in multiple panels, Project Tracker show the edits in all places simultaneously:
 
 ![](docs/images/simultanenous-edits.gif)
