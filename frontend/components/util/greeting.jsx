@@ -32,7 +32,7 @@ class Greeting extends React.Component {
         { !user &&
           <button type='button' className='guest'
             onClick={this.handleGuestLogin}>
-            Guest Sign In
+            Demo Sign In
           </button> }
       </div>
     );
