@@ -116,7 +116,7 @@ Route | Purpose
 
 ### Components and State
 
-The Redux state contains the logging in user's identity, his projects, and the selected project's stories. E.g.,
+The Redux state contains the logged in user's identity, her projects, and the selected project's stories. E.g.,
 
 ```javascript
 {
