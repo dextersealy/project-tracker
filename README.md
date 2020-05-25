@@ -1,6 +1,6 @@
 # Project Tracker
 
-Project Tracker ([Live](https://dextersealy.herokuapp.com/#/)) is a full-stack web application that keeps agile teams in sync. It's modeled after [Pivotal Tracker](http://www.pivotaltracker.com). The back-end uses Ruby on Rails and Postgresql. The front-end uses a React/Redux framework, and leverages the Pusher service for real-time notifications.
+Project Tracker ([Live](http://projecttracker.dextersealy.com)) is a full-stack web application that keeps agile teams in sync. It's modeled after [Pivotal Tracker](http://www.pivotaltracker.com). The back-end uses Ruby on Rails and Postgresql. The front-end uses a React/Redux framework, and leverages the Pusher service for real-time notifications.
 
 ![](docs/images/full-screen.png)
 
